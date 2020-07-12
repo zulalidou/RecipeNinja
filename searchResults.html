@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Search Results..</title>
+        <link rel="stylesheet" href="searchResults.css"></link>
+    </head>
+
+    <body>
+        <header>
+            <nav class="myNavBar">
+                <ul>
+                    <li><a href="#" class="uno">cooking101.com</a></li>
+
+                    <div class="searchContainer">
+                        <form action="searchResults.html" method="GET">
+                            <input type="text" placeholder="What would you like to cook?" name="searchBar" required>
+                            <input type="submit" name="searchButton">
+                        </form>
+                    </div>
+
+                    <li><a href="#" class="uno">Recipes</a></li>
+                    <li><a href="#" class="uno">Videos</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="x">
+            <ul>
+                <li><a>< previous</a></li>
+                <li><a><< first</a></li>
+                <li class="pagerEllipses">...</li>
+                <li class="pagerItem"><a>.</a></li>
+                <li class="pagerItem"><a>.</a></li>
+                <li class="pagerCurrent">.<a></a></li>
+                <li class="pagerItem"><a>.</a></li>
+                <li class="pagerItem"><a>.</a></li>
+                <li class="pagerEllipses">...</li>
+                <li><a>last >></a></li>
+                <li><a>next ></a></li>
+            </ul>
+        </div>
+
+
+        <div id="result"></div>
+
+        <footer>
+            <p id="myFooter">
+                &copy; cooking101 Inc.
+            </p>
+        </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="searchResults.js"></script>
+    </body>
+</html>

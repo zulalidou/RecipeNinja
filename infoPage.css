@@ -1,0 +1,79 @@
+header {
+    background-color: black;
+}
+
+
+.myNavBar ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.myNavBar ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+
+.mainContent {
+    width: 80%;
+    margin: auto;
+    background-color: green;
+    overflow: auto;
+}
+
+#mainRecipe {
+    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
+    background-color: coral;
+    background-repeat: no-repeat;
+    width: 700px;
+    height: 525px;
+    margin: auto;
+    background-color: black;
+}
+
+
+
+.recipeInfo {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#ingredientsSection {
+    background-color: yellow;
+    flex: 1;
+    padding: 20px;
+}
+
+#instructionsSection {
+    background-color: red;
+    flex: 3;
+    padding: 20px;
+}
+
+
+#myFooter {
+    text-align: center;
+    color: white;
+    background-color: black;
+}
+
+
+/*
+.similarRecipes {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}
+
+.gridItem {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: coral;
+    height: 35vh;
+}
+*/

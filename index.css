@@ -1,0 +1,94 @@
+/* Resets ALL padding and margin elements to 0 */
+/*
+* {
+    margin: 0;
+    padding: 0;
+}
+*/
+
+header {
+    background-color: black;
+}
+
+
+.myNavBar {
+    display: flex;
+}
+
+
+.myNavBar ul li {
+    list-style: none;
+    display: inline-block;
+    /*padding: 10px 10px;*/
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.myNavBar ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+
+
+.searchContainer {
+    display: inline-block;
+    background-color: blue;
+}
+
+.uno {
+    background-color: green;
+}
+
+
+
+
+
+.myGridContainer {
+    background-color: green;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 80%;
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+.gridBox {
+    background-color: yellow;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    overflow: auto;
+}
+
+
+.imgDiv {
+    /*content:url("images/img1.jpg");*/
+    width: 300px;
+    height: 250px;
+
+    background-color: red;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+    background-color: coral;
+}
+
+#poo {
+    background-color: yellow;
+}
+
+
+#myFooter {
+    text-align: center;
+    color: white;
+    background-color: black;
+}
