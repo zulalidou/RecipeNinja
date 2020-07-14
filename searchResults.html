@@ -14,7 +14,7 @@
 
                     <div class="searchContainer">
                         <form action="searchResults.html" method="GET">
-                            <input type="text" placeholder="What would you like to cook?" name="searchBar" required>
+                            <input type="text" placeholder="What would you like to cook?" id="searchBar" name="searchBar" required>
                             <input type="submit" name="searchButton">
                         </form>
                     </div>
@@ -27,22 +27,19 @@
 
         <div id="x">
             <ul>
-                <li><a>< previous</a></li>
-                <li><a><< first</a></li>
-                <li class="pagerEllipses">...</li>
-                <li class="pagerItem"><a>.</a></li>
-                <li class="pagerItem"><a>.</a></li>
-                <li class="pagerCurrent">.<a></a></li>
-                <li class="pagerItem"><a>.</a></li>
-                <li class="pagerItem"><a>.</a></li>
-                <li class="pagerEllipses">...</li>
-                <li><a>last >></a></li>
-                <li><a>next ></a></li>
+                <li id="prevPagerItem"><a>< previous</a></li>
+                <li id="firstPagerItem"><a><< first</a></li>
+                <li id="ellipsis1">...</li>
+                <li id="1"><a>1</a></li>
+                <li id="2"><a>2</a></li>
+                <li id="3"><a>3</a></li>
+                <li id="4"><a>4</a></li>
+                <li id="5"><a>5</a></li>
+                <li id="ellipsis2">...</li>
+                <li id="lastPagerItem"><a>last >></a></li>
+                <li id="nextPagerItem"><a>next ></a></li>
             </ul>
         </div>
-
-
-        <div id="result"></div>
 
         <footer>
             <p id="myFooter">
