@@ -36,18 +36,6 @@ function setupPageTabs(recipes, pageNumber, pagesNeeded) {
         document.getElementById(i.toString()).style.visibility = "hidden"
         document.getElementById(i.toString()).disabled = true
     }
-
-
-
-    showRecipes(recipes, pageNumber, pagesNeeded)
-
-    for (let currentPage = 1; currentPage <= pagesNeeded; currentPage++) {
-        if (currentPage == pageNumber)
-            continue
-
-        linkPagerItems(foodSearched, currentPage, pagesNeeded)
-        console.log(currentPage)
-    }
 }
 
 
@@ -91,8 +79,32 @@ function infoPage(recipeInfo) {
 
 
 function linkPagerItems(foodSearched, currentPage, pagesNeeded) {
-    document.getElementById(currentPage.toString()).addEventListener("click", function() {
-        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + currentPage
+    document.getElementById("firstPagerItem").addEventListener("click", function() {
+        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + 1
+    })
+
+    if (currentPage - 1 >= 1) {
+        document.getElementById("prevPagerItem").addEventListener("click", function() {
+            window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + (currentPage - 1)
+        })
+    }
+
+    for (let i = 1; i <= pagesNeeded; i++) {
+        if (i == currentPage) continue
+
+        document.getElementById(i.toString()).addEventListener("click", function() {
+            window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + i
+        })
+    }
+
+    if (parseInt(currentPage) + 1 <= pagesNeeded) {
+        document.getElementById("nextPagerItem").addEventListener("click", function() {
+            window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + (currentPage + 1)
+        })
+    }
+
+    document.getElementById("lastPagerItem").addEventListener("click", function() {
+        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + pagesNeeded
     })
 }
 
@@ -114,6 +126,8 @@ console.log("pagesNeeded = " + pagesNeeded)
 console.log("pageNumber = " + pageNumber)
 
 
-setupPageTabs(recipes, pageNumber, pagesNeeded)
+setupPageTabs(recipes, parseInt(pageNumber), parseInt(pagesNeeded))
+showRecipes(recipes, parseInt(pageNumber), parseInt(pagesNeeded))
+linkPagerItems(foodSearched, parseInt(pageNumber), parseInt(pagesNeeded))
 
-console.log(JSON.parse(sessionStorage.getItem(foodSearched)))
+console.log(JSON.parse(sessionStorage.getItem(foodSearched))[pageNumber])

@@ -16,7 +16,6 @@ function displayFoods(recipes) {
     console.log(recipes);
     var boxes = document.getElementsByClassName("myGridContainer")[0].children;
 
-
     for (let i = 0; i < boxes.length; i++) {
         //children[0] = div (the image of food shown)
         //children[1] = p (the title of food shown)

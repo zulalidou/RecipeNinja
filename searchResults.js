@@ -28,7 +28,14 @@ function getRecipes(foodSearched) {
         console.log(recipes)
         console.log("pagesNeeded = " + pagesNeeded)
 
+        if (sessionStorage.getItem(foodSearched) === null) {
+            sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
+            console.log(sessionStorage.getItem(foodSearched))
+        }
+
         setupPageTabs(recipes, pagesNeeded, foodSearched)
+        showRecipes(recipes, pagesNeeded, 1)
+        linkPagerItems(recipes, pagesNeeded, foodSearched)
     })
 }
 
@@ -36,9 +43,8 @@ function getRecipes(foodSearched) {
 function setupPageTabs(recipes, pagesNeeded, foodSearched) {
     document.getElementById("firstPagerItem").style.visibility = "hidden"
     document.getElementById("prevPagerItem").style.visibility = "hidden"
-    //document.getElementById("1").disabled = true // leave or remove?
+    document.getElementById("1").disabled = true // leave or remove?
     document.getElementById("1").style.color = "yellow"
-
 
     for (let pageNumber = pagesNeeded + 1; pageNumber <= 9; pageNumber++)
         document.getElementById(pageNumber.toString()).style.visibility = "hidden"
@@ -47,88 +53,11 @@ function setupPageTabs(recipes, pagesNeeded, foodSearched) {
         document.getElementById("nextPagerItem").style.visibility = "hidden"
         document.getElementById("lastPagerItem").style.visibility = "hidden"
     }
-
-
-    showRecipes(recipes, pagesNeeded, 1)
-
-    for (let pageNumber = 2; pageNumber <= pagesNeeded; pageNumber++)
-        linkPagerItems(recipes, pagesNeeded, pageNumber, foodSearched)
-
-/*
-    if (pagesNeeded === 1) {
-        document.getElementById("firstPagerItem").style.visibility = "hidden"
-        document.getElementById("firstPagerItem").style.cursor = "default"
-
-        document.getElementById("prevPagerItem").style.visibility = "hidden"
-        document.getElementById("prevPagerItem").style.cursor = "default"
-
-        document.getElementById("ellipsis1").style.visibility = "hidden"
-
-        document.getElementById("1").style.visibility = "hidden"
-        document.getElementById("1").style.cursor = "default"
-
-        document.getElementById("2").style.visibility = "hidden"
-        document.getElementById("2").style.cursor = "default"
-
-        document.getElementById("3").innerHTML = "1"
-        document.getElementById("3").disabled = true
-
-        document.getElementById("4").style.visibility = "hidden"
-        document.getElementById("4").style.cursor = "default"
-
-        document.getElementById("5").style.visibility = "hidden"
-        document.getElementById("5").style.cursor = "default"
-
-        document.getElementById("ellipsis2").style.visibility = "hidden"
-
-        document.getElementById("nextPagerItem").style.visibility = "hidden"
-        document.getElementById("nextPagerItem").style.cursor = "default"
-
-        document.getElementById("lastPagerItem").style.visibility = "hidden"
-        document.getElementById("lastPagerItem").style.visibility = "default"
-
-        showRecipes(recipes, pagesNeeded, 1)
-    }
-    else if (pagesNeeded >= 2 && pagesNeeded <= 5) {
-        document.getElementById("firstPagerItem").style.visibility = "hidden"
-        document.getElementById("firstPagerItem").style.cursor = "default"
-
-        document.getElementById("prevPagerItem").style.visibility = "hidden"
-        document.getElementById("prevPagerItem").style.cursor = "default"
-
-        document.getElementById("ellipsis1").style.visibility = "hidden"
-        document.getElementById("1").disabled = true
-        document.getElementById("ellipsis2").style.visibility = "hidden"
-
-        // hides the pagerItems for the tabs we don't use
-        if (5 - pagesNeeded > 0) {
-            for (let i = pagesNeeded + 1; i <= 5; i++)
-                document.getElementById(i).style.visibility = "hidden"
-        }
-
-        for (let i = 1; i <= pagesNeeded; i++)
-            showRecipes(recipes, pagesNeeded, i)
-    }
-    else {
-        document.getElementById("firstPagerItem").style.visibility = "hidden"
-        document.getElementById("firstPagerItem").style.cursor = "default";
-
-        document.getElementById("prevPagerItem").style.visibility = "hidden"
-        document.getElementById("prevPagerItem").style.cursor = "default"
-
-        document.getElementById("ellipsis1").style.visibility = "hidden"
-        document.getElementById("1").disabled = true;
-
-        for (let i = 1; i <= 5; i++)
-            showRecipes(recipes, pagesNeeded, i);
-    }
-    */
 }
 
 
 function showRecipes(recipes, pagesNeeded, pageNumber) {
     var boxes = document.getElementsByClassName("myGridContainer")[0].children
-    //console.log(boxes)
 
     for (let i = 0; i < recipes[pageNumber].length; i++) {
         //children[0] = div (the image of food shown)
@@ -161,21 +90,21 @@ function infoPage(recipeInfo) {
 }
 
 
-function linkPagerItems(recipes, pagesNeeded, pageNumber, foodSearched) {
-    document.getElementById(pageNumber.toString()).addEventListener("click", function() {
-        sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
-        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + pageNumber
+function linkPagerItems(recipes, pagesNeeded, foodSearched) {
+    for (let i = 2; i <= pagesNeeded; i++) {
+        document.getElementById(i.toString()).addEventListener("click", function() {
+            window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + i
+        })
+    }
+
+    document.getElementById("nextPagerItem").addEventListener("click", function() {
+        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + 2
+    })
+
+    document.getElementById("lastPagerItem").addEventListener("click", function() {
+        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + pagesNeeded
     })
 }
-
-
-/*
-function paginate(recipes, pagesNeeded, pageNumber) {
-    window.location = "paginateThroughResults.html" + "?recipes=" + recipes[pageNumber] + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + pageNumber
-    //console.log(recipes[pageNumber])
-}
-*/
-
 
 
 
