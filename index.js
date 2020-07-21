@@ -18,15 +18,19 @@ function displayFoods(recipes) {
 
 
     for (let i = 0; i < boxes.length; i++) {
-        console.log(boxes[i].children);
+        //children[0] = div (the image of food shown)
+        //children[1] = p (the title of food shown)
+
         boxes[i].children[0].style.backgroundImage = "url(" + recipes[i][2] + ")";
+        console.log(recipes[i][2])
+
         // some may not have images... take care of that
 
         boxes[i].children[0].style.maxHeight = "100%";
         boxes[i].children[0].style.maxWidth = "100%";
         boxes[i].children[0].style.objectFit = "cover";
 
-        /*boxes[i].children[0].style.backgroundSize = "cover";*/
+        //boxes[i].children[0].style.backgroundSize = "cover";
 
 
 
@@ -47,7 +51,7 @@ function infoPage(recipeInfo) {
 }
 
 
-//getRandomFoods();
+getRandomFoods();
 
 
 

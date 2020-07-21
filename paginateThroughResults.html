@@ -2,21 +2,22 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Search Results..</title>
-        <link rel="stylesheet" href="searchResults.css"></link>
+        <title>..paginating..</title>
+        <link rel="stylesheet" href="paginateThroughResults.css"></link>
     </head>
-
     <body>
         <header>
             <nav class="myNavBar">
                 <ul>
                     <li><a href="#" class="uno">cooking101.com</a></li>
 
+                    <!--li><input type="text" placeholder="What would you like to cook?"></li>-->
                     <div class="searchContainer">
                         <form action="searchResults.html" method="GET">
-                            <input type="text" placeholder="What would you like to cook?" id="searchBar" name="searchBar" required>
+                            <input type="text" placeholder="What would you like to cook?" name="searchBar" required>
                             <input type="submit" name="searchButton">
                         </form>
+                        <!--<p id="poo">hello</p>-->
                     </div>
 
                     <li><a href="#" class="uno">Recipes</a></li>
@@ -87,24 +88,6 @@
             </div>
         </div>
 
-        <!--
-        <div id="x">
-            <ul>
-                <li id="prevPagerItem"><a>< previous</a></li>
-                <li id="firstPagerItem"><a><< first</a></li>
-                <li id="ellipsis1">...</li>
-                <li id="1"><a>1</a></li>
-                <li id="2"><a>2</a></li>
-                <li id="3"><a>3</a></li>
-                <li id="4"><a>4</a></li>
-                <li id="5"><a>5</a></li>
-                <li id="ellipsis2">...</li>
-                <li id="lastPagerItem"><a>last >></a></li>
-                <li id="nextPagerItem"><a>next ></a></li>
-            </ul>
-        </div>
-        -->
-
         <ul>
             <li><a id="firstPagerItem">< first</a></li>
             <li><a id="prevPagerItem"><< prev</a></li>
@@ -123,7 +106,6 @@
             <li><a id="lastPagerItem">last >></a></li>
         </ul>
 
-
         <footer>
             <p id="myFooter">
                 &copy; cooking101 Inc.
@@ -131,6 +113,6 @@
         </footer>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="searchResults.js"></script>
+        <script src="paginateThroughResults.js"></script>
     </body>
 </html>
