@@ -4,7 +4,7 @@ function getRandomFoods() {
 
     $.getJSON(url, function(data) {
         for (let i = 0; i < data.recipes.length; i++) {
-            recipes[i] = [data.recipes[i].id, data.recipes[i].title, data.recipes[i].image];
+            recipes[i] = [data.recipes[i].id, data.recipes[i].title, (data.recipes[i].image === undefined) ? "images/plate.png" : data.recipes[i].image];
         }
 
         displayFoods(recipes);
@@ -15,25 +15,29 @@ function getRandomFoods() {
 function displayFoods(recipes) {
     console.log(recipes);
     var boxes = document.getElementsByClassName("myGridContainer")[0].children;
+    //console.log(boxes)
 
-    for (let i = 0; i < boxes.length; i++) {
+    for (let i = 0; i < 12; i++) {
         //children[0] = div (the image of food shown)
         //children[1] = p (the title of food shown)
 
-        boxes[i].children[0].style.backgroundImage = "url(" + recipes[i][2] + ")";
-        console.log(recipes[i][2])
+
+
+        console.log(boxes[i].children)
+        boxes[i].children[0].children[0].src = recipes[i][2];
 
         // some may not have images... take care of that
 
+        /*
         boxes[i].children[0].style.maxHeight = "100%";
         boxes[i].children[0].style.maxWidth = "100%";
         boxes[i].children[0].style.objectFit = "cover";
+        */
 
         //boxes[i].children[0].style.backgroundSize = "cover";
 
 
-
-        boxes[i].children[1].textContent = recipes[i][1];
+        boxes[i].children[1].children[0].textContent = recipes[i][1];
 
 
         boxes[i].addEventListener("click", function() {

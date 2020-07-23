@@ -46,19 +46,19 @@ function showRecipes(recipes, pageNumber, pagesNeeded) {
     for (let i = 0; i < 12; i++)
         boxes[i].style.visibility = "visible"
 
-    for (let i = 0; i < recipes.length; i++) {
+    for (let i = 0; i < 12; i++) {
         //children[0] = div (the image of food shown)
         //children[1] = p (the title of food shown)
 
         // I'm retrieving the recipes' images this way because the image url provided for the recipes using the search query isn't useful in getting the images
-        boxes[i].children[0].style.backgroundImage = "url(https://spoonacular.com/recipeImages/" + recipes[i][0] + "-556x370.jpg)"
+        boxes[i].children[0].children[0].src = "https://spoonacular.com/recipeImages/" + recipes[i][0] + "-556x370.jpg"
         // some may not have images... take care of that
 
         boxes[i].children[0].style.maxHeight = "100%";
         boxes[i].children[0].style.maxWidth = "100%";
         boxes[i].children[0].style.objectFit = "cover";
 
-        boxes[i].children[1].textContent = recipes[i][1]
+        boxes[i].children[1].children[0].textContent = recipes[i][1]
         //console.log(i)
 
         boxes[i].addEventListener("click", function() {
@@ -74,7 +74,7 @@ function showRecipes(recipes, pageNumber, pagesNeeded) {
 
 
 function infoPage(recipeInfo) {
-    window.location = "infoPage.html" + "?id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2];
+    window.location = "infoPage.html" + "?id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",https://spoonacular.com/recipeImages/" + recipeInfo[0] + "-556x370.jpg"
 }
 
 

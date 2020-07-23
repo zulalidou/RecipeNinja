@@ -8,12 +8,29 @@
 
     <body>
         <header>
-            <nav class="myNavBar">
+            <nav class="topNavBar">
+                    <div class="logo">
+                        <a href="#">foodconnoisseur.com</a>
+                    </div>
+
+                    <div class="searchContainer">
+                        <form action="searchResults.html" method="GET">
+                            <input type="text" placeholder="What would you like to cook?" name="searchBar" autocomplete=off required>
+                        </form>
+                    </div>
+
+                    <div class="extra">
+                        <a href="#">About Us</a>
+                    </div>
+            </nav>
+
+            <nav class="bottomNavBar">
                 <ul>
-                    <li><a href="#">cooking101.com</a></li>
-                    <li><input type="text" placeholder="What would you like to cook?"></li> <!-- "Find recipes" -->
-                    <li><a href="#">Recipes</a></li>
-                    <li><a href="#">Videos</a></li>
+                    <li><a href="#">Main Course</a></li>
+                    <li><a href="#">Side Dish</a></li>
+                    <li><a href="#">Meal Types ^</a></li>
+                    <li><a href="#">Desert</a></li>
+                    <li><a href="#">Beverages</a></li>
                 </ul>
             </nav>
         </header>
@@ -25,27 +42,31 @@
         -->
 
         <div class = "mainContent">
-            <div id="mainRecipe" style="cursor:pointer"></div>
+            <div id="foodImgContainer" style="cursor:pointer">
+                <img id="foodImg">
+            </div>
 
+            <!--
             <div class = recipeInfo>
                 <section id="ingredientsSection">
-                    <!--<img src="images/one.png"></img>-->
                     <h2>Ingredients</h2>
-                    <!--<h3>Here's a list of all the ingredients you'll need in order to cook this food:</h3>-->
                 </section>
 
                 <section id="instructionsSection">
                     <h2>Instructions</h2>
-                    <!--<h3>Here's are the instructions on how to cook this food:</h3>-->
                 </section>
             </div>
+            -->
         </div>
 
+
+        <!--
         <footer>
             <p id="myFooter">
                 &copy; cooking101 Inc.
             </p>
         </footer>
+        -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="infoPage.js"></script>

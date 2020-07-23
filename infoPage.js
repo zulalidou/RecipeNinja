@@ -1,10 +1,14 @@
 function displayFood(imgURL) {
-    //console.log(imgURL);
-    const recipeBlock = document.getElementById("mainRecipe");
-    recipeBlock.style.backgroundImage = "url(" + imgURL + ")";
-    recipeBlock.style.maxHeight = "100%";
-    recipeBlock.style.maxWidth = "100%";
-    recipeBlock.style.objectFit = "cover";
+    console.log(imgURL);
+    const recipeImg = document.getElementById("foodImg");
+    recipeImg.src = imgURL
+
+
+    /*
+    recipeImg.style.maxHeight = "100%";
+    recipeImg.style.maxWidth = "100%";
+    recipeImg.style.objectFit = "cover";
+    */
 }
 
 
@@ -29,13 +33,13 @@ function displayInstructions(recipeID) {
     const url = "https://api.spoonacular.com/recipes/" + recipeID + "/analyzedInstructions?apiKey=c27618bedd4b4071b925b766be18e0a4";
 
     $.getJSON(url, function(data) {
-        console.log(data);
+        //console.log(data);
 
         for (let i = 0; i < data[0].steps.length; i++) {
             const instructionBlock = document.createElement('div'); // creates a paragraph
             instructionBlock.style.backgroundColor = "blue";
 
-            console.log(instructionBlock);
+            //console.log(instructionBlock);
 
             const img = document.createElement('img'); // creates an image
             img.src = steps[i];
@@ -71,9 +75,9 @@ $(function() {
     for (let i = 0; i < videoInfo.length; i++)
         videoInfo[i] = videoInfo[i].substring(videoInfo[i].indexOf("=") + 1);
 
-    //console.log(videoInfo);
+    console.log(videoInfo);
 
     displayFood(videoInfo[2]);
-    displayIngredients(videoInfo[0]);
-    displayInstructions(videoInfo[0]);
+    //displayIngredients(videoInfo[0]);
+    //displayInstructions(videoInfo[0]);
 });

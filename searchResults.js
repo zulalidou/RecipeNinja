@@ -12,7 +12,7 @@ function getRecipes(foodSearched) {
         for (let i = 0; i < totalResults; i++) {
             // i can probably drop image now (the 3rd entry in the array below) since i don't use it anywhere in this program for the time being
             // I'm making an arr
-            const recipeInfo = [data.results[i].id, [data.results[i].title]]//, data.results[i].image]
+            const recipeInfo = [data.results[i].id, [data.results[i].title], "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"]
             pageRecipes.push(recipeInfo)
 
             if ((i+1) % 12 == 0) {
@@ -64,14 +64,14 @@ function showRecipes(recipes, pagesNeeded, pageNumber) {
         //children[1] = p (the title of food shown)
 
         // I'm retrieving the recipes' images this way because the image url provided for the recipes using the search query isn't useful in getting the images
-        boxes[i].children[0].style.backgroundImage = "url(https://spoonacular.com/recipeImages/" + recipes[pageNumber][i][0] + "-556x370.jpg)"
+        boxes[i].children[0].children[0].src = recipes[pageNumber][i][2]
         // some may not have images... take care of that
 
         boxes[i].children[0].style.maxHeight = "100%";
         boxes[i].children[0].style.maxWidth = "100%";
         boxes[i].children[0].style.objectFit = "cover";
 
-        boxes[i].children[1].textContent = recipes[pageNumber][i][1]
+        boxes[i].children[1].children[0].textContent = recipes[pageNumber][i][1]
 
         boxes[i].addEventListener("click", function() {
             infoPage(recipes[pageNumber][i]);

@@ -1,47 +1,142 @@
 /* Resets ALL padding and margin elements to 0 */
-/*
+
 * {
     margin: 0;
     padding: 0;
 }
-*/
+
 
 header {
     background-color: black;
 }
 
 
-.myNavBar {
+/*
+.topNavBar {
     display: flex;
 }
 
-
-.myNavBar ul li {
+.topNavBar ul li {
     list-style: none;
     display: inline-block;
-    /*padding: 10px 10px;*/
+    //padding: 10px 10px;
     font-size: 20px;
     font-family: sans-serif;
-    background-color: coral;
 }
 
-.myNavBar ul li a {
+
+.topNavBar ul li a {
     text-decoration: none;
     color: white;
 }
+*/
 
+.topNavBar {
+    display: flex;
+}
+
+/*
+.topNavBar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: burlywood;
+}
+
+
+.topNavBar li {
+    display: inline-block;
+}
+
+.topNavBar a {
+    text-decoration: none;
+}
+*/
+
+.logo {
+    flex: 1;
+    background-color: black;
+    padding: 0px 5px;
+}
+
+.logo a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+}
 
 
 .searchContainer {
+    flex: 3;
+    background-color: black;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    background-image: url("images/search.png");
+    background-repeat: no-repeat;
+    background-position: 5px;
+    font-size: 20px;
+}
+
+.extra {
+    flex: 1;
+    text-align: center;
+    background-color: black;
+    padding: 0px 5px;
+}
+
+.extra a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+
+
+
+.bottomNavBar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: firebrick;
+}
+
+.bottomNavBar li {
     display: inline-block;
-    background-color: blue;
 }
 
-.uno {
-    background-color: green;
+.bottomNavBar a {
+    text-decoration: none;
+    color: white;
+    margin: 15px;
+    display: block;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.bottomNavBar li:hover {
+    background-color: coral;
+    cursor: pointer;
 }
 
 
+
+#randomRecipesTag {
+    text-align: center;
+    margin-bottom: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    background: tan;
+}
 
 
 
@@ -62,43 +157,55 @@ header {
 }
 
 .gridBox {
-    background-color: yellow;
     margin-top: 25px;
     margin-bottom: 25px;
-    overflow: auto;
+    background-color: black;
+    /*overflow: auto; maybe add this to ".foodName" */
 }
 
+.foodImgContainer {
+    height: 225px;
+    width: 300px;
+    background-color: yellow;
+}
 
-.imgDiv {
+.foodImg {
     /*content:url("images/img1.jpg");*/
+    /*
     width: 300px;
     height: 250px;
+    */
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
 
+.foodNameContainer {
+    height: 75px;
+    width: 300px;
     background-color: red;
+    vertical-align: middle;
 }
 
-p {
-    margin: 0;
+.foodName {
+    width: 100%;
+    height: 100%;
+
     text-align: center;
+    font-family: sans-serif;
     background-color: coral;
-}
-
-#poo {
-    background-color: yellow;
 }
 
 
 #myFooter {
     text-align: center;
     color: white;
+    font-size: 20px;
+    font-family: sans-serif;
     background-color: black;
+    margin: 0px;
 }
-
-
-#y {
-    background-color: saddlebrown;
-}
-
 
 ul li {
     list-style: none;

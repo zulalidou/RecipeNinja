@@ -1,20 +1,132 @@
+/* Resets ALL padding and margin elements to 0 */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
 header {
     background-color: black;
 }
 
 
-.myNavBar ul li {
+/*
+.topNavBar {
+    display: flex;
+}
+
+.topNavBar ul li {
     list-style: none;
     display: inline-block;
-    padding: 10px 10px;
+    //padding: 10px 10px;
     font-size: 20px;
     font-family: sans-serif;
 }
 
-.myNavBar ul li a {
+
+.topNavBar ul li a {
     text-decoration: none;
     color: white;
 }
+*/
+
+.topNavBar {
+    display: flex;
+}
+
+/*
+.topNavBar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: burlywood;
+}
+
+
+.topNavBar li {
+    display: inline-block;
+}
+
+.topNavBar a {
+    text-decoration: none;
+}
+*/
+
+.logo {
+    flex: 1;
+    background-color: black;
+    padding: 0px 5px;
+}
+
+.logo a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+
+.searchContainer {
+    flex: 3;
+    background-color: black;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    background-image: url("images/search.png");
+    background-repeat: no-repeat;
+    background-position: 5px;
+    font-size: 20px;
+}
+
+.extra {
+    flex: 1;
+    text-align: center;
+    background-color: black;
+    padding: 0px 5px;
+}
+
+.extra a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: sans-serif;
+}
+
+
+.bottomNavBar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: firebrick;
+}
+
+.bottomNavBar li {
+    display: inline-block;
+}
+
+.bottomNavBar a {
+    text-decoration: none;
+    color: white;
+    margin: 15px;
+    display: block;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.bottomNavBar li:hover {
+    background-color: coral;
+    cursor: pointer;
+}
+
+
 
 
 .mainContent {
@@ -24,8 +136,8 @@ header {
     overflow: auto;
 }
 
+/*
 #mainRecipe {
-    /*border: 1px solid rgba(0, 0, 0, 0.8);*/
     background-color: coral;
     background-repeat: no-repeat;
     width: 700px;
@@ -33,9 +145,26 @@ header {
     margin: auto;
     background-color: black;
 }
+*/
+
+#foodImgContainer {
+    height: 375px;
+    width: 500px;
+    background-color: yellow;
+    margin: auto;
+}
+
+#foodImg {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
 
 
 
+
+/*
 .recipeInfo {
     background-color: white;
     display: flex;
@@ -61,6 +190,7 @@ header {
     color: white;
     background-color: black;
 }
+*/
 
 
 /*
