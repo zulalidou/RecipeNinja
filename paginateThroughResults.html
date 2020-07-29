@@ -8,8 +8,9 @@
     <body>
         <header>
             <nav class="topNavBar">
-                    <div class="logo">
-                        <a href="#">foodconnoisseur.com</a>
+                <div class="topNavBar_contentContainer">
+                    <div class="imgContainer">
+                        <img id="logoImg" src="images/logo.jpg">
                     </div>
 
                     <div class="searchContainer">
@@ -18,9 +19,8 @@
                         </form>
                     </div>
 
-                    <div class="extra">
-                        <a href="#">About Us</a>
-                    </div>
+                    <a id="aboutus" href="#">About Us</a>
+                </div>
             </nav>
 
             <nav class="bottomNavBar">
@@ -33,6 +33,9 @@
                 </ul>
             </nav>
         </header>
+
+        <div style="height: 50px; background-color: purple"></div>
+        <p id="searchResultsTag">X RESULTS FOUND FOR {Y}</p>
 
         <div class="myGridContainer">
             <div class="gridBox" style="cursor:pointer">
@@ -96,31 +99,38 @@
             </div>
         </div>
 
-        <ul>
-            <li><a id="firstPagerItem"><< first</a></li>
-            <li><a id="prevPagerItem">< prev</a></li>
-            <!--<li><a id="ellipsis1" style="cursor:pointer">...</a></li>-->
-            <li><a id="1">1</a></li>
-            <li><a id="2">2</a></li>
-            <li><a id="3">3</a></li>
-            <li><a id="4">4</a></li>
-            <li><a id="5">5</a></li>
-            <li><a id="6">6</a></li>
-            <li><a id="7">7</a></li>
-            <li><a id="8">8</a></li>
-            <li><a id="9">9</a></li>
-            <!--<li><a id="ellipsis2" style="cursor:pointer">...</a></li>-->
-            <li><a id="nextPagerItem">next ></a></li>
-            <li><a id="lastPagerItem">last >></a></li>
-        </ul>
+
+        <div class="outerPaginationBlock">
+            <div id="innerPaginationBlock">
+                <!--
+                <a id="firstPagerItem">&laquo;</a>
+                <a id="prevPagerItem">&lang;</a>
+                <a id="1">1</a>
+                <a id="2">2</a>
+                <a id="3">3</a>
+                <a id="4">4</a>
+                <a id="5">5</a>
+                <a id="6">6</a>
+                <a id="7">7</a>
+                <a id="8">8</a>
+                <a id="9">9</a>
+                <a id="nextPagerItem">&rang;</a>
+                <a id="lastPagerItem">&raquo;</a>
+                -->
+            </div>
+        </div>
+
+        <div style="height: 50px; background-color: white; clear: both;"></div>
+
 
         <footer>
             <p id="myFooter">
-                &copy; cooking101 Inc.
+                &copy; foodconnoisseur Inc.
             </p>
         </footer>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src='C:\Users\Zul-Kifl Alidou\node_modules\he\he.js'></script> <!-- he = (h)tml (e)ntities. Used in the pagination section for the prev & next pager items-->
         <script src="paginateThroughResults.js"></script>
     </body>
 </html>

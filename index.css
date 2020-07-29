@@ -11,96 +11,68 @@ header {
 }
 
 
-/*
-.topNavBar {
-    display: flex;
-}
-
-.topNavBar ul li {
-    list-style: none;
-    display: inline-block;
-    //padding: 10px 10px;
-    font-size: 20px;
-    font-family: sans-serif;
-}
-
-
-.topNavBar ul li a {
-    text-decoration: none;
-    color: white;
-}
-*/
 
 .topNavBar {
+    background-color: white;
+}
+
+.topNavBar_contentContainer {
+    background-color: white;
+
     display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
+    margin: auto;
 }
 
-/*
-.topNavBar ul {
-    list-style: none;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    background-color: burlywood;
+.imgContainer {
+    width: 270px;
+    height: 50px;
+    background-color: green;
+    margin-right: 10px;
 }
 
-
-.topNavBar li {
-    display: inline-block;
+#logoImg {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
 }
-
-.topNavBar a {
-    text-decoration: none;
-}
-*/
-
-.logo {
-    flex: 1;
-    background-color: black;
-    padding: 0px 5px;
-}
-
-.logo a {
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    font-size: 30px;
-    font-family: sans-serif;
-}
-
 
 .searchContainer {
-    flex: 3;
-    background-color: black;
+    width: 50%;
+    background-color: yellow;
 }
 
 input[type=text] {
-    width: 100%;
-    padding: 10px 30px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* TRULY understand what this does */
+    padding: 12px 30px;
     background-image: url("images/search.png");
     background-repeat: no-repeat;
     background-position: 5px;
     font-size: 20px;
+    width: 100%;
 }
 
-.extra {
-    flex: 1;
+#aboutus {
+    background-color: white;
     text-align: center;
-    background-color: black;
-    padding: 0px 5px;
-}
-
-.extra a {
-    text-align: center;
-    text-decoration: none;
-    color: white;
     font-size: 30px;
-    font-family: sans-serif;
+    padding: 10px;
+    color: black;
+}
+
+a {
+    text-decoration: none;
 }
 
 
 
+.bottomNavBar {
+    background-color: yellow;
+}
 
 .bottomNavBar ul {
     list-style: none;
@@ -116,7 +88,7 @@ input[type=text] {
 
 .bottomNavBar a {
     text-decoration: none;
-    color: white;
+    color: black;
     margin: 15px;
     display: block;
     font-size: 20px;
@@ -138,8 +110,6 @@ input[type=text] {
     background: tan;
 }
 
-
-
 .myGridContainer {
     background-color: green;
 
@@ -147,7 +117,7 @@ input[type=text] {
     flex-wrap: wrap;
     justify-content: space-evenly;
 
-    width: 80%;
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
     margin: auto;
 
     /*
@@ -161,6 +131,10 @@ input[type=text] {
     margin-bottom: 25px;
     background-color: black;
     /*overflow: auto; maybe add this to ".foodName" */
+}
+
+.gridBox:hover {
+    box-shadow: 5px 10px 10px;
 }
 
 .foodImgContainer {
@@ -185,17 +159,19 @@ input[type=text] {
     height: 75px;
     width: 300px;
     background-color: red;
-    vertical-align: middle;
 }
 
 .foodName {
-    width: 100%;
+    max-width: 100%;
     height: 100%;
-
+    font-size: 18px;
+    font-family: verdana;
+    background-color: white;
     text-align: center;
-    font-family: sans-serif;
-    background-color: coral;
+
+    padding: 5px 10px 0px 10px;
 }
+
 
 
 #myFooter {
@@ -204,51 +180,5 @@ input[type=text] {
     font-size: 20px;
     font-family: sans-serif;
     background-color: black;
-    margin: 0px;
+    padding: 10px;
 }
-
-
-/*
-.a {
-    background-color: green;
-    width: 300px;
-    position: relative;
-    padding: 0px;
-    margin: 0px;
-}
-
-.b {
-    background-color: coral;
-    width: 300px;
-    position: relative;
-    padding: 0px;
-    margin: 0px;
-}
-
-.topDiv {
-    background-color: yellow;
-    width: 300px;
-    height: 300px;
-}
-
-#foodImg {
-    min-width: 100%;
-    max-width: 100%;
-    min-height: 100%;
-    max-height: 100%;
-}
-
-.bottomDiv {
-    background-color: red;
-    width: 300px;
-    height: 25px;
-
-    position: absolute;
-    top: 300px;
-    left: 20px;
-}
-
-#foodName {
-    text-align: center;
-}
-*/

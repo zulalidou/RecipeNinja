@@ -41,18 +41,112 @@ function getRecipes(foodSearched) {
 
 
 function setupPageTabs(recipes, pagesNeeded, foodSearched) {
+    /*
     document.getElementById("firstPagerItem").style.visibility = "hidden"
     document.getElementById("prevPagerItem").style.visibility = "hidden"
-    document.getElementById("1").disabled = true // leave or remove?
-    document.getElementById("1").style.color = "yellow"
+    document.getElementById("1").style.color = "white"
+    document.getElementById("1").style.backgroundColor = "dodgerblue"
+    */
 
-    for (let pageNumber = pagesNeeded + 1; pageNumber <= 9; pageNumber++)
-        document.getElementById(pageNumber.toString()).style.visibility = "hidden"
+    for (let i = 1; i <= pagesNeeded; i++) {
+        const pagerItem = document.createElement('a')
+        pagerItem.setAttribute("id", i.toString())
+        pagerItem.style.padding = "10px 16px"
+        pagerItem.style.cursor = "pointer"
+
+        const text = document.createTextNode(i.toString())
+        pagerItem.append(text)
+        document.getElementById("innerPaginationBlock").appendChild(pagerItem)
+
+        if (i === 1) {
+            document.getElementById("1").disabled = true // leave or remove?
+            pagerItem.style.color = "white";
+            pagerItem.style.backgroundColor = "dodgerblue";
+        }
+        else {
+            pagerItem.style.color = "black";
+            pagerItem.style.backgroundColor = "white";
+
+            $(document.getElementById(i.toString())).hover(function(){
+                // when you're hovering over this pager item
+                $(this).css("color", "white")
+                $(this).css("background-color", "dodgerblue")
+              }, function(){
+                  // when you're NOT hovering over this pager item
+                 $(this).css("color", "black")
+                 $(this).css("background-color", "white")
+            });
+        }
+    }
+
+    if (pagesNeeded > 1) {
+        let pagerItem = document.createElement('a')
+        pagerItem.setAttribute("id", "nextPagerItem")
+        pagerItem.style.padding = "10px 16px"
+        pagerItem.style.cursor = "pointer"
+
+        let text = document.createTextNode(he.decode("&rsaquo;")) // adds ">"
+        pagerItem.appendChild(text)
+        document.getElementById("innerPaginationBlock").appendChild(pagerItem)
+
+        $(pagerItem).hover(function(){
+            // when you're hovering over this pager item
+            $(this).css("color", "white")
+            $(this).css("background-color", "dodgerblue")
+          }, function(){
+              // when you're NOT hovering over this pager item
+             $(this).css("color", "black")
+             $(this).css("background-color", "white")
+        });
+
+        pagerItem = document.createElement('a')
+        pagerItem.setAttribute("id", "lastPagerItem")
+        pagerItem.style.padding = "10px 16px"
+        pagerItem.style.cursor = "pointer"
+
+        text = document.createTextNode(he.decode("&raquo;")) // adds ">>""
+        pagerItem.appendChild(text)
+        document.getElementById("innerPaginationBlock").appendChild(pagerItem)
+
+        $(pagerItem).hover(function(){
+            // when you're hovering over this pager item
+            $(this).css("color", "white")
+            $(this).css("background-color", "dodgerblue")
+          }, function(){
+              // when you're NOT hovering over this pager item
+             $(this).css("color", "black")
+             $(this).css("background-color", "white")
+        });
+    }
+
+
+
+
+
+    /*
+    for (let i = 2; i <= pagesNeeded; i++) {
+        $(document.getElementById(i.toString())).hover(function(){
+            // when you're hovering over this pager item
+            $(this).css("color", "white")
+            $(this).css("background-color", "dodgerblue")
+          }, function(){
+              // when you're NOT hovering over this pager item
+             $(this).css("color", "black")
+             $(this).css("background-color", "white")
+        });
+    }
+
+    for (let pageNumber = pagesNeeded + 1; pageNumber <= 9; pageNumber++) {
+        $("#" + pageNumber.toString()).remove()
+    }
 
     if (pagesNeeded == 1) {
-        document.getElementById("nextPagerItem").style.visibility = "hidden"
-        document.getElementById("lastPagerItem").style.visibility = "hidden"
+        $("#firstPagerItem").remove()
+        $("#prevPagerItem").remove()
+        $("#nextPagerItem").remove()
+        $("#lastPagerItem").remove()
     }
+    */
 }
 
 

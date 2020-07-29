@@ -55,7 +55,8 @@ function infoPage(recipeInfo) {
 
 
 getRandomFoods();
-
+console.log(document.getElementById("logoImg").clientWidth)
+console.log(document.getElementById("aboutus").clientWidth)
 
 
 
