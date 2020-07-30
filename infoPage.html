@@ -9,8 +9,9 @@
     <body>
         <header>
             <nav class="topNavBar">
-                    <div class="logo">
-                        <a href="#">foodconnoisseur.com</a>
+                <div class="topNavBar_contentContainer">
+                    <div class="imgContainer">
+                        <img id="logoImg" src="images/logo.jpg">
                     </div>
 
                     <div class="searchContainer">
@@ -19,9 +20,8 @@
                         </form>
                     </div>
 
-                    <div class="extra">
-                        <a href="#">About Us</a>
-                    </div>
+                    <a id="aboutus" href="#">About Us</a>
+                </div>
             </nav>
 
             <nav class="bottomNavBar">
@@ -40,33 +40,34 @@
         <p>Insert the title here (8 mins, 13 secs)</p>
         <h1>Recommended Videos</h1>
         -->
+        <div style="height: 50px; background-color: white"></div>
 
-        <div class = "mainContent">
-            <div id="foodImgContainer" style="cursor:pointer">
-                <img id="foodImg">
-            </div>
-
-            <!--
-            <div class = recipeInfo>
-                <section id="ingredientsSection">
-                    <h2>Ingredients</h2>
-                </section>
-
-                <section id="instructionsSection">
-                    <h2>Instructions</h2>
-                </section>
-            </div>
-            -->
+        <h1 id="recipeTitle"></h1>
+        <div id="foodImgContainer">
+            <img id="foodImg">
         </div>
 
+        <div style="height: 50px; background-color: white"></div>
 
-        <!--
+        <div id="ingredientsSection">
+            <h2 id="ingredientsHeader">Ingredients</h2>
+            <div style="height: 20px; background-color: white"></div>
+        </div>
+
+        <div style="height: 50px; background-color: white"></div>
+
+        <div id="instructionsSection">
+            <h2 id="instructionsHeader">Instructions</h2>
+        </div>
+
+        <div style="height: 50px; background-color: white"></div>
+
         <footer>
             <p id="myFooter">
-                &copy; cooking101 Inc.
+                &copy; foodconnoisseur Inc.
             </p>
         </footer>
-        -->
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="infoPage.js"></script>
