@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Search Results Not Found</title>
+        <link rel="stylesheet" href="searchResults.css"></link>
+    </head>
+
+    <body>
+        <header>
+            <nav class="topNavBar">
+                <div class="topNavBar_contentContainer">
+                    <div class="imgContainer">
+                        <img id="logoImg" src="images/logo.jpg">
+                    </div>
+
+                    <div class="searchContainer">
+                        <form action="searchResults.html" method="GET">
+                            <input type="text" placeholder="What would you like to cook?" name="searchBar" autocomplete=off required>
+                        </form>
+                    </div>
+
+                    <a id="aboutus" href="#">About Us</a>
+                </div>
+            </nav>
+
+            <nav class="bottomNavBar">
+                <ul>
+                    <li><a href="#">Main Course</a></li>
+                    <li><a href="#">Side Dish</a></li>
+                    <li><a href="#">Meal Types ^</a></li>
+                    <li><a href="#">Desert</a></li>
+                    <li><a href="#">Beverages</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div style="height: 50px; background-color: white"></div>
+        <p id="searchResultsTag">X RESULTS FOUND FOR {Y}</p>
+
+        <div class="myGridContainer">
+        </div>
+
+        <div style="height: 50px; background-color: white; clear: both;"></div>
+
+        <footer>
+            <p id="myFooter">
+                &copy; foodconnoisseur Inc.
+            </p>
+        </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src='C:\Users\Zul-Kifl Alidou\node_modules\he\he.js'></script> <!-- he = (h)tml (e)ntities. Used in the pagination section for the prev & next pager items-->
+        <script src="searchResults_notFound.js"></script>
+    </body>
+</html>

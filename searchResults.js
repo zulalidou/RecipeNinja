@@ -2,40 +2,51 @@ function getRecipes(foodSearched) {
     const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
 
     $.getJSON(url, function(data) {
-        const totalResults = (data.number <= data.totalResults) ? data.number : data.totalResults
+        console.log(data)
+        const totalResults = (data.number <= data.results.length) ? data.number : data.results.length
         const pagesNeeded = Math.ceil(totalResults / 12)
         let recipes = Object()
 
         let pageNumber = 1
         let pageRecipes = []
 
-        for (let i = 0; i < totalResults; i++) {
-            // i can probably drop image now (the 3rd entry in the array below) since i don't use it anywhere in this program for the time being
-            // I'm making an arr
-            const recipeInfo = [data.results[i].id, [data.results[i].title], "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"]
-            pageRecipes.push(recipeInfo)
+        if (totalResults == 0) {
+            console.log("No search results found")
+            noResultsFoundPage(foodSearched)
+        }
+        else {
+            console.log("totalResults = " + totalResults)
+            console.log("pagesNeeded = " + pagesNeeded)
 
-            if ((i+1) % 12 == 0) {
-                recipes[pageNumber] = pageRecipes
-                pageNumber++
-                pageRecipes = []
+            for (let i = 0; i < data.results.length; i++) {
+                // i can probably drop image now (the 3rd entry in the array below) since i don't use it anywhere in this program for the time being
+                // I'm making an arr
+
+                const recipeInfo = [data.results[i].id, [data.results[i].title], "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"]
+                pageRecipes.push(recipeInfo)
+
+                if ((i+1) % 12 == 0) {
+                    recipes[pageNumber] = pageRecipes
+                    pageNumber++
+                    pageRecipes = []
+                }
             }
+
+            if (pageRecipes.length > 0)
+                recipes[pageNumber] = pageRecipes
+
+            console.log(recipes)
+            console.log("pagesNeeded = " + pagesNeeded)
+
+            if (sessionStorage.getItem(foodSearched) === null) {
+                sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
+                console.log(sessionStorage.getItem(foodSearched))
+            }
+
+            setupPageTabs(recipes, pagesNeeded, foodSearched)
+            showRecipes(recipes, totalResults, foodSearched, pagesNeeded, 1)
+            linkPagerItems(recipes, pagesNeeded, foodSearched)
         }
-
-        if (pageRecipes.length > 0)
-            recipes[pageNumber] = pageRecipes
-
-        console.log(recipes)
-        console.log("pagesNeeded = " + pagesNeeded)
-
-        if (sessionStorage.getItem(foodSearched) === null) {
-            sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
-            console.log(sessionStorage.getItem(foodSearched))
-        }
-
-        setupPageTabs(recipes, pagesNeeded, foodSearched)
-        showRecipes(recipes, pagesNeeded, 1)
-        linkPagerItems(recipes, pagesNeeded, foodSearched)
     })
 }
 
@@ -150,7 +161,10 @@ function setupPageTabs(recipes, pagesNeeded, foodSearched) {
 }
 
 
-function showRecipes(recipes, pagesNeeded, pageNumber) {
+function showRecipes(recipes, totalResults, foodSearched, pagesNeeded, pageNumber) {
+    const limit = (totalResults <= 12) ? totalResults : 12
+
+    document.getElementById("searchResultsTag").innerHTML = "Showing 1 - " + limit + " of " + totalResults.toString().bold() + " results for " + foodSearched.bold()
     var boxes = document.getElementsByClassName("myGridContainer")[0].children
 
     for (let i = 0; i < recipes[pageNumber].length; i++) {
@@ -182,6 +196,11 @@ function showRecipes(recipes, pagesNeeded, pageNumber) {
 function infoPage(recipeInfo) {
     window.location = "infoPage.html" + "?id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2];
 }
+
+function noResultsFoundPage(foodSearched) {
+    window.location = "searchResults_notFound.html" + "?foodSearched=" + foodSearched
+}
+
 
 
 function linkPagerItems(recipes, pagesNeeded, foodSearched) {
