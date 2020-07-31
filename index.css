@@ -108,11 +108,11 @@ a {
     margin-bottom: auto;
     font-size: 30px;
     font-family: sans-serif;
-    background: tan;
+    background: white;/*tan;*/
 }
 
 .myGridContainer {
-    background-color: green;
+    background-color: white;
 
     display: flex;
     flex-wrap: wrap;
@@ -141,7 +141,7 @@ a {
 .foodImgContainer {
     height: 225px;
     width: 300px;
-    background-color: yellow;
+    background-color: white;
 }
 
 .foodImg {

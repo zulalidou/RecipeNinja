@@ -1,8 +1,15 @@
-function getRecipes(foodSearched) {
+function getRecipes(foodSearched, firstSearch) {
+    if (sessionStorage.getItem(foodSearched) !== null)
+        return
+
+    $.ajaxSetup({
+    async: false
+    });
+
     const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
 
     $.getJSON(url, function(data) {
-        console.log(data)
+        //console.log(data)
         const totalResults = (data.number <= data.results.length) ? data.number : data.results.length
         const pagesNeeded = Math.ceil(totalResults / 12)
         let recipes = Object()
@@ -35,29 +42,67 @@ function getRecipes(foodSearched) {
             if (pageRecipes.length > 0)
                 recipes[pageNumber] = pageRecipes
 
-            console.log(recipes)
-            console.log("pagesNeeded = " + pagesNeeded)
+            //console.log(recipes)
+            //console.log("pagesNeeded = " + pagesNeeded)
 
-            if (sessionStorage.getItem(foodSearched) === null) {
-                sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
-                console.log(sessionStorage.getItem(foodSearched))
-            }
+            recipes["totalResults"] = totalResults
+            recipes["pagesNeeded"] = pagesNeeded
 
-            setupPageTabs(recipes, pagesNeeded, foodSearched)
-            showRecipes(recipes, totalResults, foodSearched, pagesNeeded, 1)
-            linkPagerItems(recipes, pagesNeeded, foodSearched)
+            //if (sessionStorage.getItem(foodSearched) === null) {
+            sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
+            //console.log(sessionStorage.getItem(foodSearched))
+            //}
         }
     })
+
+    $.ajaxSetup({
+    async: true
+    });
 }
 
 
-function setupPageTabs(recipes, pagesNeeded, foodSearched) {
-    /*
-    document.getElementById("firstPagerItem").style.visibility = "hidden"
-    document.getElementById("prevPagerItem").style.visibility = "hidden"
-    document.getElementById("1").style.color = "white"
-    document.getElementById("1").style.backgroundColor = "dodgerblue"
-    */
+function setupPageTabs(pageNumber, pagesNeeded) {
+    if (pageNumber > 1) {
+        let pagerItem = document.createElement('a')
+        pagerItem.setAttribute("id", "firstPagerItem")
+        pagerItem.style.padding = "10px 16px"
+        pagerItem.style.cursor = "pointer"
+
+        let text = document.createTextNode(he.decode("&laquo;")) // adds "<<""
+        pagerItem.appendChild(text)
+        document.getElementById("innerPaginationBlock").appendChild(pagerItem)
+
+        $(pagerItem).hover(function(){
+            // when you're hovering over this pager item
+            $(this).css("color", "white")
+            $(this).css("background-color", "dodgerblue")
+          }, function(){
+              // when you're NOT hovering over this pager item
+             $(this).css("color", "black")
+             $(this).css("background-color", "white")
+        });
+
+
+        pagerItem = document.createElement('a')
+        pagerItem.setAttribute("id", "prevPagerItem")
+        pagerItem.style.padding = "10px 16px"
+        pagerItem.style.cursor = "pointer"
+
+        text = document.createTextNode(he.decode("&lsaquo;")) // adds "<"
+        pagerItem.appendChild(text)
+        document.getElementById("innerPaginationBlock").appendChild(pagerItem)
+
+        $(pagerItem).hover(function(){
+            // when you're hovering over this pager item
+            $(this).css("color", "white")
+            $(this).css("background-color", "dodgerblue")
+          }, function(){
+              // when you're NOT hovering over this pager item
+             $(this).css("color", "black")
+             $(this).css("background-color", "white")
+        });
+    }
+
 
     for (let i = 1; i <= pagesNeeded; i++) {
         const pagerItem = document.createElement('a')
@@ -66,11 +111,10 @@ function setupPageTabs(recipes, pagesNeeded, foodSearched) {
         pagerItem.style.cursor = "pointer"
 
         const text = document.createTextNode(i.toString())
-        pagerItem.append(text)
+        pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
 
-        if (i === 1) {
-            document.getElementById("1").disabled = true // leave or remove?
+        if (i == pageNumber) {
             pagerItem.style.color = "white";
             pagerItem.style.backgroundColor = "dodgerblue";
         }
@@ -90,7 +134,7 @@ function setupPageTabs(recipes, pagesNeeded, foodSearched) {
         }
     }
 
-    if (pagesNeeded > 1) {
+    if (pageNumber < pagesNeeded) {
         let pagerItem = document.createElement('a')
         pagerItem.setAttribute("id", "nextPagerItem")
         pagerItem.style.padding = "10px 16px"
@@ -129,39 +173,10 @@ function setupPageTabs(recipes, pagesNeeded, foodSearched) {
              $(this).css("background-color", "white")
         });
     }
-
-
-
-
-
-    /*
-    for (let i = 2; i <= pagesNeeded; i++) {
-        $(document.getElementById(i.toString())).hover(function(){
-            // when you're hovering over this pager item
-            $(this).css("color", "white")
-            $(this).css("background-color", "dodgerblue")
-          }, function(){
-              // when you're NOT hovering over this pager item
-             $(this).css("color", "black")
-             $(this).css("background-color", "white")
-        });
-    }
-
-    for (let pageNumber = pagesNeeded + 1; pageNumber <= 9; pageNumber++) {
-        $("#" + pageNumber.toString()).remove()
-    }
-
-    if (pagesNeeded == 1) {
-        $("#firstPagerItem").remove()
-        $("#prevPagerItem").remove()
-        $("#nextPagerItem").remove()
-        $("#lastPagerItem").remove()
-    }
-    */
 }
 
 
-function showRecipes(recipes, totalResults, foodSearched, pagesNeeded, pageNumber) {
+function showRecipes(foodSearched, recipes, totalResults, pageNumber) {
     const limit = (totalResults <= 12) ? totalResults : 12
 
     document.getElementById("searchResultsTag").innerHTML = "Showing 1 - " + limit + " of " + totalResults.toString().bold() + " results for " + foodSearched.bold()
@@ -202,31 +217,77 @@ function noResultsFoundPage(foodSearched) {
 }
 
 
-
-function linkPagerItems(recipes, pagesNeeded, foodSearched) {
-    for (let i = 2; i <= pagesNeeded; i++) {
-        document.getElementById(i.toString()).addEventListener("click", function() {
-            window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + i
+function linkPagerItems(foodSearched, recipes, pageNumber, pagesNeeded) {
+    if (document.getElementById("firstPagerItem") !== null) {
+        document.getElementById("firstPagerItem").addEventListener("click", function() {
+            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + 1
         })
     }
 
-    document.getElementById("nextPagerItem").addEventListener("click", function() {
-        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + 2
-    })
+    if (document.getElementById("prevPagerItem") !== null) {
+        if (pageNumber - 1 >= 1) {
+            document.getElementById("prevPagerItem").addEventListener("click", function() {
+                window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + (pageNumber - 1)
+            })
+        }
+    }
 
-    document.getElementById("lastPagerItem").addEventListener("click", function() {
-        window.location = "paginateThroughResults.html" + "?foodSearched=" + foodSearched + ",pagesNeeded=" + pagesNeeded + ",pageNumber=" + pagesNeeded
-    })
+
+    for (let i = 1; i <= pagesNeeded; i++) {
+        if (i == pageNumber)
+            continue
+
+        document.getElementById(i.toString()).addEventListener("click", function() {
+            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + i
+        })
+    }
+
+
+    if (document.getElementById("nextPagerItem") !== null) {
+        if (pageNumber + 1 <= pagesNeeded) {
+            document.getElementById("nextPagerItem").addEventListener("click", function() {
+                window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + (pageNumber + 1)
+            })
+        }
+    }
+
+    if (document.getElementById("lastPagerItem") !== null) {
+        document.getElementById("lastPagerItem").addEventListener("click", function() {
+            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + pagesNeeded
+        })
+    }
 }
 
 
 
+
+/*
 const searchParams = []
 
 new URLSearchParams(window.location.search).forEach((value, name) => {
     searchParams.push(`${value}`)
     searchParams.push(`${name}`)
 })
+*/
+
+let parameters = window.location.search.replace(/\%20/g, ""); //It takes everything in the query string up to the 1st '=', and replaces them with ''
+parameters = parameters.split(",")
+
+const firstSearch = (parameters.length == 1) ? true : false
+const foodSearched = parameters[0].substring(parameters[0].indexOf("=") + 1)
+//const pagesNeeded = (parameters.length > 1) ? parameters[1].substring(parameters[1].indexOf("=") + 1) : -1
+const pageNumber = (parameters.length > 1) ? parseInt(parameters[1].substring(parameters[1].indexOf("=") + 1)) : 1
 
 
-getRecipes(searchParams[0])
+getRecipes(foodSearched, firstSearch)
+const allRecipesFound = JSON.parse(sessionStorage.getItem(foodSearched))
+console.log(allRecipesFound)
+console.log(allRecipesFound["pagesNeeded"])
+
+setupPageTabs(pageNumber, allRecipesFound["pagesNeeded"])
+showRecipes(foodSearched, allRecipesFound, allRecipesFound["totalResults"], pageNumber)
+linkPagerItems(foodSearched, allRecipesFound, pageNumber, allRecipesFound["pagesNeeded"])
+
+//console.log(searchParams)
+console.log(pageNumber)
+console.log(typeof pageNumber)
