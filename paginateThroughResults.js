@@ -239,7 +239,6 @@ function linkPagerItems(foodSearched, currentPage, pagesNeeded) {
 
 
 
-
 let parameters = window.location.search.replace(/\%20/g, " "); //It takes everything in the query string up to the 1st '=', and replaces them with ''
 
 parameters = parameters.split(",");
@@ -250,11 +249,13 @@ const pageNumber = parameters[2].substring(parameters[2].indexOf("=") + 1)
 const recipes = JSON.parse(sessionStorage.getItem(foodSearched))[pageNumber]
 
 
+
 console.log("food = " + foodSearched)
 console.log("pagesNeeded = " + pagesNeeded)
 console.log("pageNumber = " + pageNumber)
 
 
+//setupNavClickEvents()
 setupPageTabs(recipes, parseInt(pageNumber), parseInt(pagesNeeded))
 showRecipes(recipes, parseInt(pageNumber), parseInt(pagesNeeded))
 linkPagerItems(foodSearched, parseInt(pageNumber), parseInt(pagesNeeded))

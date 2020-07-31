@@ -26,11 +26,12 @@ header {
     margin: auto;
 }
 
-.imgContainer {
+#imgContainer {
     width: 270px;
     height: 50px;
     background-color: green;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 #logoImg {

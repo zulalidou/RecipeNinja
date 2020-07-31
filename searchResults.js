@@ -221,13 +221,12 @@ function linkPagerItems(recipes, pagesNeeded, foodSearched) {
 
 
 
-
-
 const searchParams = []
 
 new URLSearchParams(window.location.search).forEach((value, name) => {
     searchParams.push(`${value}`)
     searchParams.push(`${name}`)
 })
+
 
 getRecipes(searchParams[0])
