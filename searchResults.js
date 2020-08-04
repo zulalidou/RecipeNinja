@@ -1,9 +1,9 @@
-function getRecipes(foodSearched, firstSearch) {
+function getRecipes(foodSearched) {
     if (sessionStorage.getItem(foodSearched) !== null)
         return
 
     $.ajaxSetup({
-    async: false
+        async: false
     });
 
     const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
@@ -14,7 +14,7 @@ function getRecipes(foodSearched, firstSearch) {
         const pagesNeeded = Math.ceil(totalResults / 12)
         let recipes = Object()
 
-        let pageNumber = 1
+        let currentPage = 1
         let pageRecipes = []
 
         if (totalResults == 0) {
@@ -33,178 +33,128 @@ function getRecipes(foodSearched, firstSearch) {
                 pageRecipes.push(recipeInfo)
 
                 if ((i+1) % 12 == 0) {
-                    recipes[pageNumber] = pageRecipes
-                    pageNumber++
+                    recipes[currentPage] = pageRecipes
+                    currentPage++
                     pageRecipes = []
                 }
             }
 
             if (pageRecipes.length > 0)
-                recipes[pageNumber] = pageRecipes
-
-            //console.log(recipes)
-            //console.log("pagesNeeded = " + pagesNeeded)
+                recipes[currentPage] = pageRecipes
 
             recipes["totalResults"] = totalResults
             recipes["pagesNeeded"] = pagesNeeded
-
-            //if (sessionStorage.getItem(foodSearched) === null) {
             sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
-            //console.log(sessionStorage.getItem(foodSearched))
-            //}
         }
     })
 
     $.ajaxSetup({
-    async: true
+        async: true
     });
 }
 
 
-function setupPageTabs(pageNumber, pagesNeeded) {
-    if (pageNumber > 1) {
-        let pagerItem = document.createElement('a')
-        pagerItem.setAttribute("id", "firstPagerItem")
-        pagerItem.style.padding = "10px 16px"
-        pagerItem.style.cursor = "pointer"
 
-        let text = document.createTextNode(he.decode("&laquo;")) // adds "<<""
+function setupPageTabs(currentPage, pagesNeeded) {
+    if (currentPage > 1) {
+        let pagerItem = createElement("a", "id", "firstPagerItem", false)
+        let text = createText("&laquo;") // "&laquo;" == "<<"
         pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
 
-        $(pagerItem).hover(function(){
-            // when you're hovering over this pager item
-            $(this).css("color", "white")
-            $(this).css("background-color", "dodgerblue")
-          }, function(){
-              // when you're NOT hovering over this pager item
-             $(this).css("color", "black")
-             $(this).css("background-color", "white")
-        });
-
-
-        pagerItem = document.createElement('a')
-        pagerItem.setAttribute("id", "prevPagerItem")
-        pagerItem.style.padding = "10px 16px"
-        pagerItem.style.cursor = "pointer"
-
-        text = document.createTextNode(he.decode("&lsaquo;")) // adds "<"
+        pagerItem = createElement("a", "id", "prevPagerItem", false)
+        text = createText("&lsaquo;") // "&lsaquo;" == "<"
         pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
-
-        $(pagerItem).hover(function(){
-            // when you're hovering over this pager item
-            $(this).css("color", "white")
-            $(this).css("background-color", "dodgerblue")
-          }, function(){
-              // when you're NOT hovering over this pager item
-             $(this).css("color", "black")
-             $(this).css("background-color", "white")
-        });
     }
-
 
     for (let i = 1; i <= pagesNeeded; i++) {
-        const pagerItem = document.createElement('a')
-        pagerItem.setAttribute("id", i.toString())
-        pagerItem.style.padding = "10px 16px"
-        pagerItem.style.cursor = "pointer"
-
-        const text = document.createTextNode(i.toString())
+        const pagerItem = createElement("a", "id", i.toString(), (i === currentPage))
+        const text = createText(i.toString())
         pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
-
-        if (i == pageNumber) {
-            pagerItem.style.color = "white";
-            pagerItem.style.backgroundColor = "dodgerblue";
-        }
-        else {
-            pagerItem.style.color = "black";
-            pagerItem.style.backgroundColor = "white";
-
-            $(document.getElementById(i.toString())).hover(function(){
-                // when you're hovering over this pager item
-                $(this).css("color", "white")
-                $(this).css("background-color", "dodgerblue")
-              }, function(){
-                  // when you're NOT hovering over this pager item
-                 $(this).css("color", "black")
-                 $(this).css("background-color", "white")
-            });
-        }
     }
 
-    if (pageNumber < pagesNeeded) {
-        let pagerItem = document.createElement('a')
-        pagerItem.setAttribute("id", "nextPagerItem")
-        pagerItem.style.padding = "10px 16px"
-        pagerItem.style.cursor = "pointer"
-
-        let text = document.createTextNode(he.decode("&rsaquo;")) // adds ">"
+    if (currentPage < pagesNeeded) {
+        let pagerItem = createElement("a", "id", "nextPagerItem", false)
+        let text = createText("&rsaquo;") // "&rsaquo;" == ">"
         pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
 
-        $(pagerItem).hover(function(){
-            // when you're hovering over this pager item
-            $(this).css("color", "white")
-            $(this).css("background-color", "dodgerblue")
-          }, function(){
-              // when you're NOT hovering over this pager item
-             $(this).css("color", "black")
-             $(this).css("background-color", "white")
-        });
-
-        pagerItem = document.createElement('a')
-        pagerItem.setAttribute("id", "lastPagerItem")
-        pagerItem.style.padding = "10px 16px"
-        pagerItem.style.cursor = "pointer"
-
-        text = document.createTextNode(he.decode("&raquo;")) // adds ">>""
+        pagerItem = createElement("a", "id", "lastPagerItem", false)
+        text = createText("&raquo;") // "&raquo;" == ">>"
         pagerItem.appendChild(text)
         document.getElementById("innerPaginationBlock").appendChild(pagerItem)
-
-        $(pagerItem).hover(function(){
-            // when you're hovering over this pager item
-            $(this).css("color", "white")
-            $(this).css("background-color", "dodgerblue")
-          }, function(){
-              // when you're NOT hovering over this pager item
-             $(this).css("color", "black")
-             $(this).css("background-color", "white")
-        });
     }
 }
 
 
-function showRecipes(foodSearched, recipes, totalResults, pageNumber) {
-    const limit = (totalResults <= 12) ? totalResults : 12
 
-    document.getElementById("searchResultsTag").innerHTML = "Showing 1 - " + limit + " of " + totalResults.toString().bold() + " results for " + foodSearched.bold()
-    var boxes = document.getElementsByClassName("myGridContainer")[0].children
+// selector == "id" or "class"
+function createElement(tagName, selector, selectorName, active) {
+    const block = document.createElement(tagName)
+    block.setAttribute(selector, selectorName)
 
-    for (let i = 0; i < recipes[pageNumber].length; i++) {
-        //children[0] = div (the image of food shown)
-        //children[1] = p (the title of food shown)
+    if (selector === "class")
+        return block
 
-        // I'm retrieving the recipes' images this way because the image url provided for the recipes using the search query isn't useful in getting the images
-        boxes[i].children[0].children[0].src = recipes[pageNumber][i][2]
-        // some may not have images... take care of that
+    block.style.padding = "10px 16px"
+    block.style.cursor = "pointer"
 
-        boxes[i].children[0].style.maxHeight = "100%";
-        boxes[i].children[0].style.maxWidth = "100%";
-        boxes[i].children[0].style.objectFit = "cover";
+    if (active) {
+        console.log("so long, farewell. auf wiedersehen, adieu!")
+        block.style.color = "white"
+        block.style.backgroundColor = "dodgerblue"
+    }
+    else {
+        $(block).hover(function() {
+            // when you're hovering over this pager item
+            block.style.color = "white"
+            block.style.backgroundColor = "dodgerblue"
+          }, function() {
+            // when you're NOT hovering over this pager item
+            block.style.color = "black"
+            block.style.backgroundColor = "white"
+        })
+    }
 
-        boxes[i].children[1].children[0].textContent = recipes[pageNumber][i][1]
+    return block
+}
 
-        boxes[i].addEventListener("click", function() {
-            infoPage(recipes[pageNumber][i]);
+function createText(htmlEntityName) {
+    const text = document.createTextNode(he.decode(htmlEntityName))
+    return text
+}
+
+
+function showRecipes(foodSearched, recipes, totalResults, currentPage) {
+    const lowerBound = (currentPage === 1) ? 1 : (12 * currentPage) - 11;
+    const upperBound = (totalResults <= 12) ? totalResults : (lowerBound + recipes[currentPage].length - 1);
+    document.getElementById("searchResultsTag").innerHTML = "Showing " + lowerBound + " - " + upperBound + " of " + totalResults.toString().bold() + " results for " + foodSearched.bold()
+
+    for (let i = 0; i < recipes[currentPage].length; i++) {
+        const foodImg = createElement("img", "class", "foodImg", false)
+        foodImg.src = recipes[currentPage][i][2]
+        const foodImgContainer = createElement("div", "class", "foodImgContainer", false)
+        foodImgContainer.appendChild(foodImg)
+
+        const foodName = createElement("p", "class", "foodName", false)
+        foodName.innerHTML = recipes[currentPage][i][1]
+        const foodNameContainer = createElement("div", "class", "foodNameContainer", false)
+        foodNameContainer.appendChild(foodName)
+
+        const gridBox = createElement("div", "class", "gridBox", false)
+        gridBox.appendChild(foodImgContainer)
+        gridBox.appendChild(foodNameContainer)
+
+        document.getElementById("myGridContainer").appendChild(gridBox)
+
+        gridBox.addEventListener("click", function() {
+            infoPage(recipes[currentPage][i]);
         });
 
         // When mouse if over block, show title
     }
-
-    for (let i = recipes[pageNumber].length; i < 12; i++)
-        boxes[i].style.visibility = "hidden"
 }
 
 
@@ -217,47 +167,26 @@ function noResultsFoundPage(foodSearched) {
 }
 
 
-function linkPagerItems(foodSearched, recipes, pageNumber, pagesNeeded) {
-    if (document.getElementById("firstPagerItem") !== null) {
-        document.getElementById("firstPagerItem").addEventListener("click", function() {
-            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + 1
-        })
-    }
-
-    if (document.getElementById("prevPagerItem") !== null) {
-        if (pageNumber - 1 >= 1) {
-            document.getElementById("prevPagerItem").addEventListener("click", function() {
-                window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + (pageNumber - 1)
-            })
-        }
-    }
-
+function linkPagerItems(foodSearched, recipes, currentPage, pagesNeeded) {
+    link("firstPagerItem", 1)
+    link("prevPagerItem", currentPage - 1)
+    link("nextPagerItem", currentPage + 1)
+    link("lastPagerItem", pagesNeeded)
 
     for (let i = 1; i <= pagesNeeded; i++) {
-        if (i == pageNumber)
-            continue
-
-        document.getElementById(i.toString()).addEventListener("click", function() {
-            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + i
-        })
-    }
-
-
-    if (document.getElementById("nextPagerItem") !== null) {
-        if (pageNumber + 1 <= pagesNeeded) {
-            document.getElementById("nextPagerItem").addEventListener("click", function() {
-                window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + (pageNumber + 1)
-            })
-        }
-    }
-
-    if (document.getElementById("lastPagerItem") !== null) {
-        document.getElementById("lastPagerItem").addEventListener("click", function() {
-            window.location = "searchResults.html?foodSearched=" + foodSearched + ",pageNumber=" + pagesNeeded
-        })
+        if (i == currentPage) continue
+        link(i.toString(), i)
     }
 }
 
+
+function link(id, pageNumber) {
+    if (document.getElementById(id) !== null) {
+        document.getElementById(id).addEventListener("click", function() {
+            window.location = "searchResults.html?foodSearched=" + foodSearched + ",currentPage=" + pageNumber
+        })
+    }
+}
 
 
 
@@ -273,21 +202,19 @@ new URLSearchParams(window.location.search).forEach((value, name) => {
 let parameters = window.location.search.replace(/\%20/g, ""); //It takes everything in the query string up to the 1st '=', and replaces them with ''
 parameters = parameters.split(",")
 
-const firstSearch = (parameters.length == 1) ? true : false
 const foodSearched = parameters[0].substring(parameters[0].indexOf("=") + 1)
-//const pagesNeeded = (parameters.length > 1) ? parameters[1].substring(parameters[1].indexOf("=") + 1) : -1
-const pageNumber = (parameters.length > 1) ? parseInt(parameters[1].substring(parameters[1].indexOf("=") + 1)) : 1
+const currentPage = (parameters.length > 1) ? parseInt(parameters[1].substring(parameters[1].indexOf("=") + 1)) : 1
 
 
-getRecipes(foodSearched, firstSearch)
+getRecipes(foodSearched)
 const allRecipesFound = JSON.parse(sessionStorage.getItem(foodSearched))
 console.log(allRecipesFound)
-console.log(allRecipesFound["pagesNeeded"])
+console.log("pagesNeeded = " + allRecipesFound["pagesNeeded"])
 
-setupPageTabs(pageNumber, allRecipesFound["pagesNeeded"])
-showRecipes(foodSearched, allRecipesFound, allRecipesFound["totalResults"], pageNumber)
-linkPagerItems(foodSearched, allRecipesFound, pageNumber, allRecipesFound["pagesNeeded"])
+setupPageTabs(currentPage, allRecipesFound["pagesNeeded"])
+showRecipes(foodSearched, allRecipesFound, allRecipesFound["totalResults"], currentPage)
+linkPagerItems(foodSearched, allRecipesFound, currentPage, allRecipesFound["pagesNeeded"])
 
 //console.log(searchParams)
-console.log(pageNumber)
-console.log(typeof pageNumber)
+console.log(currentPage)
+console.log(typeof currentPage)

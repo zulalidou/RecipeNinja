@@ -111,7 +111,7 @@ a {
     background: white;/*tan;*/
 }
 
-.myGridContainer {
+#myGridContainer {
     background-color: white;
 
     display: flex;
@@ -131,6 +131,7 @@ a {
     margin-top: 25px;
     margin-bottom: 25px;
     background-color: black;
+    cursor: pointer;
     /*overflow: auto; maybe add this to ".foodName" */
 }
 
