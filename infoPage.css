@@ -138,6 +138,22 @@ a {
 }
 
 
+#horizontalLine {
+    width: 1229px;
+    border-color: black;
+    margin: auto;
+}
+
+#creditsSection {
+    border: 1px solid black;
+    background-color: white;
+
+    padding: 10px;
+    width: 500px;
+    margin: auto;
+}
+
+
 #myFooter {
     text-align: center;
     color: white;

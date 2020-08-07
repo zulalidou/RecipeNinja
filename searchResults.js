@@ -168,19 +168,21 @@ function noResultsFoundPage(foodSearched) {
 
 
 function linkPagerItems(foodSearched, recipes, currentPage, pagesNeeded) {
-    link("firstPagerItem", 1)
-    link("prevPagerItem", currentPage - 1)
-    link("nextPagerItem", currentPage + 1)
-    link("lastPagerItem", pagesNeeded)
+    foodSearched = foodSearched.split(" ").join("+")
+
+    link(foodSearched, "firstPagerItem", 1)
+    link(foodSearched, "prevPagerItem", currentPage - 1)
+    link(foodSearched, "nextPagerItem", currentPage + 1)
+    link(foodSearched, "lastPagerItem", pagesNeeded)
 
     for (let i = 1; i <= pagesNeeded; i++) {
-        if (i == currentPage) continue
-        link(i.toString(), i)
+        if (i === currentPage) continue
+        link(foodSearched, i.toString(), i)
     }
 }
 
 
-function link(id, pageNumber) {
+function link(foodSearched, id, pageNumber) {
     if (document.getElementById(id) !== null) {
         document.getElementById(id).addEventListener("click", function() {
             window.location = "searchResults.html?foodSearched=" + foodSearched + ",currentPage=" + pageNumber
@@ -199,10 +201,11 @@ new URLSearchParams(window.location.search).forEach((value, name) => {
 })
 */
 
-let parameters = window.location.search.replace(/\%20/g, ""); //It takes everything in the query string up to the 1st '=', and replaces them with ''
+
+let parameters = window.location.search.replace(/\%20/g, "") //It takes everything in the query string up to the 1st '=', and replaces them with ''
 parameters = parameters.split(",")
 
-const foodSearched = parameters[0].substring(parameters[0].indexOf("=") + 1)
+let foodSearched = parameters[0].substring(parameters[0].indexOf("=") + 1).split("+").join(" ")
 const currentPage = (parameters.length > 1) ? parseInt(parameters[1].substring(parameters[1].indexOf("=") + 1)) : 1
 
 
