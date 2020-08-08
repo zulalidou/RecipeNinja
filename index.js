@@ -52,7 +52,7 @@ function createElement(tagName, className) {
 
 
 function infoPage(recipeInfo) {
-    window.location = "infoPage.html?id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2];
+    window.location = "infoPage.html?foodSearched=" + recipeInfo[1] + ",id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2]
 }
 
 const recipeNum = 12

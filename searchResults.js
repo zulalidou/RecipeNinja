@@ -4,7 +4,7 @@ function getRecipes(foodSearched) {
 
     $.ajaxSetup({
         async: false
-    });
+    })
 
     const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
 
@@ -50,7 +50,7 @@ function getRecipes(foodSearched) {
 
     $.ajaxSetup({
         async: true
-    });
+    })
 }
 
 
@@ -102,7 +102,7 @@ function createElement(tagName, selector, selectorName, active) {
     block.style.cursor = "pointer"
 
     if (active) {
-        console.log("so long, farewell. auf wiedersehen, adieu!")
+        //console.log("so long, farewell. auf wiedersehen, adieu!")
         block.style.color = "white"
         block.style.backgroundColor = "dodgerblue"
     }
@@ -150,20 +150,20 @@ function showRecipes(foodSearched, recipes, totalResults, currentPage) {
         document.getElementById("myGridContainer").appendChild(gridBox)
 
         gridBox.addEventListener("click", function() {
-            infoPage(recipes[currentPage][i]);
-        });
+            infoPage(foodSearched, recipes[currentPage][i])
+        })
 
         // When mouse if over block, show title
     }
 }
 
 
-function infoPage(recipeInfo) {
-    window.location = "infoPage.html" + "?id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2];
+function infoPage(foodSearched, recipeInfo) {
+    window.location = "infoPage.html?foodSearched=" + foodSearched + ",id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2];
 }
 
 function noResultsFoundPage(foodSearched) {
-    window.location = "searchResults_notFound.html" + "?foodSearched=" + foodSearched
+    window.location = "searchResults_notFound.html?foodSearched=" + foodSearched
 }
 
 
