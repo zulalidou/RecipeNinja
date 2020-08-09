@@ -7,7 +7,7 @@
 
 
 header {
-    background-color: black;
+    background-color: black; /*C8C6C5*/
 }
 
 
@@ -126,6 +126,135 @@ a {
     overflow: auto;
     */
 }
+
+
+
+
+
+#maincoursesTag {
+    text-align: center;
+    margin-bottom: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    background: white;/*tan;*/
+}
+
+#maincoursesContainer {
+    background-color: white;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+
+
+#sidedishesTag {
+    text-align: center;
+    margin-bottom: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    background: white;/*tan;*/
+}
+
+#sidedishesContainer {
+    background-color: white;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+
+
+
+#dessertsTag {
+    text-align: center;
+    margin-bottom: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    background: white;/*tan;*/
+}
+
+#dessertsContainer {
+    background-color: white;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+
+
+
+
+
+#beveragesTag {
+    text-align: center;
+    margin-bottom: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    background: white;/*tan;*/
+}
+
+#beveragesContainer {
+    background-color: white;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .gridBox {
     margin-top: 25px;

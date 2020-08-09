@@ -14,9 +14,14 @@ function getRecipeInfo(recipeID) {
     const url = "https://api.spoonacular.com/recipes/" + recipeID + "/information?includeNutrition=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
 
     $.getJSON(url, function(data) {
+        console.log(data)
         recipeInfo["nutrition"] = getNutrients(data.nutrition.nutrients)
         recipeInfo["ingredients"] = getIngredients(data.extendedIngredients)
-        recipeInfo["instructions"] = getInstructions(data.analyzedInstructions[0].steps)
+
+        let instructions = (data.analyzedInstructions.length === 0) ? [] : data.analyzedInstructions[0].steps
+        recipeInfo["instructions"] = getInstructions(instructions)
+
+
         recipeInfo["credits"] = getCredits(data)
     })
 
