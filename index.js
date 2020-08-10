@@ -1,118 +1,102 @@
-function getRandomFoods(recipeNum) {
+function getRandomFoods() {
+    if (sessionStorage.getItem("randomFoods") !== null)
+        return JSON.parse(sessionStorage.getItem("randomFoods"))
+
     $.ajaxSetup({
         async: false
-    });
+    })
 
-    const url = "https://api.spoonacular.com/recipes/random?number=" + recipeNum.toString() + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
+    const url = "https://api.spoonacular.com/recipes/random?number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
     let recipes = Object() //dictionary
 
     $.getJSON(url, function(data) {
-        console.log(data)
-        for (let i = 0; i < data.recipes.length; i++)
-            recipes[i] = [data.recipes[i].id, data.recipes[i].title, (data.recipes[i].image === undefined) ? "images/plate.png" : data.recipes[i].image]
+        const totalResults = 100
+        const pagesNeeded = 9
+        let currentPage = 1
+        let pageRecipes = []
+
+        for (let i = 0; i < 100; i++) {
+            const recipeInfo = [data.recipes[i].id, data.recipes[i].title, (data.recipes[i].image === undefined) ? "images/plate.png" : data.recipes[i].image]
+            pageRecipes.push(recipeInfo)
+
+            if ((i+1) % 12 == 0) {
+                recipes[currentPage] = pageRecipes
+                currentPage++
+                pageRecipes = []
+            }
+        }
+
+        if (pageRecipes.length > 0)
+            recipes[currentPage] = pageRecipes
+
+        recipes["totalResults"] = totalResults
+        recipes["pagesNeeded"] = pagesNeeded
+        sessionStorage.setItem("randomFoods", JSON.stringify(recipes))
     })
 
     $.ajaxSetup({
         async: true
-    });
-
-    return recipes
-}
-
-function getMainCourseMeals(recipeNum) {
-    $.ajaxSetup({
-        async: false
-    });
-
-    const url = "https://api.spoonacular.com/recipes/complexSearch?type=main course&number=" + recipeNum.toString() + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    let recipes = Object() //dictionary
-
-    $.getJSON(url, function(data) {
-        console.log(data)
-        for (let i = 0; i < data.results.length; i++)
-            recipes[i] = [data.results[i].id, data.results[i].title, (data.results[i].image === undefined) ? "images/plate.png" : data.results[i].image]
     })
-
-    $.ajaxSetup({
-        async: true
-    });
-
-    return recipes
-}
-
-function getSideDishes(recipeNum) {
-    $.ajaxSetup({
-        async: false
-    });
-
-    const url = "https://api.spoonacular.com/recipes/complexSearch?type=sidedishes&number=" + recipeNum.toString() + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    let recipes = Object() //dictionary
-
-    $.getJSON(url, function(data) {
-        console.log(data)
-        for (let i = 0; i < data.results.length; i++)
-            recipes[i] = [data.results[i].id, data.results[i].title, (data.results[i].image === undefined) ? "images/plate.png" : data.results[i].image]
-    })
-
-    $.ajaxSetup({
-        async: true
-    });
-
-    return recipes
-}
-
-function getDesserts(recipeNum) {
-    $.ajaxSetup({
-        async: false
-    });
-
-    const url = "https://api.spoonacular.com/recipes/complexSearch?type=dessert&number=" + recipeNum.toString() + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    let recipes = Object() //dictionary
-
-    $.getJSON(url, function(data) {
-        console.log(data)
-        for (let i = 0; i < data.results.length; i++)
-            recipes[i] = [data.results[i].id, data.results[i].title, (data.results[i].image === undefined) ? "images/plate.png" : data.results[i].image]
-    })
-
-    $.ajaxSetup({
-        async: true
-    });
-
-    return recipes
-}
-
-function getBeverages(recipeNum) {
-    $.ajaxSetup({
-        async: false
-    });
-
-    const url = "https://api.spoonacular.com/recipes/complexSearch?type=beverages&number=" + recipeNum.toString() + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    let recipes = Object() //dictionary
-
-    $.getJSON(url, function(data) {
-        console.log(data)
-        for (let i = 0; i < data.results.length; i++)
-            recipes[i] = [data.results[i].id, data.results[i].title, (data.results[i].image === undefined) ? "images/plate.png" : data.results[i].image]
-    })
-
-    $.ajaxSetup({
-        async: true
-    });
 
     return recipes
 }
 
 
-function displayRandomRecipes(recipes, recipeNum) {
+function getMeal(mealType) {
+    if (sessionStorage.getItem(mealType) !== null)
+        return JSON.parse(sessionStorage.getItem(mealType))
+
+    $.ajaxSetup({
+        async: false
+    })
+
+    const url = "https://api.spoonacular.com/recipes/complexSearch?type=" + mealType + "&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
+    let recipes = Object() //dictionary
+
+    $.getJSON(url, function(data) {
+        const totalResults = (data.number <= data.results.length) ? data.number : data.results.length
+        const pagesNeeded = Math.ceil(totalResults / 12)
+        let currentPage = 1
+        let pageRecipes = []
+
+        if (totalResults != 0) {
+            for (let i = 0; i < data.results.length; i++) {
+                const recipeInfo = [data.results[i].id, data.results[i].title, "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"]
+                pageRecipes.push(recipeInfo)
+
+                if ((i+1) % 12 == 0) {
+                    recipes[currentPage] = pageRecipes
+                    currentPage++
+                    pageRecipes = []
+                }
+            }
+
+            if (pageRecipes.length > 0)
+                recipes[currentPage] = pageRecipes
+
+            recipes["totalResults"] = totalResults
+            recipes["pagesNeeded"] = pagesNeeded
+            sessionStorage.setItem(mealType, JSON.stringify(recipes))
+        }
+    })
+
+    $.ajaxSetup({
+        async: true
+    })
+
+    return recipes
+}
+
+
+function displayMeals(recipes, recipeNum, container) {
     for (let i = 0; i < recipeNum; i++) {
         const foodImg = createElement("img", "foodImg")
-        foodImg.src = recipes[i][2]
+        foodImg.src = recipes[1][i][2]
         const foodImgContainer = createElement("div", "foodImgContainer")
         foodImgContainer.appendChild(foodImg)
 
         const foodName = createElement("p", "foodName")
-        foodName.innerHTML = recipes[i][1]
+        foodName.innerHTML = recipes[1][i][1]
         const foodNameContainer = createElement("div", "foodNameContainer")
         foodNameContainer.appendChild(foodName)
 
@@ -120,129 +104,13 @@ function displayRandomRecipes(recipes, recipeNum) {
         gridBox.appendChild(foodImgContainer)
         gridBox.appendChild(foodNameContainer)
 
-        document.getElementById("myGridContainer").appendChild(gridBox)
+        document.getElementById(container).appendChild(gridBox)
 
         gridBox.addEventListener("click", function() {
-            infoPage(recipes[i]);
-        });
+            infoPage(recipes[1][i]);
+        })
     }
 }
-
-
-
-function displayMainCourseMeals(recipes, recipeNum) {
-    for (let i = 0; i < recipeNum; i++) {
-        const foodImg = createElement("img", "foodImg")
-        foodImg.src = recipes[i][2]
-        const foodImgContainer = createElement("div", "foodImgContainer")
-        foodImgContainer.appendChild(foodImg)
-
-        const foodName = createElement("p", "foodName")
-        foodName.innerHTML = recipes[i][1]
-        const foodNameContainer = createElement("div", "foodNameContainer")
-        foodNameContainer.appendChild(foodName)
-
-        const gridBox = createElement("div", "gridBox")
-        gridBox.appendChild(foodImgContainer)
-        gridBox.appendChild(foodNameContainer)
-
-        document.getElementById("maincoursesContainer").appendChild(gridBox)
-
-        gridBox.addEventListener("click", function() {
-            infoPage(recipes[i]);
-        });
-    }
-}
-
-
-function displaySideDishes(recipes, recipeNum) {
-    for (let i = 0; i < recipeNum; i++) {
-        const foodImg = createElement("img", "foodImg")
-        foodImg.src = recipes[i][2]
-        const foodImgContainer = createElement("div", "foodImgContainer")
-        foodImgContainer.appendChild(foodImg)
-
-        const foodName = createElement("p", "foodName")
-        foodName.innerHTML = recipes[i][1]
-        const foodNameContainer = createElement("div", "foodNameContainer")
-        foodNameContainer.appendChild(foodName)
-
-        const gridBox = createElement("div", "gridBox")
-        gridBox.appendChild(foodImgContainer)
-        gridBox.appendChild(foodNameContainer)
-
-        document.getElementById("sidedishesContainer").appendChild(gridBox)
-
-        gridBox.addEventListener("click", function() {
-            infoPage(recipes[i]);
-        });
-    }
-}
-
-
-function displayDesserts(recipes, recipeNum) {
-    for (let i = 0; i < recipeNum; i++) {
-        const foodImg = createElement("img", "foodImg")
-        foodImg.src = recipes[i][2]
-        const foodImgContainer = createElement("div", "foodImgContainer")
-        foodImgContainer.appendChild(foodImg)
-
-        const foodName = createElement("p", "foodName")
-        foodName.innerHTML = recipes[i][1]
-        const foodNameContainer = createElement("div", "foodNameContainer")
-        foodNameContainer.appendChild(foodName)
-
-        const gridBox = createElement("div", "gridBox")
-        gridBox.appendChild(foodImgContainer)
-        gridBox.appendChild(foodNameContainer)
-
-        document.getElementById("dessertsContainer").appendChild(gridBox)
-
-        gridBox.addEventListener("click", function() {
-            infoPage(recipes[i]);
-        });
-    }
-}
-
-function displayBeverages(recipes, recipeNum) {
-    for (let i = 0; i < recipeNum; i++) {
-        const foodImg = createElement("img", "foodImg")
-        foodImg.src = recipes[i][2]
-        const foodImgContainer = createElement("div", "foodImgContainer")
-        foodImgContainer.appendChild(foodImg)
-
-        const foodName = createElement("p", "foodName")
-        foodName.innerHTML = recipes[i][1]
-        const foodNameContainer = createElement("div", "foodNameContainer")
-        foodNameContainer.appendChild(foodName)
-
-        const gridBox = createElement("div", "gridBox")
-        gridBox.appendChild(foodImgContainer)
-        gridBox.appendChild(foodNameContainer)
-
-        document.getElementById("beveragesContainer").appendChild(gridBox)
-
-        gridBox.addEventListener("click", function() {
-            infoPage(recipes[i]);
-        });
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -254,22 +122,22 @@ function createElement(tagName, className) {
 
 
 function infoPage(recipeInfo) {
-    window.location = "infoPage.html?foodSearched=" + recipeInfo[1] + ",id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2]
+    window.location = "infoPage.html?id=" + recipeInfo[0]
 }
 
 const recipeNum = 12
 
 const randomRecipes = getRandomFoods(recipeNum)
-const maincourseMeals = getMainCourseMeals(recipeNum)
-const sidedishes = getSideDishes(recipeNum)
-const desserts = getDesserts(recipeNum)
-const beverages = getBeverages(recipeNum)
+const maincourseMeals = getMeal("main course")
+const sidedishes = getMeal("side dish")
+const desserts = getMeal("dessert")
+const beverages = getMeal("beverage")
 
-displayRandomRecipes(randomRecipes, recipeNum)
-displayMainCourseMeals(maincourseMeals, recipeNum)
-displaySideDishes(sidedishes, recipeNum)
-displayDesserts(desserts, recipeNum)
-displayBeverages(beverages, recipeNum)
+displayMeals(randomRecipes, recipeNum, "myGridContainer")
+displayMeals(maincourseMeals, recipeNum, "maincoursesContainer")
+displayMeals(sidedishes, recipeNum, "sidedishesContainer")
+displayMeals(desserts, recipeNum, "dessertsContainer")
+displayMeals(beverages, recipeNum, "beveragesContainer")
 
 
 /*

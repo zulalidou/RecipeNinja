@@ -1,10 +1,3 @@
-function displayFood(recipeTitle, imgURL) {
-    document.getElementById("recipeTitle").innerHTML = recipeTitle.bold()
-    document.getElementById("recipeTitle").style.textAlign = "center"
-    document.getElementById("foodImg").src = imgURL
-}
-
-
 function getRecipeInfo(recipeID) {
     $.ajaxSetup({
         async: false
@@ -15,6 +8,8 @@ function getRecipeInfo(recipeID) {
 
     $.getJSON(url, function(data) {
         console.log(data)
+        recipeInfo["title"] = data.title
+        recipeInfo["image"] = data.image
         recipeInfo["nutrition"] = getNutrients(data.nutrition.nutrients)
         recipeInfo["ingredients"] = getIngredients(data.extendedIngredients)
 
@@ -131,6 +126,14 @@ function createElement_IMG(source) {
     imgBlock.src = source
 
     return imgBlock
+}
+
+
+
+function displayFood(title, image) {
+    document.getElementById("recipeTitle").innerHTML = title.bold()
+    document.getElementById("recipeTitle").style.textAlign = "center"
+    document.getElementById("foodImg").src = image
 }
 
 
@@ -380,38 +383,25 @@ function displayRecipes(foodSearched, recipesToDisplay) {
 
 
 function infoPage(recipeInfo) {
-    window.location = "infoPage.html?foodSearched=" + recipeInfo[1] + ",id=" + recipeInfo[0] + ",title=" + recipeInfo[1] + ",img=" + recipeInfo[2]
+    window.location = "infoPage.html?id=" + recipeInfo[0]
 }
 
 
 
 $(function() {
     let windowParameters = window.location.search.replace(/\%20/g, " ") //It takes everything in the query string up to the 1st '=', and replaces them with ''
-    windowParameters = windowParameters.split(",")
     console.log(windowParameters)
-
-    const foodSearched = windowParameters[0].substring(windowParameters[0].indexOf("=") + 1)
-    const recipeID = windowParameters[1].substring(windowParameters[1].indexOf("=") + 1)
-    const recipeTitle = windowParameters[2].substring(windowParameters[2].indexOf("=") + 1)
-    const recipeImg = windowParameters[3].substring(windowParameters[3].indexOf("=") + 1)
-
-    console.log(foodSearched)
-    console.log(recipeID)
-    console.log(recipeTitle)
-    console.log(recipeImg)
-
-
-
+    const recipeID = parseInt(windowParameters.substring(windowParameters.indexOf("=") + 1))
 
     const recipeInfo = getRecipeInfo(recipeID)
+    console.log(recipeInfo)
 
-    displayFood(recipeTitle, recipeImg)
+    displayFood(recipeInfo["title"], recipeInfo["image"])
     displayIngredients(recipeInfo["ingredients"])
     displayInstructions(recipeInfo["instructions"])
-
     displayNutritions(recipeInfo["nutrition"])
     displayCredits(recipeInfo["credits"])
 
-    const recipesToDisplay = getRecipes(foodSearched, recipeID)
-    displayRecipes(foodSearched, recipesToDisplay)
+    const recipesToDisplay = getRecipes(recipeInfo["title"], recipeID)
+    displayRecipes(recipeInfo["title"], recipesToDisplay)
 })
