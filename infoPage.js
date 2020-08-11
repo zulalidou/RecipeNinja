@@ -7,11 +7,16 @@ function getRecipeInfo(recipeID) {
     const url = "https://api.spoonacular.com/recipes/" + recipeID + "/information?includeNutrition=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
 
     $.getJSON(url, function(data) {
-        console.log(data)
         recipeInfo["title"] = data.title
         recipeInfo["image"] = data.image
         recipeInfo["nutrition"] = getNutrients(data.nutrition.nutrients)
         recipeInfo["ingredients"] = getIngredients(data.extendedIngredients)
+
+        recipeInfo["dishTypes"] = data.dishTypes
+        recipeInfo["cuisines"] = data.cuisines
+        recipeInfo["diets"] = data.diets
+        recipeInfo["servings"] = data.servings
+
 
         let instructions = (data.analyzedInstructions.length === 0) ? [] : data.analyzedInstructions[0].steps
         recipeInfo["instructions"] = getInstructions(instructions)
@@ -76,10 +81,14 @@ function getInstructions(instructionsArray) {
 function getCredits(data) {
     let creditsArray = []
 
-    creditsArray.push(data.title)
-    creditsArray.push(data.creditsText)
-    creditsArray.push(data.sourceUrl)
-    creditsArray.push(data.license)
+    if (data.creditsText !== undefined && data.creditsText !== null)
+        creditsArray.push("Author: " + data.creditsText)
+
+    if (data.sourceUrl !== undefined && data.sourceUrl !== null)
+        creditsArray.push("Source: " + data.sourceUrl)
+
+    if (data.license !== undefined && data.license !== null)
+        creditsArray.push("License: " + data.license)
 
     return creditsArray
 }
@@ -95,7 +104,7 @@ function createElement_P(className, rowNumber) {
         pBlock.style.backgroundColor = (rowNumber % 2 == 0) ? "lightblue" : "white"
     }
     else
-        pBlock.style.backgroundColor = "white"
+        pBlock.style.backgroundColor = "gray"
 
     return pBlock
 }
@@ -130,11 +139,62 @@ function createElement_IMG(source) {
 
 
 
-function displayFood(title, image) {
-    document.getElementById("recipeTitle").innerHTML = title.bold()
+function displayFood(recipeInfo) {
+    document.getElementById("recipeTitle").innerHTML = recipeInfo["title"].bold()
     document.getElementById("recipeTitle").style.textAlign = "center"
-    document.getElementById("foodImg").src = image
+    document.getElementById("foodImg").src = recipeInfo["image"]
+
+    addFoodFact("Dish Type(s): ", recipeInfo["dishTypes"])
+    addFoodFact("Cuisine(s): ", recipeInfo["cuisines"])
+    addFoodFact("Diet(s): ", recipeInfo["diets"])
+    addFoodFact("Servings: ", recipeInfo["servings"])
+    addFoodCredits(recipeInfo["credits"])
 }
+
+
+function addFoodFact(text, factsArray) {
+    let block = createElement_P("quickFact", null)
+
+    console.log(typeof factsArray)
+    console.log(factsArray)
+
+    if (typeof factsArray !== "object")
+        text += factsArray
+    else {
+        if (factsArray.length === 0)
+            text += "N / A"
+
+        for (let i = 0; i < factsArray.length; i++) {
+            text += factsArray[i]
+
+            if (i !== factsArray.length - 1)
+                text += ", "
+        }
+    }
+
+    let textNode = document.createTextNode(text)
+    block.appendChild(textNode)
+    document.getElementById("factsContainer").appendChild(block)
+    document.getElementById("factsContainer").appendChild(createElement_DIV("class", "spaceBlock"))
+}
+
+
+function addFoodCredits(credits) {
+    for (let i = 0; i < credits.length; i++) {
+        let block = createElement_P("quickFact", null)
+        block.innerHTML = credits[i]
+        document.getElementById("factsContainer").appendChild(block)
+        document.getElementById("factsContainer").appendChild(createElement_DIV("class", "spaceBlock"))
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -220,36 +280,36 @@ function displayNutritions(nutritionArray) {
 
 
 
-function displayCredits(creditsArray) {
-    const spaceBlock = createElement_P("div")
-    spaceBlock.style.height = "20px"
-
-    const titleBlock = createElement_P("credit", null)
-    titleBlock.style.height = "20px"
-    const title = document.createTextNode("Title: " + creditsArray[0])
-    titleBlock.appendChild(title)
-
-    const creatorBlock = createElement_P("credit", null)
-    creatorBlock.style.height = "20px"
-    const creator = document.createTextNode("Creator: " + creditsArray[1])
-    creatorBlock.appendChild(creator)
-
-    const sourceBlock = createElement_P("credit", null)
-    sourceBlock.style.height = "20px"
-    const source = document.createTextNode("Source: " + creditsArray[2])
-    sourceBlock.appendChild(source)
-
-    const licenseBlock = createElement_P("credit", null)
-    licenseBlock.style.height = "20px"
-    const license = document.createTextNode("License: " + creditsArray[3])
-    licenseBlock.appendChild(license)
-
-    document.getElementById("creditsSection").appendChild(spaceBlock)
-    document.getElementById("creditsSection").appendChild(titleBlock)
-    document.getElementById("creditsSection").appendChild(creatorBlock)
-    document.getElementById("creditsSection").appendChild(sourceBlock)
-    document.getElementById("creditsSection").appendChild(licenseBlock)
-}
+// function displayCredits(creditsArray) {
+//     const spaceBlock = createElement_P("div")
+//     spaceBlock.style.height = "20px"
+//
+//     const titleBlock = createElement_P("credit", null)
+//     titleBlock.style.height = "20px"
+//     const title = document.createTextNode("Title: " + creditsArray[0])
+//     titleBlock.appendChild(title)
+//
+//     const creatorBlock = createElement_P("credit", null)
+//     creatorBlock.style.height = "20px"
+//     const creator = document.createTextNode("Creator: " + creditsArray[1])
+//     creatorBlock.appendChild(creator)
+//
+//     const sourceBlock = createElement_P("credit", null)
+//     sourceBlock.style.height = "20px"
+//     const source = document.createTextNode("Source: " + creditsArray[2])
+//     sourceBlock.appendChild(source)
+//
+//     const licenseBlock = createElement_P("credit", null)
+//     licenseBlock.style.height = "20px"
+//     const license = document.createTextNode("License: " + creditsArray[3])
+//     licenseBlock.appendChild(license)
+//
+//     document.getElementById("creditsSection").appendChild(spaceBlock)
+//     document.getElementById("creditsSection").appendChild(titleBlock)
+//     document.getElementById("creditsSection").appendChild(creatorBlock)
+//     document.getElementById("creditsSection").appendChild(sourceBlock)
+//     document.getElementById("creditsSection").appendChild(licenseBlock)
+// }
 
 
 function getRecipes(foodSearched, currentRecipeID) {
@@ -352,7 +412,7 @@ function getRandomRecipes(number) {
 
 
 function displayRecipes(foodSearched, recipesToDisplay) {
-    document.getElementById("similarRecipesHeader").innerHTML = "Browse through similar recipes"
+    document.getElementById("similarRecipesHeader").innerHTML = "Other Recipes You May Like"
 
     console.log(recipesToDisplay)
 
@@ -396,11 +456,11 @@ $(function() {
     const recipeInfo = getRecipeInfo(recipeID)
     console.log(recipeInfo)
 
-    displayFood(recipeInfo["title"], recipeInfo["image"])
+    displayFood(recipeInfo)
     displayIngredients(recipeInfo["ingredients"])
     displayInstructions(recipeInfo["instructions"])
     displayNutritions(recipeInfo["nutrition"])
-    displayCredits(recipeInfo["credits"])
+    // displayCredits(recipeInfo["credits"])
 
     const recipesToDisplay = getRecipes(recipeInfo["title"], recipeID)
     displayRecipes(recipeInfo["title"], recipesToDisplay)

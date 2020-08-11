@@ -57,13 +57,23 @@ input[type=text] {
     width: 100%;
 }
 
+
 #aboutus {
     background-color: white;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     padding: 10px;
     color: black;
 }
+
+#contactus {
+    background-color: white;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    color: black;
+}
+
 
 a {
     text-decoration: none;

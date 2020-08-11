@@ -125,6 +125,9 @@ function infoPage(recipeInfo) {
     window.location = "infoPage.html?id=" + recipeInfo[0]
 }
 
+
+
+
 const recipeNum = 12
 
 const randomRecipes = getRandomFoods(recipeNum)
