@@ -1,0 +1,444 @@
+/* Resets ALL padding and margin elements to 0 */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    background-color: black;
+}
+
+
+.topNavBar {
+    background-color: white;
+}
+
+.topNavBar_contentContainer {
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
+    margin: auto;
+}
+
+#imgContainer {
+    width: 270px;
+    height: 50px;
+    background-color: green;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#logoImg {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.searchContainer {
+    width: 50%;
+    background-color: yellow;
+}
+
+input[type=text] {
+    box-sizing: border-box; /* TRULY understand what this does */
+    padding: 12px 30px;
+    background-image: url("/images/magnifyingglass.png");
+    background-repeat: no-repeat;
+    background-position: 5px;
+    font-size: 20px;
+    width: 100%;
+}
+
+
+
+#about {
+    background-color: white;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    color: black;
+}
+
+#contactus {
+    background-color: white;
+    text-align: center;
+    font-size: 25px;
+    padding: 10px;
+    color: black;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+
+
+.bottomNavBar {
+    background-color: yellow;
+}
+
+.bottomNavBar ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    background-color: firebrick;
+}
+
+.bottomNavBar ul li {
+    display: inline-block;
+    position: relative; /* this allows us to add an "absolute" position to the subitems of this li */
+}
+
+.bottomNavBar ul li a {
+    text-decoration: none;
+    color: black;
+    margin: 15px;
+    display: block;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.bottomNavBar ul li:hover {
+    background-color: coral;
+    cursor: pointer;
+}
+
+
+
+
+/* for hiding the 1st sub menu */
+.submenu_1, .submenu_2, .submenu_3, .submenu_4, .submenu_5 {
+    display: none;
+}
+
+/* .submenu_1 ul, .submenu_2 ul, .submenu_3 ul {
+    border-radius: 0px 0px 5px 5px;
+} */
+
+.submenu_1 ul li, .submenu_2 ul li, .submenu_3 ul li, .submenu_4 ul li, .submenu_5 ul li {
+    margin: 4px;
+}
+
+
+/* for showing the 1st sub menu when you hover over its "parent" li */
+.bottomNavBar ul li:hover .submenu_1, .bottomNavBar ul li:hover .submenu_2 {
+    display: block;
+    position: absolute;
+}
+
+.bottomNavBar ul li .submenu_2 ul li:hover .submenu_3,
+.bottomNavBar ul li .submenu_2 ul li:hover .submenu_4,
+.bottomNavBar ul li .submenu_2 ul li:hover .submenu_5 {
+     display: block;
+     position: absolute;
+     margin-top: -57px;
+     margin-left: 164px;
+ }
+
+
+/* for displaying the 1st submenu vertically */
+.bottomNavBar ul li:hover .submenu_1 ul li,
+.bottomNavBar ul li:hover .submenu_3 ul li {
+    width: 160px;
+}
+
+.bottomNavBar ul li:hover .submenu_2 ul li,
+.bottomNavBar ul li:hover .submenu_4 ul li {
+    width: 165px;
+}
+
+.bottomNavBar ul li:hover .submenu_5 ul li {
+    width: 192px;
+}
+
+
+
+
+.bigSpaceBlock {
+    background-color: white;
+    height: 50px;
+}
+
+.smallSpaceBlock {
+    /* background-color: white; */
+    height: 20px;
+}
+
+
+
+#quickFactsContainer {
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    background-color: gray;
+}
+
+.fact {
+    padding: 5px;
+    background-color: gray;
+}
+
+
+
+
+
+#foodImgContainer {
+    height: 375px;
+    width: 500px;
+    background-color: gray;
+    margin: auto;
+    flex: 1;
+
+    margin: 10px;
+}
+
+#factsContainer {
+    flex: 1;
+    background-color: gray;
+    margin: 10px;
+}
+
+
+
+
+#foodImg {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+
+
+#ingredientsSection {
+    border: 1px solid black;
+    background-color: white;
+
+    padding: 10px;
+    width: 500px;
+    margin: auto;
+}
+
+
+#instructionsSection {
+    border: 1px solid black;
+    background-color: white;
+
+    padding: 10px;
+    width: 1000px;
+    margin: auto;
+}
+
+
+#nutritionSection {
+    border: 1px solid black;
+    background-color: white;
+
+    padding: 10px;
+    width: 500px;
+    margin: auto;
+}
+
+
+#similarRecipesHeader {
+}
+
+#similarRecipesSection {
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+}
+
+
+
+
+
+
+#recipes {
+    background-color: green;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    width: 1000px; /* I might need to use media queries to set this field, in case the user's device is smaller than anticipated */
+    margin: auto;
+
+    /*
+    resize:both;
+    overflow: auto;
+    */
+}
+
+.gridBox {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: yellow;
+    cursor: pointer;
+    /*overflow: auto; maybe add this to ".foodName" */
+}
+
+.gridBox:hover {
+    box-shadow: 5px 10px 10px;
+}
+
+.foodImgContainer {
+    height: 225px;
+    width: 300px;
+    background-color: white;
+}
+
+.foodImg {
+    /*content:url("images/img1.jpg");*/
+    /*
+    width: 300px;
+    height: 250px;
+    */
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.foodNameContainer {
+    /* height: 75px; */
+    width: 300px;
+    background-color: white;
+}
+
+.foodName {
+    max-width: 100%;
+    height: 100%;
+
+    font-size: 18px;
+    font-family: verdana;
+    background-color: white;
+    text-align: center;
+
+    word-wrap: break-word;
+    /* padding: 5px 10px 0px 10px; */
+}
+
+
+
+
+
+
+
+
+#horizontalLine {
+    width: 1229px;
+    border-color: black;
+    margin: auto;
+}
+
+#creditsSection {
+    border: 1px solid black;
+    background-color: white;
+
+    padding: 10px;
+    width: 700px;
+    margin: auto;
+}
+
+
+#myFooter {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    background-color: black;
+    padding: 10px;
+}
+
+
+
+
+
+
+#hamburgerMenu {
+    display: none;
+    background-color: pink;
+}
+
+#hamburgerMenu ul {
+    list-style: none;
+}
+
+
+.hamburgerItem {
+    width: 90%;
+    margin: auto;
+
+    padding: 20px 0px 20px 0px;
+    background-color: green;
+
+    border-bottom: 1px solid red;
+    background-color: green;
+}
+
+#mealTypes-submenu, #cuisines-submenu {
+    width: 90%;
+    margin: auto;
+    background-color: yellow;
+    display: none;
+}
+
+#mealTypes-submenu ul li, #cuisines-submenu ul li {
+    padding: 20px 0px 20px 25px;
+}
+
+.down-arrow {
+    float: right;
+}
+
+
+#americanFoods-submenu, #europeanFoods-submenu {
+    background-color: red;
+    display: none;
+}
+
+#americanFoods-submenu ul li, #europeanFoods-submenu ul li {
+    padding: 15px 0px 15px 50px;
+}
+
+
+
+
+
+@media (max-width: 500px) {
+    .searchContainer {
+        display: none;
+    }
+
+    #about {
+        display: none;
+    }
+
+    .bottomNavBar {
+        display: none;
+    }
+
+    #hamburgerIcon, #magnifyingglassIcon {
+        display: inline;
+    }
+
+    #randomRecipesContainer, #mainCoursesContainer, #sideDishesContainer, #dessertsContainer, #beveragesContainer {
+        width: 100%;
+    }
+}
+
+/* @media (min-width: 501px) {
+    #hamburgerMenu {
+        display: none;
+    }
+} */
