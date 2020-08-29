@@ -7,7 +7,9 @@
 
 
 header {
+    top: 0;
     background-color: black; /*C8C6C5*/
+    position: sticky;
 }
 
 
@@ -47,7 +49,7 @@ header {
     background-color: yellow;
 }
 
-input[type=text] {
+.searchContainer #searchBar {
     box-sizing: border-box; /* TRULY understand what this does */
     padding: 12px 30px;
     background-image: url("/images/magnifyingglass.png");
@@ -398,11 +400,29 @@ a {
 
 
 #hamburgerMenu {
+    position: fixed;
+    height: 100%;
+    width: 70%;
     display: none;
     background-color: pink;
+    overflow-y: scroll; /* Add the ability to scroll */
 }
 
-#hamburgerMenu ul {
+/* Hide scrollbar for Chrome, Safari and Opera */
+#hamburgerMenu::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#hamburgerMenu {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+
+
+#hamburgerMenu-contents ul {
     list-style: none;
 }
 
@@ -444,9 +464,55 @@ a {
 }
 
 
-#hamburgerIcon, #magnifyingglassIcon {
+#hamburgerIcon-container, #magnifyingglassIcon-container {
     display: none;
 }
+
+
+
+
+
+
+
+#magnifyingglassMenu {
+    /* top: 0; */
+    position: fixed;
+    width: 100%;
+    display: none;
+}
+
+#magnifyingglassMenu-contents {
+    display: flex;
+}
+
+#magnifyingglassMenu-contents #searchBar-container {
+    flex: 1;
+    background-color: tomato;
+    padding: 15px;
+}
+
+#magnifyingglassMenu-contents #searchButton-container {
+    background-color: orange;
+    padding: 15px;
+}
+
+
+
+#magnifyingglassMenu-contents #searchBar2 {
+    width: 100%;
+    box-sizing: border-box; /* TRULY understand what this does */
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+button {
+    height: 100%;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
 
 
 
@@ -465,7 +531,7 @@ a {
         display: none;
     }
 
-    #hamburgerIcon, #magnifyingglassIcon {
+    #hamburgerIcon-container, #magnifyingglassIcon-container {
         display: inline;
     }
 
@@ -479,8 +545,12 @@ a {
         width: 100%;
     }
 
-    #hamburgerMenu-contents {
+    #hamburgerMenu-contents, #magnifyingglassMenu-contents {
         display: none;
+    }
+
+    #hamburgerMenu {
+        visibility: hidden;
     }
 }
 
@@ -489,7 +559,11 @@ a {
         width: 1400px;
     }
 
-    #hamburgerMenu-contents {
+    #hamburgerMenu-contents, #magnifyingglassMenu-contents {
         display: none;
+    }
+
+    #hamburgerMenu {
+        visibility: hidden;
     }
 }

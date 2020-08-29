@@ -218,6 +218,7 @@ function infoPage(recipeInfo) {
 }
 
 
+
 $(document).ready(function() {
     const recipeNum = 12
     displayOnMainPage("random foods", recipeNum, "randomRecipesContainer")
@@ -227,6 +228,8 @@ $(document).ready(function() {
     displayOnMainPage("beverages", recipeNum, "beveragesContainer")
 
 
+    setupSearchMenu("magnifyingglassIcon", "magnifyingglassMenu")
+
     setupNavBarEvents("hamburgerIcon", "hamburgerMenu")
     setupNavBarEvents("mealTypes-down-arrow", "mealTypes-submenu")
     setupNavBarEvents("cuisines-down-arrow", "cuisines-submenu")
@@ -235,53 +238,47 @@ $(document).ready(function() {
 })
 
 
+function setupSearchMenu(buttonName, containerName) {
+    const toggleButton = document.getElementById(buttonName)
+    const container = document.getElementById(containerName)
+
+    toggleButton.addEventListener("click", () => {
+        document.getElementById("hamburgerMenu").style.display = "none"
+        document.getElementById("hamburgerIcon").src = "/images/hamburger.png"
+
+        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
+
+        if (buttonURL === "magnifyingglass.png") toggleButton.src = "/images/close.png"
+        else toggleButton.src = "/images/magnifyingglass.png"
+
+        $("#"+containerName).slideToggle()
+    })
+}
+
+
 function setupNavBarEvents(buttonName, containerName) {
     const toggleButton = document.getElementById(buttonName)
     const container = document.getElementById(containerName)
 
-    console.log(toggleButton)
-    console.log(container)
-
     toggleButton.addEventListener("click", () => {
-        $("#"+containerName).toggle("slide")
+        // closes the "magnifyingglass" menu (in case it's open when we try to open the hamburger menu)
+        document.getElementById("magnifyingglassMenu").style.display = "none"
+        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass.png"
 
-        // const image = toggleButton.src.substr(toggleButton.src.indexOf("-") + 1)
-        // console.log(image)
-
-        // if (image === "down-arrow")
-        //     toggleButton.src = "/images/up-arrow.png"
-        // else
-        //     toggleButton.src = "/images/down-arrow.png"
-
-        // var w = window.innerWidth
-        // console.log(w)
-        //
-        // if (w >= 901) {
-        //   containerName = containerName.substr(1)
-        //   document.getElementById(containerName).style.display = "none"
-        // }
+        console.log(container)
 
 
-        // if (container.style.display === "none" || container.style.display === "") {
-        //     container.style.display = "block"
-        //
-        //     if (buttonName === "hamburgerIcon")
-        //         toggleButton.src = "/images/close.png"
-        //     else
-        //         toggleButton.src = "/images/up-arrow.png"
-        //
-        //     console.log(buttonName)
-        // }
-        // else {
-        //     container.style.display = "none"
-        //
-        //     if (buttonName === "hamburgerIcon")
-        //         toggleButton.src = "/images/hamburger.png"
-        //     else
-        //         toggleButton.src = "/images/down-arrow.png"
-        //
-        //     console.log(buttonName)
-        // }
+        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
+
+        if (buttonURL === "hamburger.png") toggleButton.src = "/images/close.png"
+        else if (buttonURL === "close.png") toggleButton.src = "/images/hamburger.png"
+        else if (buttonURL === "up-arrow.png") toggleButton.src = "/images/down-arrow.png"
+        else toggleButton.src = "/images/up-arrow.png"
+
+        if (containerName === "hamburgerMenu")
+            $("#"+containerName).toggle("slide")
+        else
+            $("#"+containerName).slideToggle()
     })
 }
 

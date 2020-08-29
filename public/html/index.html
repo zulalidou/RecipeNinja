@@ -11,7 +11,7 @@
         <header>
             <nav class="topNavBar">
                 <div class="topNavBar_contentContainer">
-                    <a id="hamburgerIcon" href="#"><img src="/images/hamburger.png"></a>
+                    <a id="hamburgerIcon-container" href="javascript:void(0)"><img id="hamburgerIcon" src="/images/hamburger.png"></a>
 
                     <div id="imgContainer">
                         <a href="/html/index.html"><img id="logoImg" src="/images/logo.jpg"></a>
@@ -19,16 +19,13 @@
 
                     <div class="searchContainer">
                         <form action="/html/searchResults.html" method="GET">
-                            <input type="text" placeholder="What would you like to cook?" name="searchBar" autocomplete=off required>
+                            <input type="text" placeholder="What would you like to cook?" id="searchBar" name="searchBar" autocomplete=off required>
                         </form>
                     </div>
 
-                    <!-- <div class="additionalInfoContainer"> -->
                     <a id="about" href="/html/about.html">About</a>
-                        <!-- <a id="contactus" href="contactus.html">Contact Us</a>
-                    </div> -->
 
-                    <a id="magnifyingglassIcon" href="#"><img src="/images/magnifyingglass.png"></a>
+                    <a id="magnifyingglassIcon-container" href="javascript:void(0)"><img id="magnifyingglassIcon" src="/images/magnifyingglass.png"></a>
                 </div>
             </nav>
 
@@ -99,14 +96,13 @@
                     </li>
                 </ul>
             </nav>
-
         </header>
 
         <nav id="hamburgerMenu">
             <div id="hamburgerMenu-contents">
                 <ul>
                     <li class="hamburgerItem">
-                        <a href="#">MEAL TYPES<img id="mealTypes-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a>
+                        <a href="javascript:void(0)">MEAL TYPES<img id="mealTypes-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a>
                     </li>
 
                     <div id="mealTypes-submenu">
@@ -123,13 +119,13 @@
                     </div>
 
                     <li class="hamburgerItem">
-                        <a href="#">CUISINES<img id="cuisines-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a>
+                        <a href="javascript:void(0)">CUISINES<img id="cuisines-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a>
                     </li>
 
                     <div id="cuisines-submenu">
                         <ul>
                             <li><a href="/html/searchResults.html?foodSearched=African">Africa</a></li>
-                            <li><a href="#">Americas <img id="americanFoods-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a></li>
+                            <li><a href="javascript:void(0)">Americas <img id="americanFoods-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a></li>
 
                             <div id="americanFoods-submenu">
                                 <ul>
@@ -140,7 +136,7 @@
                                 </ul>
                             </div>
 
-                            <li><a href="#">Europe <img id="europeanFoods-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a></li>
+                            <li><a href="javascript:void(0)">Europe <img id="europeanFoods-down-arrow" class="down-arrow" src="/images/down-arrow.png"></a></li>
 
                             <div id="europeanFoods-submenu">
                                 <ul>
@@ -162,16 +158,22 @@
                     </div>
                 </ul>
             </div>
-
         </nav>
 
 
+        <nav id="magnifyingglassMenu">
+            <div id="magnifyingglassMenu-contents">
+                <div id="searchBar-container">
+                    <form action="/html/searchResults.html" method="GET" id="searchForm">
+                        <input type="text" placeholder="What would you like to cook?" id="searchBar2" name="searchBar" autocomplete=off required>
+                    </form>
+                </div>
 
-
-
-
-
-
+                <div id="searchButton-container">
+                    <button type="submit" form="searchForm">GO</button>
+                </div>
+            </div>
+        </nav>
 
 
 
