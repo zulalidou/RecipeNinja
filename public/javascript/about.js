@@ -1,38 +1,51 @@
 $(document).ready(function() {
-    setupNavBarEvents("hamburgerIcon", "hamburgerMenu")
-    setupNavBarEvents("mealTypes-down-arrow", "mealTypes-submenu")
-    setupNavBarEvents("cuisines-down-arrow", "cuisines-submenu")
-    setupNavBarEvents("americanFoods-down-arrow", "americanFoods-submenu")
-    setupNavBarEvents("europeanFoods-down-arrow", "europeanFoods-submenu")
+    setupSearchMenu("magnifyingglassIcon", "magnifyingglassMenu")
+
+    setupNavBarEvents("hamburgerIcon-container", "hamburgerIcon", "hamburgerMenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item1", "hamburgerMenu-subcategory1-item1-arrow", "mealTypes-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item2", "hamburgerMenu-subcategory1-item2-arrow", "cuisines-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item1", "americanFoods-down-arrow", "americanFoods-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item2", "europeanFoods-down-arrow", "europeanFoods-submenu")
 })
 
-function setupNavBarEvents(buttonName, className) {
+function setupSearchMenu(buttonName, containerName) {
     const toggleButton = document.getElementById(buttonName)
-    const container = document.getElementById(className)
-
-    console.log(toggleButton)
-    console.log(container)
+    const container = document.getElementById(containerName)
 
     toggleButton.addEventListener("click", () => {
-        if (container.style.display === "none" || container.style.display === "") {
-            container.style.display = "block"
+        document.getElementById("hamburgerMenu").style.display = "none"
+        document.getElementById("hamburgerIcon").src = "/images/hamburger.png"
 
-            if (buttonName === "hamburgerIcon")
-                toggleButton.src = "/images/close.png"
-            else
-                toggleButton.src = "/images/up-arrow.png"
+        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
 
-            console.log(button)
-        }
-        else {
-            container.style.display = "none"
+        if (buttonURL === "magnifyingglass_big.png") toggleButton.src = "/images/close.png"
+        else toggleButton.src = "/images/magnifyingglass_big.png"
 
-            if (buttonName === "hamburgerIcon")
-                toggleButton.src = "/images/hamburger.png"
-            else
-                toggleButton.src = "/images/down-arrow.png"
+        $("#"+containerName).slideToggle()
+    })
+}
 
-            console.log(button)
-        }
+function setupNavBarEvents(anchorTagName, imgTagName, containerName) {
+    const toggleButton = document.getElementById(anchorTagName)
+    const arrowImg_container = document.getElementById(imgTagName)
+    const container = document.getElementById(containerName)
+
+
+    toggleButton.addEventListener("click", () => {
+        // closes the "magnifyingglass" menu (in case it's open when we try to open the hamburger menu)
+        document.getElementById("magnifyingglassMenu").style.display = "none"
+        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass_big.png"
+
+        let arrowURL = arrowImg_container.src.substr(arrowImg_container.src.lastIndexOf("/") + 1)
+
+        if (arrowURL === "hamburger.png") arrowImg_container.src = "/images/close.png"
+        else if (arrowURL === "close.png") arrowImg_container.src = "/images/hamburger.png"
+        else if (arrowURL === "up-arrow.png") arrowImg_container.src = "/images/down-arrow.png"
+        else arrowImg_container.src = "/images/up-arrow.png"
+
+        if (containerName === "hamburgerMenu")
+            $("#"+containerName).toggle("slide")
+        else
+            $("#"+containerName).slideToggle()
     })
 }

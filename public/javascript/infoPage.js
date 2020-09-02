@@ -255,7 +255,7 @@ function getNutrients(nutrientsArray) {
     let storedNutrients = []
 
     for (let i = 0; i < nutrientsArray.length; i++)
-        storedNutrients.push(nutrientsArray[i].title + " = " + nutrientsArray[i].amount + " " + nutrientsArray[i].unit)
+        storedNutrients.push(" " + nutrientsArray[i].title + " = " + nutrientsArray[i].amount + " " + nutrientsArray[i].unit + " |")
 
     return storedNutrients.sort()
 }
@@ -317,6 +317,11 @@ function createElement_P(className, rowNumber) {
     let pBlock = document.createElement("p")
     pBlock.setAttribute("class", className)
 
+    if(className==="nutrient") {
+        pBlock.style.display = "inline-block"
+        pBlock.style.whiteSpace = "pre"
+    }
+
     // if (className === "ingredient" || className === "nutrient") {
     //     pBlock.style.padding = "5px"
     //     pBlock.style.backgroundColor = (rowNumber % 2 == 0) ? "lightblue" : "white"
@@ -360,7 +365,7 @@ function createElement_IMG(source) {
 function displayFood(recipeInfo) {
     document.getElementById("recipeTitle").innerHTML = recipeInfo["title"].bold()
     document.getElementById("recipeTitle").style.textAlign = "center"
-    document.getElementById("foodImg").src = recipeInfo["image"]
+    document.getElementById("currentFood-img").src = recipeInfo["image"]
 
     addFoodFact("Dish Type(s): ", recipeInfo["dishTypes"])
     addFoodFact("Cuisine(s): ", recipeInfo["cuisines"])
@@ -393,6 +398,7 @@ function addFoodFact(text, factsArray) {
 
     let textNode = document.createTextNode(text)
     block.appendChild(textNode)
+    // block.style.wordWrap = "break-word"
     document.getElementById("factsContainer").appendChild(block)
     //document.getElementById("factsContainer").appendChild(createElement_DIV("class", "spaceBlock"))
 
@@ -654,6 +660,7 @@ $(function() {
     // console.log(recipeTitle)
 
     setup(recipeID, recipeTitle)
+    navBarStuff()
 
     // ======================================================================================
     // EVERYTHING BELOW THIS COMMENT WAS ALREADY COMMENTED OUT BEFORE I STARTED WORKING
@@ -689,4 +696,57 @@ async function setup(recipeID, recipeTitle) {
     displayNutritions(res.nutrition)
     displaySimilarRecipes(recipeTitle, res.similarRecipes)
     console.log(res)
+}
+
+
+function navBarStuff() {
+    setupSearchMenu("magnifyingglassIcon", "magnifyingglassMenu")
+
+    setupNavBarEvents("hamburgerIcon-container", "hamburgerIcon", "hamburgerMenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item1", "hamburgerMenu-subcategory1-item1-arrow", "mealTypes-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item2", "hamburgerMenu-subcategory1-item2-arrow", "cuisines-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item1", "americanFoods-down-arrow", "americanFoods-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item2", "europeanFoods-down-arrow", "europeanFoods-submenu")
+}
+
+function setupSearchMenu(buttonName, containerName) {
+    const toggleButton = document.getElementById(buttonName)
+    const container = document.getElementById(containerName)
+
+    toggleButton.addEventListener("click", () => {
+        document.getElementById("hamburgerMenu").style.display = "none"
+        document.getElementById("hamburgerIcon").src = "/images/hamburger.png"
+
+        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
+
+        if (buttonURL === "magnifyingglass_big.png") toggleButton.src = "/images/close.png"
+        else toggleButton.src = "/images/magnifyingglass_big.png"
+
+        $("#"+containerName).slideToggle()
+    })
+}
+
+function setupNavBarEvents(anchorTagName, imgTagName, containerName) {
+    const toggleButton = document.getElementById(anchorTagName)
+    const arrowImg_container = document.getElementById(imgTagName)
+    const container = document.getElementById(containerName)
+
+
+    toggleButton.addEventListener("click", () => {
+        // closes the "magnifyingglass" menu (in case it's open when we try to open the hamburger menu)
+        document.getElementById("magnifyingglassMenu").style.display = "none"
+        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass_big.png"
+
+        let arrowURL = arrowImg_container.src.substr(arrowImg_container.src.lastIndexOf("/") + 1)
+
+        if (arrowURL === "hamburger.png") arrowImg_container.src = "/images/close.png"
+        else if (arrowURL === "close.png") arrowImg_container.src = "/images/hamburger.png"
+        else if (arrowURL === "up-arrow.png") arrowImg_container.src = "/images/down-arrow.png"
+        else arrowImg_container.src = "/images/up-arrow.png"
+
+        if (containerName === "hamburgerMenu")
+            $("#"+containerName).toggle("slide")
+        else
+            $("#"+containerName).slideToggle()
+    })
 }

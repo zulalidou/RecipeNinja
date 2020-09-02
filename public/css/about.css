@@ -1,97 +1,99 @@
 /* Resets ALL padding and margin elements to 0 */
-
 * {
     margin: 0;
     padding: 0;
 }
 
-
-header {
-    background-color: black;
+body {
+    background-color: #EBE5E5;
 }
 
 
 
-.topNavBar {
+#topNavBar {
     background-color: white;
-}
-
-.topNavBar_contentContainer {
-    background-color: white;
-
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 80%;
-    margin: auto;
 }
 
-#imgContainer {
-    width: 270px;
-    height: 50px;
-    background-color: green;
-    margin-right: 10px;
-    cursor: pointer;
+#hamburgerIcon-container, #magnifyingglassIcon-container {
+    display: none;
+    margin: 10px;
+    background-color: white;
 }
 
-#logoImg {
+#hamburgerIcon, #magnifyingglassIcon {
     max-width: 100%;
     max-height: 100%;
     min-width: 100%;
     min-height: 100%;
 }
 
-.searchContainer {
-    width: 50%;
-    background-color: yellow;
+
+#topNavBar-middleContainer {
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
 }
 
-input[type=text] {
-    box-sizing: border-box; /* TRULY understand what this does */
+#logoContainer {
+    width: 270px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#logoContainer img {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#searchContainer {
+    width: 50%;
+    background-color: white;
+    padding: 5px 0px;
+}
+
+#searchContainer #searchBar {
+    box-sizing: border-box;
     padding: 12px 30px;
-    background-image: url("/images/magnifyingglass.png");
+    background-image: url("/images/magnifyingglass_small.png");
     background-repeat: no-repeat;
     background-position: 5px;
+    font-family: verdana, arial, sans-serif;
     font-size: 20px;
     width: 100%;
+    height: 30%;
+    border: 1px solid gray;
 }
 
+/* What happens when the user clicks on the search bar */
+#searchContainer #searchBar:focus {
+    outline: none;
+    border-color: black;
+}
 
 #about {
-    background-color: white;
-    text-align: center;
-    font-size: 25px;
-    padding: 10px;
     color: black;
-}
-
-#contactus {
     background-color: white;
-    text-align: center;
+    font-family: verdana, arial, sans-serif;
     font-size: 25px;
-    padding: 10px;
-    color: black;
-}
 
-
-a {
+    height: 60px;   /* Using "height" & "line-height" to center the text vertically */
+    line-height: 60px;
     text-decoration: none;
+    margin: 0px 0px 0px 10px;
 }
 
 
 
-
-.bottomNavBar {
-    background-color: yellow;
-}
 
 .bottomNavBar ul {
     list-style: none;
     text-align: center;
-    padding: 0;
-    margin: 0;
-    background-color: firebrick;
+    background-color: #33bbff;
 }
 
 .bottomNavBar ul li {
@@ -99,81 +101,203 @@ a {
     position: relative; /* this allows us to add an "absolute" position to the subitems of this li */
 }
 
+.bottomNavBar ul li img {
+    float: right;
+    height: 18px;
+    line-height: 18px;
+}
+
 .bottomNavBar ul li a {
     text-decoration: none;
     color: black;
-    margin: 15px;
+    padding: 6px;
     display: block;
+
     font-size: 20px;
-    font-family: sans-serif;
+    font-family: verdana, arial, sans-serif;
 }
 
 .bottomNavBar ul li:hover {
-    background-color: coral;
+    background-color: #b3e6ff;
+    cursor: pointer;
+}
+
+
+.bottomNavBar-submenu {
+    display: none;
+}
+
+/* for showing the 1st & 2nd submenus when you hover over its "parent" li */
+.bottomNavBar ul li:hover #bottomNavBar-mealTypes-submenu, .bottomNavBar ul li:hover #bottomNavBar-cuisine-submenu {
+    display: block;
+    position: absolute;
+}
+
+.bottomNavBar ul li:hover #bottomNavBar-mealTypes-submenu ul li,
+.bottomNavBar ul li:hover #bottomNavBar-cuisine-submenu ul li,
+.bottomNavBar ul li:hover .submenu_3 ul li,
+.bottomNavBar ul li:hover .submenu_4 ul li,
+.bottomNavBar ul li:hover .submenu_5 ul li {
+    width: 192px;
+}
+
+.bottomNavBar ul li #bottomNavBar-cuisine-submenu ul li:hover .submenu_3,
+.bottomNavBar ul li #bottomNavBar-cuisine-submenu ul li:hover .submenu_4,
+.bottomNavBar ul li #bottomNavBar-cuisine-submenu ul li:hover .submenu_5 {
+     display: block;
+     position: absolute;
+     margin-top: -36px;
+     margin-left: 192px;
+}
+
+
+
+
+#hamburgerMenu {
+    position: fixed;
+    height: 100%;
+    width: 70%;
+    display: none;
+    background-color: #292929;
+    overflow-y: scroll; /* Adds the ability to scroll (vertically) */
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+#hamburgerMenu::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#hamburgerMenu {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+#hamburgerMenu-contents ul {
+    list-style: none;
+}
+
+
+.hamburgerMenu-subcategory1 {
+    display: block;
+    width: 90%;
+    margin: auto;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid gray;
+    background-color: #292929;
+
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+    font-family: verdana, arial, sans-serif;
+}
+
+/* .hamburgerMenu-subcategory1:hover {
+    background-color: #4F4E4E;
+} */
+
+
+.down-arrow {
+    float: right;
+    background-color: #292929;
+    line-height: 26px;
+    height: 26px;
+}
+
+
+
+#mealTypes-submenu, #cuisines-submenu {
+    width: 90%;
+    margin: auto;
+    background-color: #292929;
+    display: none;
+}
+
+#mealTypes-submenu ul li, #cuisines-submenu ul li {
+    padding: 12px 0px 12px 20px;
+    background-color: #292929;
+    border-bottom: 1px solid gray;
+
+}
+
+.hamburgerMenu-subcategory2 {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-family: verdana, arial, sans-serif;
+}
+
+
+#americanFoods-submenu, #europeanFoods-submenu {
+    display: none;
+}
+
+#americanFoods-submenu ul li, #europeanFoods-submenu ul li {
+    padding: 8px 0px 8px 50px;
+}
+
+.hamburgerMenu-subcategory3 {
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    font-family: verdana, arial, sans-serif;
+}
+
+
+
+
+#magnifyingglassMenu {
+    position: fixed;
+    width: 100%;
+    display: none;
+    background-color: #292929;
+}
+
+#magnifyingglassMenu-contents {
+    flex: 1;
+    display: flex;
+}
+
+#searchBar-container {
+    flex: 1;
+    padding: 10px;
+}
+
+#searchButton-container {
+    padding: 10px;
+}
+
+#searchBar2 {
+    width: 100%;
+    box-sizing: border-box; /* TRULY understand what this does */
+    padding: 12px;
+    font-size: 20px;
+    /* border-radius: 5px; */
+    border: 1px solid gray;
+}
+
+#searchBar2:focus {
+    outline:none;
+    border-color: black;
+}
+
+button {
+    height: 100%;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 
 
 
-/* for hiding the 1st sub menu */
-.submenu_1, .submenu_2, .submenu_3, .submenu_4, .submenu_5 {
-    display: none;
-}
-
-/* .submenu_1 ul, .submenu_2 ul, .submenu_3 ul {
-    border-radius: 0px 0px 5px 5px;
-} */
-
-.submenu_1 ul li, .submenu_2 ul li, .submenu_3 ul li, .submenu_4 ul li, .submenu_5 ul li {
-    margin: 4px;
-}
-
-
-/* for showing the 1st sub menu when you hover over its "parent" li */
-.bottomNavBar ul li:hover .submenu_1, .bottomNavBar ul li:hover .submenu_2 {
-    display: block;
-    position: absolute;
-}
-
-.bottomNavBar ul li .submenu_2 ul li:hover .submenu_3,
-.bottomNavBar ul li .submenu_2 ul li:hover .submenu_4,
-.bottomNavBar ul li .submenu_2 ul li:hover .submenu_5 {
-     display: block;
-     position: absolute;
-     margin-top: -57px;
-     margin-left: 164px;
- }
-
-
-/* for displaying the 1st submenu vertically */
-.bottomNavBar ul li:hover .submenu_1 ul li,
-.bottomNavBar ul li:hover .submenu_3 ul li {
-    width: 160px;
-}
-
-.bottomNavBar ul li:hover .submenu_2 ul li,
-.bottomNavBar ul li:hover .submenu_4 ul li {
-    width: 165px;
-}
-
-.bottomNavBar ul li:hover .submenu_5 ul li {
-    width: 192px;
-}
-
-
-
-
-
-
-
 .bigSpaceBlock {
-    background-color: white;
     height: 50px;
 }
 
 .smallSpaceBlock {
-    background-color: white;
     height: 25px;
 }
 
@@ -181,6 +305,8 @@ a {
 
 #aboutHeader {
     text-align: center;
+    font-size: 30px;
+    font-family: sans-serif;
 }
 
 
@@ -189,32 +315,43 @@ a {
     margin: auto;
 }
 
+.aboutContainer p {
+    font-size: 25px;
+    font-family: sans-serif;
+    background-color: orange;
+}
+
 
 
 .feature {
     display: flex;
     width: 1000px;
     margin: auto;
-    background-color: white;
+    background-color: orange;
 }
 
 .leftContainer {
-    flex: 1;
-    background-color: white;
-    margin: 10px;
+    /* flex: 1;
+    margin: 10px; */
 }
 
 .rightContainer {
-    flex: 1;
-    background-color: white;
-    margin: 30px;
+    /* flex: 1;
+    margin: 10px; */
 }
 
+.rightContainer p {
+    font-size: 25px;
+    font-family: sans-serif;
+}
+
+.rightContainer-title {
+    font-family: sans-serif;
+}
 
 .img {
     max-width: 100%;
     max-height: 100%;
-
     min-width: 100%;
     min-height: 100%;
 }
@@ -236,59 +373,15 @@ a {
 
 
 
+@media (max-width: 799px) {
+    #hamburgerIcon-container, #magnifyingglassIcon-container {
+        display: inline-block;
+        margin: 10px;
+        width: 10%;
+        height: 10%;
+    }
 
-#hamburgerMenu {
-    display: none;
-    background-color: pink;
-}
-
-#hamburgerMenu ul {
-    list-style: none;
-}
-
-
-.hamburgerItem {
-    width: 90%;
-    margin: auto;
-
-    padding: 20px 0px 20px 0px;
-    background-color: green;
-
-    border-bottom: 1px solid red;
-    background-color: green;
-}
-
-#mealTypes-submenu, #cuisines-submenu {
-    width: 90%;
-    margin: auto;
-    background-color: yellow;
-    display: none;
-}
-
-#mealTypes-submenu ul li, #cuisines-submenu ul li {
-    padding: 20px 0px 20px 25px;
-}
-
-.down-arrow {
-    float: right;
-}
-
-
-#americanFoods-submenu, #europeanFoods-submenu {
-    background-color: red;
-    display: none;
-}
-
-#americanFoods-submenu ul li, #europeanFoods-submenu ul li {
-    padding: 15px 0px 15px 50px;
-}
-
-
-
-
-
-@media (max-width: 500px) {
-    .searchContainer {
+    #searchContainer {
         display: none;
     }
 
@@ -296,21 +389,210 @@ a {
         display: none;
     }
 
+    #logoContainer {
+        width: 80%;
+    }
+
+    #topNavBar {
+        top: 0;
+        position: sticky;
+        width: 100%;
+    }
+
     .bottomNavBar {
         display: none;
     }
 
-    #hamburgerIcon, #magnifyingglassIcon {
-        display: inline;
+
+    #searchBar2 {
+        padding: 5px;
     }
 
-    #randomRecipesContainer, #mainCoursesContainer, #sideDishesContainer, #dessertsContainer, #beveragesContainer {
-        width: 100%;
+    button {
+        padding: 5px;
+        font-size: 15px;
+    }
+
+    #searchBar2::placeholder {
+        font-size: 15px;
+    }
+
+    #hamburgerMenu-subcategory1-item1, #hamburgerMenu-subcategory1-item2 {
+        font-size: 18px;
+    }
+
+    .hamburgerMenu-subcategory2 {
+        font-size: 14px;
+    }
+
+    .hamburgerMenu-subcategory3 {
+        font-size: 11px;
+    }
+
+    #americanFoods-down-arrow, #europeanFoods-down-arrow {
+        height: 5%;
+    }
+
+
+
+    .aboutContainer {
+        width: 80%;
+    }
+
+    .feature {
+        width: 80%;
+    }
+
+    .feature ul {
+        width: 80%;
+        list-style: none;
+        /* display: flex;
+        justify-content: space-around; */
+    }
+
+    .leftContainer {
+        width: 125%;
+        height: 100%;
+        background-color: red;
+    }
+
+    #rightContainer-1 {
+        width: 125%;
+        height: 1%;
+        margin-top: 25px;
+        background-color: tomato;
+    }
+
+
+    #rightContainer-2 {
+        width: 125%;
+        height: 1%;
+        background-color: tomato;
     }
 }
 
-/* @media (min-width: 501px) {
-    #hamburgerMenu {
+
+@media (min-width: 800px) and (max-width: 1099px) {
+    #hamburgerIcon-container, #magnifyingglassIcon-container {
+        display: inline-block;
+    }
+
+    #searchContainer {
         display: none;
     }
-} */
+
+    #about {
+        display: none;
+    }
+
+    #topNavBar {
+        top: 0;
+        position: sticky;
+    }
+
+    .bottomNavBar {
+        display: none;
+    }
+
+
+    .aboutContainer {
+        width: 800px;
+    }
+
+    .feature {
+        width: 800px;
+    }
+
+    .feature ul {
+        width: 800px;
+        list-style: none;
+        /* display: flex;
+        justify-content: space-around; */
+    }
+
+    .leftContainer {
+        width: 800px;
+        height: 800px;
+        background-color: red;
+        /* margin: 20px 20px 20px 20px; */
+        /* text-align: center; */
+    }
+
+    #rightContainer-1 {
+        width: 800px;
+        height: 380px;
+        margin-top: 25px;
+    }
+
+    #rightContainer-2 {
+        width: 800px;
+        height: 180px;
+    }
+}
+
+
+@media (min-width: 1100px)  and (max-width: 1499px) {
+    #hamburgerMenu-contents, #magnifyingglassMenu-contents {
+        display: none;
+    }
+
+    #hamburgerMenu {
+        visibility: hidden;
+    }
+
+
+    .aboutContainer {
+        width: 1100px;
+    }
+
+    .feature {
+        width: 1100px;
+    }
+
+    .feature ul {
+        width: 1100px;
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .leftContainer, .rightContainer {
+        width: 500px;
+        height: 500px;
+        background-color: red;
+        margin: 20px 0px 20px 0px;
+    }
+}
+
+
+@media (min-width: 1500px) {
+    #hamburgerMenu-contents, #magnifyingglassMenu-contents {
+        display: none;
+    }
+
+    #hamburgerMenu {
+        visibility: hidden;
+    }
+
+    .aboutContainer {
+        width: 1400px;
+    }
+
+    .feature {
+        width: 1400px;
+    }
+
+    .feature ul {
+        width: 1400px;
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .leftContainer, .rightContainer {
+        width: 650px;
+        height: 650px;
+        background-color: red;
+        margin: 20px 0px 20px 0px;
+    }
+}

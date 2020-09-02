@@ -230,11 +230,11 @@ $(document).ready(function() {
 
     setupSearchMenu("magnifyingglassIcon", "magnifyingglassMenu")
 
-    setupNavBarEvents("hamburgerIcon", "hamburgerMenu")
-    setupNavBarEvents("mealTypes-down-arrow", "mealTypes-submenu")
-    setupNavBarEvents("cuisines-down-arrow", "cuisines-submenu")
-    setupNavBarEvents("americanFoods-down-arrow", "americanFoods-submenu")
-    setupNavBarEvents("europeanFoods-down-arrow", "europeanFoods-submenu")
+    setupNavBarEvents("hamburgerIcon-container", "hamburgerIcon", "hamburgerMenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item1", "hamburgerMenu-subcategory1-item1-arrow", "mealTypes-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory1-item2", "hamburgerMenu-subcategory1-item2-arrow", "cuisines-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item1", "americanFoods-down-arrow", "americanFoods-submenu")
+    setupNavBarEvents("hamburgerMenu-subcategory2-item2", "europeanFoods-down-arrow", "europeanFoods-submenu")
 })
 
 
@@ -248,32 +248,31 @@ function setupSearchMenu(buttonName, containerName) {
 
         let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
 
-        if (buttonURL === "magnifyingglass.png") toggleButton.src = "/images/close.png"
-        else toggleButton.src = "/images/magnifyingglass.png"
+        if (buttonURL === "magnifyingglass_big.png") toggleButton.src = "/images/close.png"
+        else toggleButton.src = "/images/magnifyingglass_big.png"
 
         $("#"+containerName).slideToggle()
     })
 }
 
 
-function setupNavBarEvents(buttonName, containerName) {
-    const toggleButton = document.getElementById(buttonName)
+function setupNavBarEvents(anchorTagName, imgTagName, containerName) {
+    const toggleButton = document.getElementById(anchorTagName)
+    const arrowImg_container = document.getElementById(imgTagName)
     const container = document.getElementById(containerName)
+
 
     toggleButton.addEventListener("click", () => {
         // closes the "magnifyingglass" menu (in case it's open when we try to open the hamburger menu)
         document.getElementById("magnifyingglassMenu").style.display = "none"
-        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass.png"
+        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass_big.png"
 
-        console.log(container)
+        let arrowURL = arrowImg_container.src.substr(arrowImg_container.src.lastIndexOf("/") + 1)
 
-
-        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
-
-        if (buttonURL === "hamburger.png") toggleButton.src = "/images/close.png"
-        else if (buttonURL === "close.png") toggleButton.src = "/images/hamburger.png"
-        else if (buttonURL === "up-arrow.png") toggleButton.src = "/images/down-arrow.png"
-        else toggleButton.src = "/images/up-arrow.png"
+        if (arrowURL === "hamburger.png") arrowImg_container.src = "/images/close.png"
+        else if (arrowURL === "close.png") arrowImg_container.src = "/images/hamburger.png"
+        else if (arrowURL === "up-arrow.png") arrowImg_container.src = "/images/down-arrow.png"
+        else arrowImg_container.src = "/images/up-arrow.png"
 
         if (containerName === "hamburgerMenu")
             $("#"+containerName).toggle("slide")
