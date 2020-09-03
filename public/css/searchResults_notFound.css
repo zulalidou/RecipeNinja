@@ -396,7 +396,7 @@ button {
     #errorMsgContainer {
         width: 80%;
         margin: auto;
-        background-color: yellow;
+        /* background-color: yellow; */
     }
 }
 
@@ -466,7 +466,7 @@ button {
     #errorMsgContainer {
         width: 400px;
         margin: auto;
-        background-color: yellow;
+        /* background-color: yellow; */
     }
 }
 
@@ -497,7 +497,7 @@ button {
     #errorMsgContainer {
         width: 700px;
         margin: auto;
-        background-color: yellow;
+        /* background-color: yellow; */
     }
 }
 
@@ -516,7 +516,7 @@ button {
     #errorMsgContainer {
         width: 1000px;
         margin: auto;
-        background-color: yellow;
+        /* background-color: yellow; */
     }
 }
 
@@ -534,6 +534,6 @@ button {
     #errorMsgContainer {
         width: 1400px;
         margin: auto;
-        background-color: yellow;
+        /* background-color: yellow; */
     }
 }

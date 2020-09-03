@@ -306,7 +306,7 @@ button {
 }
 
 #randomRecipesContainer {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -322,7 +322,7 @@ button {
 }
 
 #mainCoursesContainer {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -338,7 +338,7 @@ button {
 }
 
 #sideDishesContainer {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -354,7 +354,7 @@ button {
 }
 
 #dessertsContainer {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -370,7 +370,7 @@ button {
 }
 
 #beveragesContainer {
-    background-color: white;
+    /* background-color: white; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -406,7 +406,7 @@ button {
 
 .foodNameContainer {
     width: 300px;
-    background-color: white;
+    /* background-color: white; */
 }
 
 .foodName {
@@ -414,7 +414,7 @@ button {
     height: 100%;
     font-size: 18px;
     font-family: verdana, arial, sans-serif;
-    background-color: white;
+    /* background-color: white; */
     text-align: center;
     word-wrap: break-word;
 }

@@ -318,7 +318,7 @@ button {
 .aboutContainer p {
     font-size: 25px;
     font-family: sans-serif;
-    background-color: orange;
+    /* background-color: orange; */
 }
 
 
@@ -327,7 +327,7 @@ button {
     display: flex;
     width: 1000px;
     margin: auto;
-    background-color: orange;
+    /* background-color: orange; */
 }
 
 .leftContainer {
@@ -453,21 +453,21 @@ button {
     .leftContainer {
         width: 125%;
         height: 100%;
-        background-color: red;
+        /* background-color: red; */
     }
 
     #rightContainer-1 {
         width: 125%;
         height: 1%;
         margin-top: 25px;
-        background-color: tomato;
+        /* background-color: tomato; */
     }
 
 
     #rightContainer-2 {
         width: 125%;
         height: 1%;
-        background-color: tomato;
+        /* background-color: tomato; */
     }
 }
 
@@ -513,7 +513,7 @@ button {
     .leftContainer {
         width: 800px;
         height: 800px;
-        background-color: red;
+        /* background-color: red; */
         /* margin: 20px 20px 20px 20px; */
         /* text-align: center; */
     }
@@ -559,7 +559,7 @@ button {
     .leftContainer, .rightContainer {
         width: 500px;
         height: 500px;
-        background-color: red;
+        /* background-color: red; */
         margin: 20px 0px 20px 0px;
     }
 }
@@ -592,7 +592,7 @@ button {
     .leftContainer, .rightContainer {
         width: 650px;
         height: 650px;
-        background-color: red;
+        /* background-color: red; */
         margin: 20px 0px 20px 0px;
     }
 }

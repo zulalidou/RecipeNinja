@@ -308,7 +308,7 @@ button {
 }
 
 #myGridContainer {
-    background-color: green;
+    /* background-color: green; */
 
     display: flex;
     flex-wrap: wrap;
@@ -352,7 +352,7 @@ button {
 
 .foodNameContainer {
     width: 300px;
-    background-color: white;
+    /* background-color: white; */
 }
 
 .foodName {
@@ -360,7 +360,7 @@ button {
     height: 100%;
     font-size: 18px;
     font-family: verdana, arial, sans-serif;
-    background-color: white;
+    /* background-color: white; */
     text-align: center;
     word-wrap: break-word;
 }
@@ -387,7 +387,7 @@ button {
 
 
 #innerPaginationBlock {
-    background-color: tomato;
+    /* background-color: tomato; */
     padding: 10px;
     /* border: 1px solid black;
     border-radius: 3px; */

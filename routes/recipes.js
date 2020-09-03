@@ -18,13 +18,13 @@ let recipeSchema = new mongoose.Schema({
 
 
 router.get('/', function (req, res) {
-    let collectionName = req.url.substr(req.url.indexOf("=") + 1)
-    collectionName = collectionName.split("%20").join(" ")
+    let foodCategory = req.url.substr(req.url.indexOf("=") + 1)
+    foodCategory = foodCategory.split("%20").join(" ")
 
-    var recipe = mongoose.model(collectionName, recipeSchema)
+    var recipe = mongoose.model(foodCategory, recipeSchema)
 
     console.log("\n\n=====================")
-    console.log("collectionName: " + collectionName)
+    console.log("foodCategory: " + foodCategory)
 
     recipe.find()
         .then(function(doc) {
@@ -36,14 +36,15 @@ router.get('/', function (req, res) {
 
 
 router.post('/', function(req, res) {
-    let collectionName = req.body.collectionName
-    collectionName = collectionName.split("%20").join(" ")
+    console.log(req.body)
 
-    var recipe = mongoose.model(collectionName, recipeSchema)
+    let foodCategory = req.body.foodCategory
+    foodCategory = foodCategory.split("%20").join(" ")
+
+    var recipe = mongoose.model(foodCategory, recipeSchema)
 
 
     console.log("\n\n\n\n>>>>>>>>>>>>>>>>>>>>>")
-    console.log(req.body)
 
     for (let i = 0; i < req.body.recipes.length; i++) {
         let item = {

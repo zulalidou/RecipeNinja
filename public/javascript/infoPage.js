@@ -1,11 +1,31 @@
-async function getRecipeInfo(recipeID, foodSearched) {
+async function setupThePage(recipeID, recipeTitle) {
+    const recipeInfo = await getRecipeInfo(recipeID, recipeTitle)
+    console.log(recipeInfo)
+
+    displayRecipe(recipeInfo)
+    displayIngredients(recipeInfo.ingredients)
+    displayInstructions(recipeInfo.instructions)
+    displayNutritions(recipeInfo.nutrition)
+    displaySimilarRecipes(recipeInfo.similarRecipes)
+}
+
+
+async function getRecipeInfo(recipeID, recipeTitle) {
+    let recipeInfo = await getInfoFromDB(recipeID, recipeTitle)
+
+    if ($.isEmptyObject(recipeInfo)) {
+        recipeInfo = await getRecipeFromAPI(recipeID)
+        const similarRecipes = await getSimilarRecipes(recipeID, recipeTitle)
+        recipeInfo["similarRecipes"] = similarRecipes
+        storeInDB(recipeInfo)
+    }
+
+    return recipeInfo
+}
+
+
+async function getInfoFromDB(recipeID, recipeTitle) {
     // GET requests do not support bodies, and parameters must be sent in the URL
-
-    //"/recipes?collectionName=snacks,id=222482"
-    //"/recipes?collectionName=__DETAILED__RECIPE__INFO__,id=" + recipeID
-
-    console.log("hello")
-
     let recipeInfo = Object()
 
     await fetch("/recipeInfo?id=" + recipeID, {
@@ -18,124 +38,74 @@ async function getRecipeInfo(recipeID, foodSearched) {
         return response.json()
     })
     .then(data => {
-        console.log(data)
         recipeInfo = data
     })
 
-    console.log("world")
     return recipeInfo
-
-
-    // $.ajaxSetup({
-    //     async: false
-    // })
-    //
-    // let adsdf = []
-    //
-    // $.ajax({
-    //     type: "GET",
-    //     url: "/recipes",
-    //     data: {
-    //         collectionNmame: "__DETAILED__RECIPE__INFO__"
-    //     },
-    //     success: async function(result) {
-    //         console.log(result)
-    //
-    //         if (result.length === 0) {
-    //             console.log("0 recipes returned")
-    //
-    //             // let recipeInfo = await getFoodsFromAPI(recipeID)
-    //             // console.log(recipeInfo)
-    //
-    //             // const similarRecipes = await getSimilarRecipes(recipeID, foodSearched)
-    //             // console.log(similarRecipes)
-    //
-    //             // recipeInfo["similarRecipes"] = similarRecipes
-    //             // storeInDB("__DETAILED__RECIPE__INFO__", recipeInfo)
-    //             // console.log(result)
-    //             asdf = ["result"]
-    //             console.log(asdf)
-    //         }
-    //         else {
-    //             console.log(result)
-    //             asdf = result
-    //         }
-    //     },
-    //     error: function(e) {
-    //         console.log("ERROR: ", e)
-    //     }
-    // })
-    //
-    // $.ajaxSetup({
-    //     async: true
-    // })
-    //
-    // return asdf
 }
 
 
-async function getFoodsFromAPI(recipeID) {
+async function getRecipeFromAPI(recipeID) {
     const url = "https://api.spoonacular.com/recipes/" + recipeID + "/information?includeNutrition=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
     recipeInfo = Object()
-    console.log("1")
 
-    await $.getJSON(url, function(data) {
-        recipeInfo["id"] = recipeID
+    await fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-type': 'application/json'
+        }
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(data => {
+        recipeInfo["id"] = data.id
         recipeInfo["title"] = data.title
         recipeInfo["image"] = data.image
         recipeInfo["nutrition"] = getNutrients(data.nutrition.nutrients)
         recipeInfo["ingredients"] = getIngredients(data.extendedIngredients)
-        recipeInfo["dishTypes"] = data.dishTypes
         recipeInfo["cuisines"] = data.cuisines
         recipeInfo["diets"] = data.diets
+        recipeInfo["dishTypes"] = data.dishTypes
         recipeInfo["servings"] = data.servings
-        console.log("222")
 
         let instructions = (data.analyzedInstructions.length === 0) ? [] : data.analyzedInstructions[0].steps
         recipeInfo["instructions"] = getInstructions(instructions)
         recipeInfo["credits"] = getCredits(data)
     })
 
-    console.log("3")
     return recipeInfo
-    // }).done(function() {
-    //     // getSimilarRecipes(recipeInfo)
-    //     // displayFood(recipeInfo)
-    //
-    //     // displayIngredients(recipeInfo["ingredients"])
-    //     // displayInstructions(recipeInfo["instructions"])
-    //     // displayNutritions(recipeInfo["nutrition"])
-    // })
 }
 
 
-async function getSimilarRecipes(recipeID, foodSearched) {
+async function getSimilarRecipes(recipeID, recipeTitle) {
+    const url = "https://api.spoonacular.com/recipes/search?query=" + recipeTitle + "&instructionsRequired=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
     let similarRecipes = []
 
-    const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    let recipes = Object()
-
-    console.log("22")
-
-    await $.getJSON(url, function(data) {
-        console.log(data)
-        // console.log(similarRecipes)
-
-        for (let i = 0; i < data.results.length && similarRecipes.length < 3; i++) {
-            if (data.results[i].id === recipeID)
-                continue
-
-            const recipeInfo = {"id": data.results[i].id, "title": data.results[i].title, "image": "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"}
-            similarRecipes.push(recipeInfo)
+    await fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-type': 'application/json'
         }
-
-        console.log(similarRecipes)
     })
+    .then(response => {
+        return response.json()
+    })
+    .then(data => {
+        console.log(data)
+        const recipesFound = data.results
 
+        let i = 0
+        while (i < recipesFound.length) {
+            if (recipesFound[i].id === recipeID) continue
 
-    console.log("24")
-    console.log("similarRecipes.length = " + similarRecipes.length)
+            const recipeInfo = {"id": recipesFound[i].id, "title": recipesFound[i].title, "image": "https://spoonacular.com/recipeImages/" + recipesFound[i].id + "-556x370.jpg"}
+            similarRecipes.push(recipeInfo)
 
+            if (similarRecipes.length === 3) break
+            i++
+        }
+    })
 
     if (similarRecipes.length < 3) {
         const recommendedRecipes = await getRandomRecipes(Math.abs(similarRecipes.length - 3))
@@ -145,87 +115,35 @@ async function getSimilarRecipes(recipeID, foodSearched) {
             similarRecipes.push(recommendedRecipes[i])
     }
 
-    console.log(similarRecipes)
     return similarRecipes
-
-    // .done(function() {
-    //     console.log(similarRecipes.length)
-    //
-    //     // if (similarRecipes.length < 3) {
-    //     //     let randomRecipes = await getRandomRecipes(Math.abs(similarRecipes.length - 3))
-    //     //
-    //     //     for (let i = 0; i < randomRecipes.length; i++) {
-    //     //         console.log("asdf")
-    //     //         similarRecipes.push(randomRecipes[i])
-    //     //     }
-    //     //
-    //     //     console.log(randomRecipes)
-    //     //     console.log(similarRecipes)
-    //     //     recipeInfo["similarRecipes"] = similarRecipes
-    //     // }
-    //
-    //     //================================================================
-    //
-    //     // getSimilarRecipes(recipeInfo)
-    //     // displayFood(recipeInfo)
-    //
-    //     // displayIngredients(recipeInfo["ingredients"])
-    //     // displayInstructions(recipeInfo["instructions"])
-    //     // displayNutritions(recipeInfo["nutrition"])
-    // })
 }
 
 
-async function getRandomRecipes(recipesNum) {
-    recipes = []
-    console.log("before GRR()")
+async function getRandomRecipes(recipesNeeded) {
+    randomRecipes = []
 
-    await $.ajax({
-        type: "GET",
-        url: "/recipes",
-        data: {
-            collectionName: "random foods"
-        },
-        success: function(result) {
-            // console.log(result)
-
-            while (recipes.length != recipesNum) {
-                const randomIdx = Math.ceil(Math.random() * result.length)
-                recipes.push(result[randomIdx])
-                delete recipes[randomIdx]
-            }
-
-            console.log("hey hey hey")
-        },
-        error: function(e) {
-            console.log("ERROR: ", e)
+    await fetch("/recipes?foodCategory=random foods", {
+        method: "GET",
+        headers: {
+            'Content-type': 'application/json'
+        }
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(recipesFound => {
+        while (randomRecipes.length != recipesNeeded) {
+            const randomIdx = Math.ceil(Math.random() * recipesFound.length)
+            randomRecipes.push(recipesFound[randomIdx])
+            delete recipesFound[randomIdx]
         }
     })
 
-    console.log("after GRR()")
-    // console.log(recipes)
-
-    return recipes
+    return randomRecipes
 }
 
 
-
 function storeInDB(recipeInfo) {
-    console.log("before storeInDB()")
-
-    // $.ajax({
-    //     type : "POST",
-    //     contentType : "application/json",
-    //     url : "/recipes",
-    //     data: JSON.stringify({collectionName: "__DETAILED__RECIPE__INFO__", recipeInfo: recipeInfo}),//JSON.stringify(recipes),
-    //     success: function(result) {
-    //         console.log("SUCCESS: ", result)
-    //     },
-    //     error : function(e) {
-    //         console.log("ERROR: ", e)
-    //     }
-    // })
-
     fetch("/recipeInfo", {
         method: "POST",
         body: JSON.stringify(recipeInfo),
@@ -240,15 +158,7 @@ function storeInDB(recipeInfo) {
         console.log(data)
         foods = data
     })
-
-
-    console.log("aFtEr storeInDB()")
 }
-
-
-
-
-
 
 
 function getNutrients(nutrientsArray) {
@@ -257,15 +167,23 @@ function getNutrients(nutrientsArray) {
     for (let i = 0; i < nutrientsArray.length; i++)
         storedNutrients.push(" " + nutrientsArray[i].title + " = " + nutrientsArray[i].amount + " " + nutrientsArray[i].unit + " |")
 
-    return storedNutrients.sort()
+    storedNutrients = storedNutrients.sort()
+    storedNutrients[storedNutrients.length-1] = storedNutrients[storedNutrients.length-1].replace(" |", "")
+    return storedNutrients
 }
 
 
 function getIngredients(ingredientsArray) {
     let storedIngredients = []
 
-    for (let i = 0; i < ingredientsArray.length; i++)
-        storedIngredients.push(ingredientsArray[i].name + " (" + ingredientsArray[i].amount + " " + ingredientsArray[i].unit + ")")
+    for (let i = 0; i < ingredientsArray.length; i++) {
+        let ingredient = ingredientsArray[i].name + " (" + ingredientsArray[i].amount
+
+        if (ingredientsArray[i].unit === "") ingredient += ")"
+        else ingredient += " " + ingredientsArray[i].unit + ")"
+
+        storedIngredients.push(ingredient)
+    }
 
     return storedIngredients
 }
@@ -285,7 +203,6 @@ function getInstructions(instructionsArray) {
         let equipmentsForThisStep = []
         for (let j = 0; j < instructionsArray[i].equipment.length; j++)
             equipmentsForThisStep.push(instructionsArray[i].equipment[j].name)
-
 
         stepInfo.push(ingredientsForThisStep)
         stepInfo.push(equipmentsForThisStep)
@@ -313,21 +230,15 @@ function getCredits(data) {
 
 
 
+
 function createElement_P(className, rowNumber) {
     let pBlock = document.createElement("p")
     pBlock.setAttribute("class", className)
 
-    if(className==="nutrient") {
+    if(className === "nutrient") {
         pBlock.style.display = "inline-block"
         pBlock.style.whiteSpace = "pre"
     }
-
-    // if (className === "ingredient" || className === "nutrient") {
-    //     pBlock.style.padding = "5px"
-    //     pBlock.style.backgroundColor = (rowNumber % 2 == 0) ? "lightblue" : "white"
-    // }
-    // else
-    //     pBlock.style.backgroundColor = "gray"
 
     return pBlock
 }
@@ -337,10 +248,10 @@ function createElement_P(className, rowNumber) {
 function createElement_DIV(selector, selectorName) {
     let divBlock = document.createElement("div")
 
-    if (selectorName === "spaceBlock")
-        divBlock.style.height = "20px"
-    else
-        divBlock.setAttribute(selector, selectorName)
+    // if (selectorName === "spaceBlock")
+    //     divBlock.style.height = "20px"
+    // else
+    divBlock.setAttribute(selector, selectorName)
 
     return divBlock
 }
@@ -362,7 +273,7 @@ function createElement_IMG(source) {
 
 
 
-function displayFood(recipeInfo) {
+function displayRecipe(recipeInfo) {
     document.getElementById("recipeTitle").innerHTML = recipeInfo["title"].bold()
     document.getElementById("recipeTitle").style.textAlign = "center"
     document.getElementById("currentFood-img").src = recipeInfo["image"]
@@ -376,47 +287,41 @@ function displayFood(recipeInfo) {
 }
 
 
-function addFoodFact(text, factsArray) {
-    let block = createElement_P("fact", null)
+// "facts" will either be an array containing some facts about the recipe (such as cuisines it falls under, etc),
+// or, it'll be a single number (representing the amount of servings of the recipe)
+function addFoodFact(text, facts) {
+    let block = createElement_P("foodFact", null)
 
-    // console.log(typeof factsArray)
-    // console.log(factsArray)
-
-    if (typeof factsArray !== "object")
-        text += factsArray
-    else {
-        if (factsArray.length === 0)
+    if (typeof facts === "number")
+        text += facts
+    else { // typeof facts === object (which is to say "facts" is an array)
+        if (facts.length === 0)
             text += "N / A"
+        else {
+            for (let i = 0; i < facts.length; i++) {
+                text += facts[i]
 
-        for (let i = 0; i < factsArray.length; i++) {
-            text += factsArray[i]
-
-            if (i !== factsArray.length - 1)
-                text += ", "
+                if (i !== facts.length - 1)
+                    text += ", "
+            }
         }
     }
 
     let textNode = document.createTextNode(text)
     block.appendChild(textNode)
-    // block.style.wordWrap = "break-word"
     document.getElementById("factsContainer").appendChild(block)
-    //document.getElementById("factsContainer").appendChild(createElement_DIV("class", "spaceBlock"))
-
-    console.log(text)
 }
 
 
 function addFoodCredits(credits) {
+    console.log(credits)
+
     for (let i = 0; i < credits.length; i++) {
-        let block = createElement_P("fact", null)
+        let block = createElement_P("foodFact", null)
         block.innerHTML = credits[i]
         document.getElementById("factsContainer").appendChild(block)
     }
 }
-
-
-
-
 
 
 function displayIngredients(ingredientsArray) {
@@ -478,8 +383,6 @@ function displayInstructions(instructionsArray) {
         const equipmentsText = document.createTextNode(text)
         equipmentsBlock.appendChild(equipmentsText)
 
-
-
         document.getElementById("instructionsSection").appendChild(spaceBlock)
         document.getElementById("instructionsSection").appendChild(stepNumberBlock)
         document.getElementById("instructionsSection").appendChild(instructionBlock)
@@ -487,7 +390,6 @@ function displayInstructions(instructionsArray) {
         document.getElementById("instructionsSection").appendChild(equipmentsBlock)
     }
 }
-
 
 
 function displayNutritions(nutritionArray) {
@@ -500,118 +402,7 @@ function displayNutritions(nutritionArray) {
 }
 
 
-
-// function displayCredits(creditsArray) {
-//     const spaceBlock = createElement_P("div")
-//     spaceBlock.style.height = "20px"
-//
-//     const titleBlock = createElement_P("credit", null)
-//     titleBlock.style.height = "20px"
-//     const title = document.createTextNode("Title: " + creditsArray[0])
-//     titleBlock.appendChild(title)
-//
-//     const creatorBlock = createElement_P("credit", null)
-//     creatorBlock.style.height = "20px"
-//     const creator = document.createTextNode("Creator: " + creditsArray[1])
-//     creatorBlock.appendChild(creator)
-//
-//     const sourceBlock = createElement_P("credit", null)
-//     sourceBlock.style.height = "20px"
-//     const source = document.createTextNode("Source: " + creditsArray[2])
-//     sourceBlock.appendChild(source)
-//
-//     const licenseBlock = createElement_P("credit", null)
-//     licenseBlock.style.height = "20px"
-//     const license = document.createTextNode("License: " + creditsArray[3])
-//     licenseBlock.appendChild(license)
-//
-//     document.getElementById("creditsSection").appendChild(spaceBlock)
-//     document.getElementById("creditsSection").appendChild(titleBlock)
-//     document.getElementById("creditsSection").appendChild(creatorBlock)
-//     document.getElementById("creditsSection").appendChild(sourceBlock)
-//     document.getElementById("creditsSection").appendChild(licenseBlock)
-// }
-
-
-// function getRecipes(foodSearched, currentRecipeID) {
-//     let recipesFound = null
-//
-//     if (sessionStorage.getItem(foodSearched) === null)
-//         recipesFound = searchForFood(foodSearched)
-//     else
-//         recipesFound = JSON.parse(sessionStorage.getItem(foodSearched))
-//
-//
-//     let recipesToDisplay = []
-//
-//     //console.log(recipesFound)
-//     let displayableRecipes = (jQuery.isEmptyObject(recipesFound)) ? 0 : recipesFound[1].length - 1
-//     //console.log(displayableRecipes)
-//
-//     if (displayableRecipes <= 2)
-//         recipesToDisplay = getRandomRecipes(Math.abs(displayableRecipes - 3))
-//
-//     while (recipesToDisplay.length < 3) {
-//         const pageNumber = Math.floor(Math.random() * (recipesFound.pagesNeeded)) + 1
-//         const recipeNumber = Math.floor(Math.random() * recipesFound[pageNumber].length)
-//
-//         if (recipesToDisplay.indexOf(recipesFound[pageNumber][recipeNumber]) === -1 && parseInt(recipesFound[pageNumber][recipeNumber][0]) !== parseInt(currentRecipeID))
-//             recipesToDisplay.unshift(recipesFound[pageNumber][recipeNumber])
-//     }
-//
-//     return recipesToDisplay
-// }
-
-
-
-// function searchForFood(foodSearched) {
-//     $.ajaxSetup({
-//         async: false
-//     })
-//
-//     const url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
-//     let recipes = Object()
-//
-//     $.getJSON(url, function(data) {
-//         const totalResults = (data.number <= data.results.length) ? data.number : data.results.length
-//         const pagesNeeded = Math.ceil(totalResults / 12)
-//
-//         let currentPage = 1
-//         let pageRecipes = []
-//
-//         if (totalResults !== 0) {
-//             for (let i = 0; i < data.results.length; i++) {
-//                 const recipeInfo = [data.results[i].id, [data.results[i].title], "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"]
-//                 pageRecipes.push(recipeInfo)
-//
-//                 if ((i+1) % 12 == 0) {
-//                     recipes[currentPage] = pageRecipes
-//                     currentPage++
-//                     pageRecipes = []
-//                 }
-//             }
-//
-//             if (pageRecipes.length > 0)
-//                 recipes[currentPage] = pageRecipes
-//
-//             recipes["totalResults"] = totalResults
-//             recipes["pagesNeeded"] = pagesNeeded
-//         }
-//     })
-//
-//     sessionStorage.setItem(foodSearched, JSON.stringify(recipes))
-//
-//     $.ajaxSetup({
-//         async: true
-//     })
-//
-//     return recipes
-// }
-
-
-
-
-function displaySimilarRecipes(foodSearched, recipesToDisplay) {
+function displaySimilarRecipes(recipesToDisplay) {
     document.getElementById("similarRecipesHeader").innerHTML = "Other Recipes You May Like"
 
     console.log(recipesToDisplay)
@@ -642,111 +433,19 @@ function displaySimilarRecipes(foodSearched, recipesToDisplay) {
 
 
 function infoPage(recipeInfo) {
-    window.location = "infoPage.html?id=" + recipeInfo["id"] + ",foodName=" + recipeInfo["title"]
+    window.location = "infoPage.html?id=" + recipeInfo["id"] + ",recipeTitle=" + recipeInfo["title"]
 }
 
 
 
 $(function() {
-    let windowParameters = window.location.search.replace(/\%20/g, " ") //It takes everything in the query string up to the 1st '=', and replaces them with ''
+    //It takes everything in the query string up to the 1st '=', and replaces them with ''
+    let windowParameters = window.location.search.replace(/\%20/g, " ")
 
     windowParameters = windowParameters.split(",")
-    // console.log(windowParameters)
 
     const recipeID = parseInt(windowParameters[0].substring(windowParameters[0].indexOf("=") + 1))
     const recipeTitle = windowParameters[1].substring(windowParameters[1].indexOf("=") + 1)
 
-    // console.log(recipeID)
-    // console.log(recipeTitle)
-
-    setup(recipeID, recipeTitle)
-    navBarStuff()
-
-    // ======================================================================================
-    // EVERYTHING BELOW THIS COMMENT WAS ALREADY COMMENTED OUT BEFORE I STARTED WORKING
-    // ON THIS PAGE.. THIS DAY.. THE 21ST OF AUGUST, 2020
-    // ======================================================================================
-
-    // displayFood(recipeInfo)
-    // displayIngredients(recipeInfo["ingredients"])
-    // displayInstructions(recipeInfo["instructions"])
-    // displayNutritions(recipeInfo["nutrition"])
-
-    // const recipesToDisplay = getRecipes(recipeInfo["title"], recipeID)
-    // displayRecipes(recipeInfo["title"], recipesToDisplay)
+    setupThePage(recipeID, recipeTitle)
 })
-
-
-async function setup(recipeID, recipeTitle) {
-    let res = await getRecipeInfo(recipeID, recipeTitle)
-
-    if ($.isEmptyObject(res)) {
-        console.log("'twas empty")
-        res = await getFoodsFromAPI(recipeID)
-        const similarRecipes = await getSimilarRecipes(recipeID, recipeTitle)
-        console.log(similarRecipes)
-
-        res["similarRecipes"] = similarRecipes
-        storeInDB(res)
-    }
-
-    displayFood(res)
-    displayIngredients(res.ingredients)
-    displayInstructions(res.instructions)
-    displayNutritions(res.nutrition)
-    displaySimilarRecipes(recipeTitle, res.similarRecipes)
-    console.log(res)
-}
-
-
-function navBarStuff() {
-    setupSearchMenu("magnifyingglassIcon", "magnifyingglassMenu")
-
-    setupNavBarEvents("hamburgerIcon-container", "hamburgerIcon", "hamburgerMenu")
-    setupNavBarEvents("hamburgerMenu-subcategory1-item1", "hamburgerMenu-subcategory1-item1-arrow", "mealTypes-submenu")
-    setupNavBarEvents("hamburgerMenu-subcategory1-item2", "hamburgerMenu-subcategory1-item2-arrow", "cuisines-submenu")
-    setupNavBarEvents("hamburgerMenu-subcategory2-item1", "americanFoods-down-arrow", "americanFoods-submenu")
-    setupNavBarEvents("hamburgerMenu-subcategory2-item2", "europeanFoods-down-arrow", "europeanFoods-submenu")
-}
-
-function setupSearchMenu(buttonName, containerName) {
-    const toggleButton = document.getElementById(buttonName)
-    const container = document.getElementById(containerName)
-
-    toggleButton.addEventListener("click", () => {
-        document.getElementById("hamburgerMenu").style.display = "none"
-        document.getElementById("hamburgerIcon").src = "/images/hamburger.png"
-
-        let buttonURL = toggleButton.src.substr(toggleButton.src.lastIndexOf("/") + 1)
-
-        if (buttonURL === "magnifyingglass_big.png") toggleButton.src = "/images/close.png"
-        else toggleButton.src = "/images/magnifyingglass_big.png"
-
-        $("#"+containerName).slideToggle()
-    })
-}
-
-function setupNavBarEvents(anchorTagName, imgTagName, containerName) {
-    const toggleButton = document.getElementById(anchorTagName)
-    const arrowImg_container = document.getElementById(imgTagName)
-    const container = document.getElementById(containerName)
-
-
-    toggleButton.addEventListener("click", () => {
-        // closes the "magnifyingglass" menu (in case it's open when we try to open the hamburger menu)
-        document.getElementById("magnifyingglassMenu").style.display = "none"
-        document.getElementById("magnifyingglassIcon").src = "/images/magnifyingglass_big.png"
-
-        let arrowURL = arrowImg_container.src.substr(arrowImg_container.src.lastIndexOf("/") + 1)
-
-        if (arrowURL === "hamburger.png") arrowImg_container.src = "/images/close.png"
-        else if (arrowURL === "close.png") arrowImg_container.src = "/images/hamburger.png"
-        else if (arrowURL === "up-arrow.png") arrowImg_container.src = "/images/down-arrow.png"
-        else arrowImg_container.src = "/images/up-arrow.png"
-
-        if (containerName === "hamburgerMenu")
-            $("#"+containerName).toggle("slide")
-        else
-            $("#"+containerName).slideToggle()
-    })
-}

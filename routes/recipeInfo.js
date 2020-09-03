@@ -26,10 +26,10 @@ let recipeSchema = new mongoose.Schema({
 })
 
 router.get('/', function (req, res) {
-    const collectionName = "__DETAILED__RECIPE__INFO__"
+    const foodCategory = "__DETAILED__RECIPE__INFO__"
     let recipeID = req.url.substr(req.url.indexOf("=") + 1)
 
-    var recipe = mongoose.model(collectionName, recipeSchema)
+    var recipe = mongoose.model(foodCategory, recipeSchema)
 
     console.log("recipeID = " + recipeID)
 
