@@ -2,10 +2,11 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Hello</title>
-        <link rel="stylesheet" href="/css/infoPage.css"></link>
+        <meta name="description" content="On this page you'll find more information about the recipe that you clicked on.">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <title></title> <!-- this title tag will be "filled out" in infoPage.js -->
+        <link rel="icon" href="/images/tablogo.ico">
+        <link rel="stylesheet" href="/css/infoPage.css"></link>
     </head>
 
     <body>
@@ -191,7 +192,7 @@
 
         <div id="ingredients-and-instructionsSection">
             <ul>
-                <li>
+                <li id="left">
                     <div id="ingredientsSection">
                         <h2 id="ingredientsHeader">Ingredients</h2>
                         <div class="smallSpaceBlock"></div>
@@ -199,7 +200,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li id="right">
                     <div id="instructionsSection">
                         <h2 id="instructionsHeader">Instructions</h2>
                         <!-- The instructions get added in the script file -->
@@ -241,7 +242,7 @@
 
         <footer>
             <p id="myFooter">
-                &copy; foodconnoisseur Inc.
+                &copy; Foodconnoisseur Inc.
             </p>
         </footer>
 

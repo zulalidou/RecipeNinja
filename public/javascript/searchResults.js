@@ -1,53 +1,31 @@
 async function setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage) {
-    let recipes = await getRecipesFromDB(foodSearched.toLowerCase())
+    let recipes = await getRecipes(API_PARAMETER, foodSearched.toLowerCase())
+
+    console.log(foodSearched)
 
     if (recipes.length === 0) {
-        console.log("holas")
-        recipes = await getRecipesFromAPI(API_PARAMETER, foodSearched.toLowerCase())
-
-        if (recipes.length === 0)
-            noResultsFoundPage(foodSearched)
-        else
-            storeInDB(API_PARAMETER, foodSearched, recipes)
-
+        console.log("no search results")
+        noResultsFoundPage(foodSearched)
     }
-
-    displayMeals(foodSearched, recipes, currentPage)
-    setupPageTabs(currentPage, Math.ceil(recipes.length / 12))
-    linkPagerItems(foodSearched, currentPage, Math.ceil(recipes.length / 12))
-
-    // console.log(recipes)
-
+    else {
+        document.title = "Search results for \"" + foodSearched + "\" | Foodconnoisseur"
+        displayMeals(foodSearched, recipes, currentPage)
+        setupPageTabs(currentPage, Math.ceil(recipes.length / 12))
+        linkPagerItems(foodSearched, currentPage, Math.ceil(recipes.length / 12))
+    }
 }
 
 
-async function getRecipesFromDB(foodSearched) {
-    if (foodSearched.length === 0) return
+// API_PARAMETER == ("type" || "cuisine")
+async function getRecipes(API_PARAMETER, foodSearched) {
+    // if (foodSearched.length === 0) return
 
-    let recipes = []
-
-    await fetch("/recipes?foodCategory=" + foodSearched, {
-        method: "GET",
-        headers: {
-            'Content-type': 'application/json'
-        }
-    })
-    .then(response => {
-        return response.json()
-    })
-    .then(recipesFound => {
-        recipes = recipesFound
-    })
-
-    return recipes
-}
-
-
-async function getRecipesFromAPI(API_PARAMETER, foodSearched) {
     let url = ""
 
-    if (API_PARAMETER !== null) url = "https://api.spoonacular.com/recipes/complexSearch?" + API_PARAMETER + "=" + foodSearched + "&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
-    else url = "https://api.spoonacular.com/recipes/search?query=" + foodSearched + "&instructionsRequired=true&number=100&apiKey=c27618bedd4b4071b925b766be18e0a4"
+    if (API_PARAMETER === null)
+        url = "/recipes?foodCategory=" + foodSearched
+    else
+        url = "/recipes?" + API_PARAMETER + "=" + foodSearched
 
     let recipes = []
 
@@ -62,33 +40,11 @@ async function getRecipesFromAPI(API_PARAMETER, foodSearched) {
     })
     .then(data => {
         console.log(data)
-
-        for (let i = 0; i < data.results.length; i++) {
-            let recipeInfo = Object()
-
-            if (API_PARAMETER !== null)
-                recipeInfo = {"id": data.results[i].id, "title": data.results[i].title, "image": (data.results[i].image === undefined) ? "/images/plate.png" : data.results[i].image}
-            else
-                recipeInfo = {"id": data.results[i].id, "title": data.results[i].title, "image": "https://spoonacular.com/recipeImages/" + data.results[i].id + "-556x370.jpg"}
-
-            recipes.push(recipeInfo)
-        }
+        recipes = data
     })
 
+    console.log(recipes)
     return recipes
-}
-
-
-function storeInDB(API_PARAMETER, foodSearched, recipes) {
-    const infoToStore = {foodCategory: (API_PARAMETER !== null) ? API_PARAMETER : foodSearched, recipes: recipes}
-
-    fetch("/recipes?", {
-        method: "POST",
-        body: JSON.stringify(infoToStore),
-        headers: {
-            'Content-type': 'application/json'
-        }
-    })
 }
 
 
@@ -158,7 +114,6 @@ function setupPageTabs(currentPage, pagesNeeded) {
 }
 
 
-
 // selector == "id" or "class"
 function createElement(tagName, selector, selectorName, active) {
     const block = document.createElement(tagName)
@@ -171,7 +126,6 @@ function createElement(tagName, selector, selectorName, active) {
     block.style.cursor = "pointer"
 
     if (active) {
-        //console.log("so long, farewell. auf wiedersehen, adieu!")
         block.style.color = "white"
         block.style.backgroundColor = "dodgerblue"
     }
@@ -277,12 +231,4 @@ $(function() {
         console.log("search item was empty")
         // maybe make it so that the user is sent to the "no results found" page
     }
-
-
-    // const allRecipesFound = JSON.parse(sessionStorage.getItem(foodSearched))
-
-    // setupPageTabs(currentPage, allRecipesFound["pagesNeeded"])
-    // showRecipes(foodSearched, allRecipesFound, allRecipesFound["totalResults"], currentPage)
-
-    // linkPagerItems(foodSearched, currentPage, allRecipesFound["pagesNeeded"])
 })

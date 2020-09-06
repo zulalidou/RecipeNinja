@@ -1,4 +1,5 @@
 function displayMessage(foodSearched) {
+    document.title = "Search results for \"" + foodSearched + "\" | Foodconnoisseur"
     document.getElementById("searchResultsTag").innerHTML = "No results found for \"" + foodSearched.bold() + "\""
 }
 
