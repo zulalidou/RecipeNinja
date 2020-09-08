@@ -1,5 +1,5 @@
 const express = require('express')
-require('dotenv').config()
+// require('dotenv').config()
 // const mongoose = require('mongoose')
 const bodyParser = require('body-parser') // body parser middleware. allows access to the "req.body" property
 const path = require('path')
