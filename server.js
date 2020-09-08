@@ -1,6 +1,6 @@
 const express = require('express')
-// require('dotenv').config()
-// const mongoose = require('mongoose')
+require('dotenv').config()
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser') // body parser middleware. allows access to the "req.body" property
 const path = require('path')
 const app = express()
@@ -11,7 +11,9 @@ const recipesRoute = require("./routes/recipes")
 const recipeInfoRoute = require("./routes/recipeInfo")
 const aboutRoute = require("./routes/about")
 
-// mongoose.connect("mongodb://localhost:27017/nodetest1")
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/foodconnoisseurDB")
+//"mongodb://localhost:27017/foodconnoisseurDB"
+
 // mongoose.model("usercollection", {username: String, email: String})
 
 //const db = require('./db')
