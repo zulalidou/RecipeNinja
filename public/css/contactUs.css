@@ -50,7 +50,7 @@ header {
 .searchContainer input[type=text] {
     box-sizing: border-box; /* TRULY understand what this does */
     padding: 12px 30px;
-    background-image: url("/images/magnifyingglass.png");
+    background-image: url("../images/magnifyingglass.png");
     background-repeat: no-repeat;
     background-position: 5px;
     font-size: 20px;

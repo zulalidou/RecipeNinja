@@ -1,13 +1,16 @@
+// Retrieves the recipes needed, and displays them.
 async function displayOnMainPage(foodSearched, recipeNum, container) {
-    const foods = await getFoods(foodSearched, recipeNum, container)
-    console.log(foods)
-    displayMeals(foods, recipeNum, container)
+    const recipes = await getRecipes(foodSearched, recipeNum, container)
+    displayRecipes(recipes, recipeNum, container)
 }
 
 
-async function getFoods(foodSearched, recipeNum, container) {
-    foods = []
-    console.log("one")
+// Retrieves the recipes needed. It performs a request to the "recipes" route on the server, the server
+// checks to see if the recipes are stored within the DB. If yes, it simply returns the recipes. If no,
+// a call is made to the API (on the server) to retrieve the necessary recipes, stores the recipes in the
+// DB, and returns the recipes to the browser.
+async function getRecipes(foodSearched, recipeNum, container) {
+    recipes = []
 
     await fetch("/recipes?foodSearched=" + foodSearched, {
         method: "GET",
@@ -19,26 +22,23 @@ async function getFoods(foodSearched, recipeNum, container) {
         return response.json()
     })
     .then(data => {
-        foods = data
-        // console.log(foods)
+        recipes = data
     })
 
-    console.log("two")
-
-    return foods
+    return recipes
 }
 
 
-function displayMeals(foods, recipeNum, container) {
-
+// Displays the recipes passed to it.
+function displayRecipes(recipes, recipeNum, container) {
     for (let i = 0; i < recipeNum; i++) {
         const foodImg = createElement("img", "foodImg")
-        foodImg.src = foods[i]["image"]
+        foodImg.src = recipes[i]["image"]
         const foodImgContainer = createElement("div", "foodImgContainer")
         foodImgContainer.appendChild(foodImg)
 
         const foodName = createElement("p", "foodName")
-        foodName.innerHTML = foods[i]["title"]
+        foodName.innerHTML = recipes[i]["title"]
         const foodNameContainer = createElement("div", "foodNameContainer")
         foodNameContainer.appendChild(foodName)
 
@@ -49,12 +49,13 @@ function displayMeals(foods, recipeNum, container) {
         document.getElementById(container).appendChild(recipeBox)
 
         recipeBox.addEventListener("click", function() {
-            infoPage(foods[i]);
+            infoPage(recipes[i]);
         })
     }
 }
 
 
+// Creates an HTML element (based on the tag passed), and adds a class name to it.
 function createElement(tagName, className) {
     const block = document.createElement(tagName)
     block.setAttribute("class", className)
@@ -62,12 +63,14 @@ function createElement(tagName, className) {
 }
 
 
+// Directs the user's window to the "infoPage" file if the user clicks on a recipe.
 function infoPage(recipeInfo) {
     window.location = "/html/infoPage.html?id=" + recipeInfo["id"] + ",foodName=" + recipeInfo["title"]
 }
 
 
-$(document).ready(function() {
+// Displays the recipes once the (static) DOM elements have been loaded
+$(function() {
     const recipeNum = 12
     displayOnMainPage("random foods", recipeNum, "randomRecipesContainer")
     displayOnMainPage("main courses", recipeNum, "mainCoursesContainer")

@@ -1,7 +1,6 @@
+// Retrieves the recipe's info, and has them displayed on the page.
 async function setupThePage(recipeID, recipeTitle) {
-    // console.log("1")
     const recipeInfo = await getRecipeInfo(recipeID, recipeTitle)
-    // console.log(recipeInfo)
 
     document.title = recipeInfo.title + " | Foodconnoisseur"
     displayRecipe(recipeInfo)
@@ -12,6 +11,10 @@ async function setupThePage(recipeID, recipeTitle) {
 }
 
 
+// Retrieves the recipes needed. It performs a request to the "recipeInfo" route on the server, the server
+// checks to see if the recipes are stored within the DB. If yes, it simply returns the recipes. If no,
+// a call is made to the API (on the server) to retrieve the necessary recipe info, stores the recipe info
+// in the DB, and returns the recipe info to the browser.
 async function getRecipeInfo(recipeID, recipeTitle) {
     let recipeInfo = Object()
 
@@ -77,6 +80,7 @@ function createElement_IMG(source) {
 }
 
 
+// Display the recipe's info
 function displayRecipe(recipeInfo) {
     document.getElementById("recipeTitle").innerHTML = recipeInfo["title"].bold()
     document.getElementById("recipeTitle").style.textAlign = "center"
@@ -118,8 +122,6 @@ function addFoodFact(text, facts) {
 
 
 function addFoodCredits(credits) {
-    console.log(credits)
-
     for (let i = 0; i < credits.length; i++) {
         let block = createElement_P("foodFact", null)
         block.innerHTML = credits[i]
@@ -209,8 +211,6 @@ function displayNutritions(nutritionArray) {
 function displaySimilarRecipes(recipesToDisplay) {
     document.getElementById("similarRecipesHeader").innerHTML = "Other Recipes You May Like"
 
-    console.log(recipesToDisplay)
-
     for (let i = 0; i < recipesToDisplay.length; i++) {
         const foodImg = createElement_IMG(recipesToDisplay[i]["image"])
         const foodImgContainer = createElement_DIV("class", "foodImgContainer")
@@ -230,7 +230,6 @@ function displaySimilarRecipes(recipesToDisplay) {
         gridBox.addEventListener("click", function() {
             infoPage(recipesToDisplay[i])
         })
-
         // When mouse if over block, show title
     }
 }
@@ -242,7 +241,7 @@ function infoPage(recipeInfo) {
 
 
 $(function() {
-    //It takes everything in the query string up to the 1st '=', and replaces them with ''
+    // It replaces every occurrence of "%20" with " "
     let windowParameters = window.location.search.replace(/\%20/g, " ")
 
     windowParameters = windowParameters.split(",")

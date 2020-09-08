@@ -1,13 +1,9 @@
 async function setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage) {
-    let recipes = await getRecipes(API_PARAMETER, foodSearched.toLowerCase())
-
-    console.log(foodSearched)
-
-    if (recipes.length === 0) {
-        console.log("no search results")
+    if (foodSearched.length === 0)
         noResultsFoundPage(foodSearched)
-    }
     else {
+        let recipes = await getRecipes(API_PARAMETER, foodSearched.toLowerCase())
+
         document.title = "Search results for \"" + foodSearched + "\" | Foodconnoisseur"
         displayMeals(foodSearched, recipes, currentPage)
         setupPageTabs(currentPage, Math.ceil(recipes.length / 12))
@@ -18,8 +14,6 @@ async function setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage)
 
 // API_PARAMETER == ("type" || "cuisine")
 async function getRecipes(API_PARAMETER, foodSearched) {
-    // if (foodSearched.length === 0) return
-
     let url = ""
 
     if (API_PARAMETER === null)
@@ -39,18 +33,16 @@ async function getRecipes(API_PARAMETER, foodSearched) {
         return response.json()
     })
     .then(data => {
-        console.log(data)
         recipes = data
     })
 
-    console.log(recipes)
     return recipes
 }
 
 
 function displayMeals(foodSearched, recipes, currentPage) {
-    const lowerBound = (currentPage === 1) ? 1 : (12 * currentPage) - 11;
-    const upperBound = (lowerBound + (12 - 1) <= recipes.length) ? lowerBound + (12 - 1) : recipes.length;
+    const lowerBound = (currentPage === 1) ? 1 : (12 * currentPage) - 11
+    const upperBound = (lowerBound + (12 - 1) <= recipes.length) ? lowerBound + (12 - 1) : recipes.length
 
     document.getElementById("searchResultsTag").innerHTML = "Showing " + lowerBound + " - " + upperBound + " of " + recipes.length.toString().bold() + " results for " + foodSearched.bold()
 
@@ -74,7 +66,6 @@ function displayMeals(foodSearched, recipes, currentPage) {
         gridBox.addEventListener("click", function() {
             infoPage(recipes[i])
         })
-
         //When mouse if over block, show title
     }
 }
@@ -173,7 +164,6 @@ function linkPagerItems(foodSearched, currentPage, pagesNeeded) {
 
 function link(foodSearched, id, pageNumber) {
     foodSearched =  foodSearched.split(" ").join("+")
-    console.log(foodSearched)
 
     if (document.getElementById(id) !== null) {
         document.getElementById(id).addEventListener("click", function() {
@@ -193,15 +183,10 @@ function noResultsFoundPage(foodSearched) {
 
 
 
-
-
-
-
 $(function() {
-    //It takes everything in the query string up to the 1st '=', and replaces them with ''
+    // It replaces every occurrence of "%20" with " "
     let parameters = window.location.search.replace(/\%20/g, "")
     parameters = parameters.split(",")
-
 
     let foodSearched = parameters[0].substring(parameters[0].indexOf("=") + 1).split("+").join(" ").trim()
     const currentPage = (parameters.length > 1) ? parseInt(parameters[1].substring(parameters[1].indexOf("=") + 1)) : 1
@@ -212,23 +197,14 @@ $(function() {
                         "british", "eastern european", "french", "german", "greek", "irish", "italian", "nordic", "spanish",
                         "mediterranean", "middle eastern"]
 
-    foodSearched = foodSearched.trim()
+    foodSearched = decodeURIComponent(foodSearched)
 
     const recipeNum = 12
+    let API_PARAMETER = undefined
 
-    if (foodSearched.length > 0) {
-        console.log("hello")
-        let API_PARAMETER = undefined
+    if (mealTypes.includes(foodSearched)) API_PARAMETER = "type"
+    else if (cuisines.includes(foodSearched)) API_PARAMETER = "cuisine"
+    else API_PARAMETER = null
 
-        if (mealTypes.includes(foodSearched)) API_PARAMETER = "type"
-        else if (cuisines.includes(foodSearched)) API_PARAMETER = "cuisine"
-        else API_PARAMETER = null
-
-        setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage)
-    }
-    else {
-        console.log("world")
-        console.log("search item was empty")
-        // maybe make it so that the user is sent to the "no results found" page
-    }
+    setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage)
 })

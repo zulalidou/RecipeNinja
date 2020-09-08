@@ -59,7 +59,7 @@ body {
 #searchContainer #searchBar {
     box-sizing: border-box;
     padding: 12px 30px;
-    background-image: url("/images/magnifyingglass_small.png");
+    background-image: url("../images/magnifyingglass_small.png");
     background-repeat: no-repeat;
     background-position: 5px;
     font-family: verdana, arial, sans-serif;

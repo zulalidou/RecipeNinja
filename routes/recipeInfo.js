@@ -7,14 +7,13 @@ const bodyParser = require('body-parser')
 var app = express();
 app.use(bodyParser.json());
 
-
 const mongoose = require('mongoose')
 mongoose.connect("mongodb://localhost:27017/foodconnoisseurDB")
 
 let recipeSchema = new mongoose.Schema({
-  id: Number,//{type: Number, required: true},
-  title: String,//{ type: String, required: true},
-  image: String,//{ type: String, required: true},
+  id: Number,
+  title: String,
+  image: String,
   nutrition: Array,
   ingredients: Array,
   dishTypes: Array,
@@ -26,30 +25,18 @@ let recipeSchema = new mongoose.Schema({
   similarRecipes: Array
 })
 
+
 router.get('/', async function (req, res) {
-    const foodCategory = "__DETAILED__RECIPE__INFO__"
+    const parameter = req.url.split(",")
+    const recipeID = parameter[0].substr(parameter[0].indexOf("=") + 1)
+    const recipeTitle = parameter[1].substr(parameter[1].indexOf("=") + 1).split("%20").join(" ")
 
-    let parameter = req.url.split(",")
-
-    let recipeID = parameter[0].substr(parameter[0].indexOf("=") + 1)
-    let recipeTitle = parameter[1].substr(parameter[1].indexOf("=") + 1).split("%20").join(" ")
-
-    console.log("====================================================================================")
-
-
-
-
-
-    var recipe = mongoose.model(foodCategory, recipeSchema)
-    // console.log("{Within 'recipeInfo' route} recipeID = " + recipeID)
+    let recipe = mongoose.model("__DETAILED__RECIPE__INFO__", recipeSchema)
 
     let recipeInfo = await getRecipeFromDB(recipe, recipeID)
-    // console.log(recipeInfo)
 
     if (isEmpty(recipeInfo)) {
-        console.log("tis empty")
         recipeInfo = await getRecipeFromAPI(recipeID)
-        // console.log(recipeInfo)
         const similarRecipes = await getSimilarRecipes(recipeID, recipeTitle)
         recipeInfo["similarRecipes"] = similarRecipes
         storeRecipeInDB(recipeInfo)
@@ -62,16 +49,14 @@ router.get('/', async function (req, res) {
 function isEmpty(recipeInfo) {
     for(let property in recipeInfo) {
         if(recipeInfo.hasOwnProperty(property))
-            return false;
+            return false
     }
 
-    return true;
+    return true
 }
 
 
 async function getRecipeFromDB(recipe, recipeID) {
-    // console.log("\n\n\nrecipeInfo -- \"getRecipeFromDB\"")
-
     let recipeInfo = null
 
     await recipe.findOne({"id": recipeID})
@@ -87,15 +72,12 @@ async function getRecipeFromDB(recipe, recipeID) {
 
 
 async function getRecipeFromAPI(recipeID) {
-    // console.log("\n\n\nrecipeInfo ** \"getRecipeFromAPI\"")
-
     const url = "https://api.spoonacular.com/recipes/" + recipeID + "/information?includeNutrition=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
+
     const response = await got(url)
-    // console.log(response.body)
-
     const data = JSON.parse(response.body)
-    let recipeInfo = Object()
 
+    let recipeInfo = Object()
     recipeInfo["id"] = data.id
     recipeInfo["title"] = data.title
     recipeInfo["image"] = data.image
@@ -112,6 +94,7 @@ async function getRecipeFromAPI(recipeID) {
 
     return recipeInfo
 }
+
 
 function getNutrients(nutrientsArray) {
     let storedNutrients = []
@@ -181,62 +164,43 @@ function getCredits(data) {
 }
 
 
-
-
-
-
 async function getSimilarRecipes(recipeID, recipeTitle) {
     const url = "https://api.spoonacular.com/recipes/search?query=" + recipeTitle + "&instructionsRequired=true&apiKey=c27618bedd4b4071b925b766be18e0a4"
+
     const response = await got(url)
-
     let recipesFound = JSON.parse(response.body).results
-    // console.log("\n\nmuerkaddfnka\n")
-    // console.log(recipesFound)
-
 
     let similarRecipes = []
 
     let i = 0
     while (i < recipesFound.length) {
-        if (recipesFound[i].id === recipeID) continue
+        if (recipesFound[i].id === recipeID)
+            continue
 
         const recipeInfo = {"id": recipesFound[i].id, "title": recipesFound[i].title, "image": "https://spoonacular.com/recipeImages/" + recipesFound[i].id + "-556x370.jpg"}
         similarRecipes.push(recipeInfo)
 
-        if (similarRecipes.length === 3) break
+        if (similarRecipes.length === 3)
+            break
         i++
     }
 
-
-    console.log("\n\nsimilarRecipes")
-    console.log(similarRecipes)
-
-
     if (similarRecipes.length < 3) {
         const recommendedRecipes = await getRandomRecipes(Math.abs(similarRecipes.length - 3))
-        console.log("recommendedRecipes")
-        console.log(recommendedRecipes)
 
         for (let i = 0; i < recommendedRecipes.length; i++)
             similarRecipes.push(recommendedRecipes[i])
     }
 
-
-    console.log("\n\nsimilarRecipes")
-    console.log(similarRecipes)
-
-
     return similarRecipes
 }
 
 
-// how to call a route from another route in express
 async function getRandomRecipes(recipesNeeded) {
-    console.log("\n\nrecipesNeeded = " + recipesNeeded)
+    // console.log("\n\nrecipesNeeded = " + recipesNeeded)
 
     const url = "https://api.spoonacular.com/recipes/random?number=" + recipesNeeded + "&apiKey=c27618bedd4b4071b925b766be18e0a4"
     const response = await got(url)
-    // console.log("\n\n\nRandos here::")
 
     const randomRecipes = JSON.parse(response.body).recipes
     let recommendedRecipes = []
@@ -250,10 +214,8 @@ async function getRandomRecipes(recipesNeeded) {
 }
 
 
-
 function storeRecipeInDB(recipeInfo) {
-    const collectionName = "__DETAILED__RECIPE__INFO__"
-    var recipe = mongoose.model(collectionName, recipeSchema)
+    var recipe = mongoose.model("__DETAILED__RECIPE__INFO__", recipeSchema)
 
     let data = new recipe(recipeInfo)
     data.save()
@@ -263,20 +225,17 @@ function storeRecipeInDB(recipeInfo) {
 
 
 // Not using this, so I might have to delete it
-router.post('/', function(req, res) {
-    const collectionName = "__DETAILED__RECIPE__INFO__"
-    var recipe = mongoose.model(collectionName, recipeSchema)
-
-    console.log("\n\n\n\n\n=============================================")
-    console.log(req.body)
-
-    let data = new recipe(req.body)
-    data.save()
-    console.log("=============================================")
-
-})
+// router.post('/', function(req, res) {
+//     const collectionName = "__DETAILED__RECIPE__INFO__"
+//     var recipe = mongoose.model(collectionName, recipeSchema)
+//
+//     console.log("\n\n\n\n\n=============================================")
+//     console.log(req.body)
+//
+//     let data = new recipe(req.body)
+//     data.save()
+//     console.log("=============================================")
+//
+// })
 
 module.exports = router
-
-
-// SHOULDN'T I BE CLOSING THE DB??

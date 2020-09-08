@@ -4,8 +4,8 @@ const got = require('got')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
-var app = express();
-app.use(bodyParser.json());
+var app = express()
+app.use(bodyParser.json())
 
 
 const mongoose = require('mongoose')
@@ -19,27 +19,28 @@ let recipeSchema = new mongoose.Schema({
 
 
 router.get('/', function (req, res) {
-    let parameter = req.url.split(",")
+    const parameter = req.url.split(",")
     let foodSearched = ""
     let API_PARAMETER = ""
 
-    foodSearched = parameter[0].substr(parameter[0].indexOf("=") + 1).split("%20").join(" ") // key === ("foodCategory" || "randomRecipes" || "type")
+    foodSearched = parameter[0].substr(parameter[0].indexOf("=") + 1).split("%20").join(" ")
 
-    if (parameter.length == 2) API_PARAMETER = parameter[1].substr(parameter[1].indexOf("=") + 1).split("%20").join(" ")
-    else API_PARAMETER = "null"
+    if (parameter.length == 2)
+        API_PARAMETER = parameter[1].substr(parameter[1].indexOf("=") + 1).split("%20").join(" ")
+    else
+        API_PARAMETER = "null"
 
-    console.log("\n\n===================================")
-    console.log("foodSearched => " + foodSearched)
-    console.log("API_PARAMETER => " + API_PARAMETER)
-    console.log("===================================\n")
+    // console.log("\n\n===================================")
+    // console.log("foodSearched => " + foodSearched)
+    // console.log("API_PARAMETER => " + API_PARAMETER)
+    // console.log("===================================\n")
 
-    let data = Object()
+    // a boolean
+    let recipesInDB = undefined
 
-    let recipesInDB = undefined // a boolean
+    response = getRecipesFromDB(foodSearched)
 
-    response = getRecipesFromDB(foodSearched) // the function returns a promise
-
-    // "response" is a Promise object, while "data" is the value stored within the Promise object (the Promise object being "response" in this case)
+    // "response" is a Promise object, while "data" is the value stored within the Promise object
     response.then(function(data) {
        if (data.length === 0) {
            recipesInDB = false
@@ -52,11 +53,7 @@ router.get('/', function (req, res) {
        }
     })
     .then(function(data) {
-        console.log("\n\n..when the sun go down")
-        console.log(data)
-
         if (!recipesInDB) {
-            // console.log("\n\n.. and juliet.. is the sun!\n\n")
             storeRecipesInDB(foodSearched, data)
             res.send(data)
         }
@@ -66,11 +63,8 @@ router.get('/', function (req, res) {
 })
 
 
-async function getRecipesFromDB(value) {
-    let foodCategory = value
-    var recipe = mongoose.model(foodCategory, recipeSchema)
-
-    console.log("foodCategory: " + foodCategory)
+async function getRecipesFromDB(foodSearched) {
+    var recipe = mongoose.model(foodSearched, recipeSchema)
 
     let data = null
 
@@ -104,12 +98,6 @@ async function getRecipesFromAPI(foodSearched, API_PARAMETER) {
     let recipesFound = JSON.parse(response.body)[propertyName]
     let recipes = []
 
-    // console.log("\n\n" + propertyName)
-    // console.log("recipesFound ------------------>")
-    // console.log(recipesFound)
-    // console.log("\n\n")
-
-
     for (let i = 0; i < recipesFound.length; i++) {
         let recipeInfo = Object()
         recipeInfo["id"] = recipesFound[i].id
@@ -122,12 +110,8 @@ async function getRecipesFromAPI(foodSearched, API_PARAMETER) {
 }
 
 
-function storeRecipesInDB(_foodSearched, recipes) {
-    let foodSearched = _foodSearched
+function storeRecipesInDB(foodSearched, recipes) {
     var recipe = mongoose.model(foodSearched, recipeSchema)
-
-    // console.log("recipes below my nigg-nigg")
-    // console.log(recipes)
 
     for (let i = 0; i < recipes.length; i++) {
         let item = {
@@ -142,32 +126,28 @@ function storeRecipesInDB(_foodSearched, recipes) {
 }
 
 
-
 // This probably isn't even called anymore, so is it even still needed??
-router.post('/', function(req, res) {
-    console.log(req.body)
-
-    let foodCategory = req.body.foodCategory
-    foodCategory = foodCategory.split("%20").join(" ")
-
-    var recipe = mongoose.model(foodCategory, recipeSchema)
-
-
-    console.log("\n\n\n\n>>>>>>>>>>>>>>>>>>>>>")
-
-    for (let i = 0; i < req.body.recipes.length; i++) {
-        let item = {
-            id: req.body.recipes[i]["id"],
-            title: req.body.recipes[i]["title"],
-            image: req.body.recipes[i]["image"]
-        }
-
-        let data = new recipe(item)
-        data.save()
-    }
-})
+// router.post('/', function(req, res) {
+//     console.log(req.body)
+//
+//     let foodCategory = req.body.foodCategory
+//     foodCategory = foodCategory.split("%20").join(" ")
+//
+//     var recipe = mongoose.model(foodCategory, recipeSchema)
+//
+//
+//     console.log("\n\n\n\n>>>>>>>>>>>>>>>>>>>>>")
+//
+//     for (let i = 0; i < req.body.recipes.length; i++) {
+//         let item = {
+//             id: req.body.recipes[i]["id"],
+//             title: req.body.recipes[i]["title"],
+//             image: req.body.recipes[i]["image"]
+//         }
+//
+//         let data = new recipe(item)
+//         data.save()
+//     }
+// })
 
 module.exports = router
-
-
-// SHOULDN'T I BE CLOSING THE DB??
