@@ -1,7 +1,6 @@
 // Retrieves the recipes needed, and displays them.
 async function displayOnMainPage(foodSearched, recipeNum, container) {
     const recipes = await getRecipes(foodSearched, recipeNum, container)
-    console.log(recipes)
     displayRecipes(recipes, recipeNum, container)
 }
 
@@ -23,8 +22,12 @@ async function getRecipes(foodSearched, recipeNum, container) {
         return response.json()
     })
     .then(data => {
+        console.log(foodSearched)
         console.log(data)
         recipes = data
+    })
+    .catch( (error) => {
+        console.log("Error message: " + error)
     })
 
     return recipes

@@ -7,8 +7,11 @@ const bodyParser = require('body-parser')
 var app = express();
 app.use(bodyParser.json());
 
+const CONNECTION_URI = process.env.MONGODB_URI
+
+
 const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017/foodconnoisseurDB")
+mongoose.connect(CONNECTION_URI, { useUnifiedTopology: true, useNewUrlParser: true })
 
 let recipeSchema = new mongoose.Schema({
   id: Number,
@@ -65,6 +68,9 @@ async function getRecipeFromDB(recipe, recipeID) {
                     doc = {}
 
                 recipeInfo = doc
+            })
+            .catch( (error) => {
+                console.log("Error message: " + error)
             })
 
     return recipeInfo

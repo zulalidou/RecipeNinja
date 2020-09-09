@@ -7,9 +7,11 @@ const bodyParser = require('body-parser')
 var app = express()
 app.use(bodyParser.json())
 
+const CONNECTION_URI = process.env.MONGODB_URI
+
 
 const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017/foodconnoisseurDB")
+mongoose.connect(CONNECTION_URI, { useUnifiedTopology: true, useNewUrlParser: true })
 
 let recipeSchema = new mongoose.Schema({
   id: Number,
@@ -30,11 +32,6 @@ router.get('/', function (req, res) {
     else
         API_PARAMETER = "null"
 
-    // console.log("\n\n===================================")
-    // console.log("foodSearched => " + foodSearched)
-    // console.log("API_PARAMETER => " + API_PARAMETER)
-    // console.log("===================================\n")
-
     // a boolean
     let recipesInDB = undefined
 
@@ -48,8 +45,9 @@ router.get('/', function (req, res) {
            return response
        }
        else {
+           console.log(data[0])
            recipesInDB = true
-           return response
+           return data
        }
     })
     .then(function(data) {
@@ -57,8 +55,15 @@ router.get('/', function (req, res) {
             storeRecipesInDB(foodSearched, data)
             res.send(data)
         }
-        else
+        else {
+            console.log(data[0])
             res.send(data)
+        }
+    })
+    .catch( (error) => {
+        console.log("Error message: " + error)
+        // Maybe I should have an error file sent to the browser, telling the user that
+        // the recipes were not able to be retrieved??
     })
 })
 
@@ -71,6 +76,9 @@ async function getRecipesFromDB(foodSearched) {
     await recipe.find()
         .then(function(doc) {
             data = doc
+        })
+        .catch( (error) => {
+            console.log("Error message: " + error)
         })
 
     return data
