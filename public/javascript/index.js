@@ -22,8 +22,8 @@ async function getRecipes(foodSearched, recipeNum, container) {
         return response.json()
     })
     .then(data => {
-        console.log(foodSearched)
-        console.log(data)
+        // console.log(foodSearched)
+        // console.log(data)
         recipes = data
     })
     .catch( (error) => {

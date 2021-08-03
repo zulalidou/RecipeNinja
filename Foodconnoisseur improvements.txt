@@ -1,0 +1,36 @@
+The purpose of this document is to contain a list of things to work on for foodconnoisseur.
+The things I need to do include (but are not limited to):
+
+
+
+RECOMMENDED RECIPES
+
+Sometimes when I look at detailed info about a recipe, I get that same recipe as a recommendation at the bottom
+
+-------------------------------------------------------------------------------------------
+
+CLEAN THE CODE
+
+Make the code more organized, and make sure you understand every single part. If you can’t explain it in simple words, then you don’t understand it.
+
+-------------------------------------------------------------------------------------------
+
+SEARCH RESULTS
+
+Make it so that when users look up some type of food, that food EXACTLY is what shows up, and not foods that contain the search term in them
+
+-------------------------------------------------------------------------------------------
+
+CONTACT FORM
+
+Add a contact form
+
+-------------------------------------------------------------------------------------------
+
+LOADING
+
+Consider adding the loading circle when retrieving recipes
+
+-------------------------------------------------------------------------------------------
+
+HANDLE THE CATCHALL ROUTE!!

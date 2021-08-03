@@ -1,7 +1,7 @@
 {
   "name": "cooking101",
   "version": "1.0.0",
-  "description": "**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start" : "node server.js"

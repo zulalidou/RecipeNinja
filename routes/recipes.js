@@ -4,7 +4,7 @@ const got = require('got')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
-var app = express()
+const app = express()
 app.use(bodyParser.json())
 
 const CONNECTION_URI = process.env.MONGODB_URI
@@ -45,7 +45,7 @@ router.get('/', function (req, res) {
            return response
        }
        else {
-           console.log(data[0])
+           // console.log(data[0])
            recipesInDB = true
            return data
        }
@@ -56,7 +56,7 @@ router.get('/', function (req, res) {
             res.send(data)
         }
         else {
-            console.log(data[0])
+            // console.log(data[0])
             res.send(data)
         }
     })
