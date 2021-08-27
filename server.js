@@ -18,9 +18,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
+const helmet = require('helmet')
 
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '/public')))
+app.use(helmet())
 
 
 // Routes
@@ -38,5 +40,5 @@ app.use("/about", aboutRoute)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, function() {
-    console.log("\nListening on port 3000")
+    console.log(`\nListening on port ${PORT}`)
 })
