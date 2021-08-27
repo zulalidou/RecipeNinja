@@ -2,7 +2,7 @@
 async function setupThePage(recipeID, recipeTitle) {
     const recipeInfo = await getRecipeInfo(recipeID, recipeTitle)
 
-    document.title = recipeInfo.title + " | Foodconnoisseur"
+    document.title = `${recipeInfo.title} | RecipeNinja`
     displayRecipe(recipeInfo)
     displayIngredients(recipeInfo.ingredients)
     displayInstructions(recipeInfo.instructions)

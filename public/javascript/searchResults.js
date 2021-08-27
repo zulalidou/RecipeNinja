@@ -4,7 +4,7 @@ async function setupThePage(API_PARAMETER, foodSearched, recipeNum, currentPage)
     else {
         let recipes = await getRecipes(API_PARAMETER, foodSearched.toLowerCase())
 
-        document.title = "Search results for \"" + foodSearched + "\" | Foodconnoisseur"
+        document.title = "Search results for \"" + foodSearched + "\" | RecipeNinja"
         displayMeals(foodSearched, recipes, currentPage)
         setupPageTabs(currentPage, Math.ceil(recipes.length / 12))
         linkPagerItems(foodSearched, currentPage, Math.ceil(recipes.length / 12))
