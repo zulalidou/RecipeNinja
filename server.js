@@ -1,25 +1,39 @@
+/*
+ * @fileoverview This is the entry point of the app. It sets up the server,
+ * and it creates the routes the app uses.
+ */
+
+
+/*
+ * If the app isn't in production mode, then it's most likely running in
+ * development mode
+ */
 if (process.env.NODE_ENV !== 'production') {
-    // A module that Loads environment variables from a .env file into process.env
     require('dotenv').config()
 }
 
+
+// Modules
 const express = require('express')
-const bodyParser = require('body-parser') // body parser middleware. allows access to the "req.body" property
+const bodyParser = require('body-parser')
 const path = require('path')
 const app = express()
 
+app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, '/public')))
+
+
+// Routes
 const indexRoute = require("./routes/index")
 const recipesRoute = require("./routes/recipes")
 const recipeInfoRoute = require("./routes/recipeInfo")
 const aboutRoute = require("./routes/about")
 
-app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, '/public'))) // allows static files (html, css, images, etc) to run
-
 app.use("/", indexRoute)
 app.use("/recipes", recipesRoute)
 app.use("/recipeInfo", recipeInfoRoute)
 app.use("/about", aboutRoute)
+
 
 const PORT = process.env.PORT || 3000
 
