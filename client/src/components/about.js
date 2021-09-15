@@ -6,6 +6,8 @@ import '../styles/about.css';
 import RecipeIcon from '../images/recipe.png';
 
 const About = () => {
+  document.title = 'About RecipeNinja'
+
   return (
     <div className='body'>
       <h1 className='about-header'>About Us</h1>

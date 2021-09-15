@@ -44,6 +44,8 @@ const SearchResults = () => {
 
     useEffect(() => {
         const fetchRecipes = async () => {
+            document.title = `Search results for ${location.state.foodSearched} | RecipeNinja`
+
             let searchedRecipes = await db.recipes.get({searchTerm: location.state.foodSearched});
 
             console.log(searchedRecipes)

@@ -7,23 +7,17 @@ import '../styles/recipes.css'
 
 
 const getRecipeInfo = async (recipeID) => {
-  // console.log("getRandomRecipes()");
   const recipes = await fetchRecipeInfo(recipeID);
-  // console.log(recipes);
   return recipes
 }
 
 const getSimilarRecipes = async (recipeID) => {
-  // console.log("getSimilarRecipes()");
   const recipes = await fetchSimilarRecipes(recipeID);
-  // console.log(recipes);
   return recipes
 }
 
 const fetchRecipeInfo = async (recipeID) => {
   let recipeInfo = null;
-
-  // console.log('fetchRecipeInfo()')
 
   try {
     const response = await fetch(`/api/get-recipe-info?recipeID=${recipeID}`, {
@@ -37,15 +31,13 @@ const fetchRecipeInfo = async (recipeID) => {
 
     return recipeInfo
   } catch (err) {
-      console.log("An error occurred - Couldn't retrieve recipes");
+      console.log("An error occurred - Couldn't retrieve recipes - fetchRecipeInfo()");
       console.log(err);
   }
 }
 
 const fetchSimilarRecipes = async (recipeID) => {
   let recipes = null;
-
-  // console.log('fetchRecipeInfo()')
 
   try {
     const response = await fetch(`/api/get-similar-recipes?recipeID=${recipeID}`, {
@@ -59,24 +51,22 @@ const fetchSimilarRecipes = async (recipeID) => {
 
     return recipes
   } catch (err) {
-      console.log("An error occurred - Couldn't retrieve recipes");
+      console.log("An error occurred - Couldn't retrieve recipes - fetchSimilarRecipes()");
       console.log(err);
   }
 }
 
 
 const Recipes = (props) => {
-    // 1. Fetch data using the spoonacular api to retrieve data about the recipe.
-    // 2. Display the data retrieved about the recipe
-
-    // console.log(props)
     const [recipeInfo, setRecipeInfo] = useState(null)
     const [similarRecipes, setSimilarRecipes] = useState(null)
 
 
     useEffect(() => {
         async function fetchData() {
+
             const recipeInfo = await getRecipeInfo(props.location.state.recipeID)
+            console.log(recipeInfo)
             document.title = `${recipeInfo.title} | RecipeNinja`
             setRecipeInfo(recipeInfo)
 
@@ -88,11 +78,6 @@ const Recipes = (props) => {
         fetchData()
     }, [props.location.state.recipeID])
 
-    // console.log(recipeInfo)
-
-
-    // if (searchResults === null)
-    //     <Loading />
 
     return (
         <div className='body'>

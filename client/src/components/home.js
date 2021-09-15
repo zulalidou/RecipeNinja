@@ -67,6 +67,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchData() {
       if (!recipesRetrieved) {
+        document.title = 'RecipeNinja | Your #1 Stop For Learning About All The World\'s Foods'
           // Checks to see if the recipes are already in the client db
         let [mainCourses, sideDishes, desserts, beverages] = await db.recipes.bulkGet([
           'main_courses_homepage',
@@ -166,7 +167,7 @@ const Home = () => {
       <h1 className='homepage-header'>Desserts</h1>
 
       <div className='recipe-cards-container'>
-          {/*
+          {
               dessertRecipes !== null &&
 
               dessertRecipes.map((recipeInfo) => {
@@ -174,13 +175,13 @@ const Home = () => {
                       <RecipeCard key={recipeInfo.id} recipeInfo={recipeInfo}/>
                   )
               })
-          */}
+          }
       </div>
 
       <h1 className='homepage-header'>Beverages</h1>
 
       <div className='recipe-cards-container bottom-container'>
-          {/*
+          {
               beverageRecipes !== null &&
 
               beverageRecipes.map((recipeInfo) => {
@@ -188,7 +189,7 @@ const Home = () => {
                       <RecipeCard key={recipeInfo.id} recipeInfo={recipeInfo}/>
                   )
               })
-          */}
+          }
       </div>
     </div>
   )
