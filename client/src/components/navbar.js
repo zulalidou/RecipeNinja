@@ -9,9 +9,9 @@ import DarkBackground from './dark-background'
 import '../styles/navbar.css';
 
 
-import LogoIcon from '../images/logo.jpg';
+import LogoIcon from '../images/logo.png';
 import DownArrowIcon from '../images/down-arrow.png';
-import HamburgerIcon from '../images/hamburger.jpg';
+import HamburgerIcon from '../images/hamburger.png';
 
 
 const keyPressed = (history) => {
