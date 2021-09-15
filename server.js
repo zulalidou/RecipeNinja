@@ -21,23 +21,29 @@ const app = express()
 const helmet = require('helmet')
 
 app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '/client/build')))
 app.use(helmet())
 
 
 // Routes
-const indexRoute = require("./routes/index")
-const recipesRoute = require("./routes/recipes")
-const recipeInfoRoute = require("./routes/recipeInfo")
-const aboutRoute = require("./routes/about")
+const getRandomRecipesRoute = require('./routes/get-random-recipes')
+const getCategoricalRecipesRoute = require('./routes/get-categorical-recipes')
+const getSearchedRecipesRoute = require('./routes/get-searched-recipes')
+const getRecipeInfoRoute = require('./routes/get-recipe-info')
 
-app.use("/", indexRoute)
-app.use("/recipes", recipesRoute)
-app.use("/recipeInfo", recipeInfoRoute)
-app.use("/about", aboutRoute)
+app.use('/api/get-random-recipes', getRandomRecipesRoute)
+app.use('/api/get-categorical-recipes', getCategoricalRecipesRoute)
+app.use('/api/get-searched-recipes', getSearchedRecipesRoute)
+app.use('/api/get-recipe-info', getRecipeInfoRoute)
 
 
-const PORT = process.env.PORT || 3000
+// handles access to routes that do not exist
+app.get('/*', (req, res) => {
+    // res.sendFile(path.join(__dirname, '/client/build/index.html'))
+})
+
+
+const PORT = process.env.PORT || 9000
 
 app.listen(PORT, function() {
     console.log(`\nListening on port ${PORT}`)

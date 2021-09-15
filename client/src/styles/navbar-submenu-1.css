@@ -1,0 +1,27 @@
+.navbar-submenu-1 {
+    position: absolute;
+    margin: 5px 0px 0px -5px;
+}
+
+.navbar-submenu-1 ul {
+    background-color: #3bf;
+}
+
+.navbar-submenu-1 ul li {
+    list-style: none;
+    width: 200px;
+    text-align: center;
+}
+
+.navbar-submenu-1 ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-submenu-1 ul li a div {
+    padding: 5px;
+}
+
+.navbar-submenu-1 ul li a div:hover {
+    background-color: #b3e6ff;
+}

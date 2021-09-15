@@ -1,0 +1,40 @@
+.navbar-submenu-2 {
+    position: absolute;
+    margin: 5px 0px 0px -5px;
+}
+
+.navbar-submenu-2 ul {
+    background-color: #3bf;
+}
+
+.navbar-submenu-2 ul li {
+    list-style: none;
+    width: 200px;
+    text-align: center;
+}
+
+.navbar-submenu-2 ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-submenu-2 ul li a div {
+    padding: 5px;
+}
+
+.navbar-submenu-2 ul li a div:hover {
+    background-color: #b3e6ff;
+}
+
+#navbar-americas,
+#navbar-asia,
+#navbar-europe {
+    background-color: #3bf;
+    padding: 5px;
+}
+
+#navbar-americas:hover,
+#navbar-asia:hover,
+#navbar-europe:hover {
+    background-color: #b3e6ff;
+}

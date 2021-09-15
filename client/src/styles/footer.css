@@ -1,0 +1,25 @@
+.footer {
+    text-align: center;
+    color: white;
+    background-color: black;
+    font-family: verdana, arial, sans-serif;
+    padding: 10px;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+@media (max-width: 350px) {
+    .footer {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 351px) {
+    .footer {
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,416 @@
+.recipe-info-container {
+    margin: 30px;
+}
+
+.recipe-info-name {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.recipe-info-top {
+    margin: auto;
+}
+
+.recipe-img {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.recipe-facts {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: sans-serif;
+}
+
+.recipe-facts p {
+    margin: 15px 10px;
+}
+
+.recipe-info-middle {
+    margin: auto;
+    margin-top: 30px;
+}
+
+
+.recipe-diets,
+.recipe-dishtypes,
+.recipe-ingredients {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: sans-serif;
+}
+
+.recipe-diet,
+.recipe-dishtype,
+.recipe-ingredient {
+    font-family: sans-serif;
+    margin: 15px 0px;
+}
+
+.recipe-info-bottom {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 30px auto 0px auto;
+    margin-bottom: 30px;
+}
+
+.recipe-info-bottom h2 {
+    font-family: sans-serif;
+}
+
+.recipe-instruction {
+    margin: 15px 0px;
+    font-family: sans-serif;
+}
+
+.recipe-instructions p {
+    font-family: sans-serif;
+    margin: 10px 0px;
+}
+
+
+.similar-recipes-container {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 30px auto 30px auto;
+    padding: 5px;
+}
+
+.similar-recipes-container h2 {
+    font-family: sans-serif;
+}
+
+
+
+.hr {
+    margin: auto;
+}
+
+.similar-recipes .recipe-card {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+
+@media (max-width: 350px) {
+    .recipe-info-name {
+        font-size: 25px;
+    }
+
+    .recipe-info-top {
+        width: 90%;
+    }
+
+    .recipe-facts {
+        font-size: 16px;
+    }
+
+    .recipe-info-middle {
+        width: 90%;
+    }
+
+    .recipe-diets,
+    .recipe-dishtypes {
+        margin-bottom: 10px;
+    }
+
+    .recipe-ingredients {
+        margin-bottom: 30px;
+    }
+
+    .recipe-diets h2,
+    .recipe-dishtypes h2,
+    .recipe-ingredients h2 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .recipe-diet,
+    .recipe-dishtype,
+    .recipe-ingredient {
+        font-size: 16px;
+        text-align: center;
+    }
+
+
+
+    .recipe-info-bottom {
+        width: 90%;
+    }
+
+    .recipe-info-bottom h2 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .recipe-instructions {
+        font-size: 16px;
+    }
+
+
+
+    .hr {
+        width: 90%;
+    }
+
+    .similar-recipes-container {
+        width: 90%;
+    }
+
+    .similar-recipes-container h2 {
+        text-align: center;
+    }
+
+    .similar-recipes .recipe-card {
+        margin: 30px auto 30px auto;
+    }
+}
+
+
+@media (min-width: 351px) and (max-width: 768px) {
+    .recipe-info-top {
+        width: 90%;
+    }
+
+    .recipe-facts {
+        font-size: 20px;
+    }
+
+    .recipe-info-middle {
+        width: 90%;
+    }
+
+    .recipe-diets,
+    .recipe-dishtypes {
+        margin-bottom: 10px;
+    }
+
+    .recipe-ingredients {
+        margin-bottom: 30px;
+    }
+
+    .recipe-diets h2,
+    .recipe-dishtypes h2,
+    .recipe-ingredients h2 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .recipe-diet,
+    .recipe-dishtype,
+    .recipe-ingredient {
+        font-size: 20px;
+        text-align: center;
+    }
+
+
+
+    .recipe-info-bottom {
+        width: 90%;
+    }
+
+    .recipe-info-bottom h2 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .recipe-instructions {
+        font-size: 20px;
+    }
+
+
+
+    .hr {
+        width: 90%;
+    }
+
+    .similar-recipes-container {
+        width: 90%;
+    }
+
+    .similar-recipes-container h2 {
+        text-align: center;
+    }
+
+    .similar-recipes .recipe-card {
+        margin: 30px auto 30px auto;
+    }
+}
+
+
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .recipe-info-top {
+        width: 600px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+    }
+
+    .recipe-img-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .recipe-facts {
+        width: 200px;
+    }
+
+
+
+    .recipe-info-middle {
+        width: 600px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+    }
+
+    .recipe-diets,
+    .recipe-dishtypes {
+        width: 120px;
+    }
+
+    .recipe-ingredients {
+        width: 300px;
+    }
+
+    .recipe-diets h2,
+    .recipe-dishtypes h2,
+    .recipe-ingredients h2 {
+        font-size: 25px;
+    }
+
+    .recipe-diet,
+    .recipe-dishtype,
+    .recipe-ingredient {
+        font-size: 20px;
+    }
+
+
+
+    .recipe-info-bottom {
+        width: 600px;
+    }
+
+    .recipe-info-bottom h2 {
+        font-size: 25px;
+    }
+
+    .recipe-instructions {
+        font-size: 20px;
+    }
+
+
+
+    .hr {
+        width: 600px;
+    }
+
+    .similar-recipes-container {
+        width: 600px;
+    }
+
+    .similar-recipes-container h2 {
+        font-size: 25px;
+    }
+
+    .similar-recipes {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}
+
+
+
+@media (min-width: 993px) {
+    .recipe-info-top {
+        width: 800px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+    }
+
+    .recipe-img-container {
+        width: 400px;
+        height: 400px;
+    }
+
+    .recipe-facts {
+        width: 300px;
+    }
+
+
+
+    .recipe-info-middle {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        width: 800px;
+    }
+
+    .recipe-diets,
+    .recipe-dishtypes {
+        width: 160px;
+    }
+
+    .recipe-ingredients {
+        width: 400px;
+    }
+
+    .recipe-diets h2,
+    .recipe-dishtypes h2,
+    .recipe-ingredients h2 {
+        font-size: 25px;
+    }
+
+    .recipe-diet,
+    .recipe-dishtype,
+    .recipe-ingredient {
+        font-size: 20px;
+    }
+
+
+
+    .recipe-info-bottom {
+        width: 800px;
+    }
+
+    .recipe-info-bottom h2 {
+        font-size: 25px;
+    }
+
+    .recipe-instructions {
+        font-size: 20px;
+    }
+
+
+
+    .hr {
+        width: 800px;
+    }
+
+    .similar-recipes-container {
+        width: 800px;
+    }
+
+    .similar-recipes-container h2 {
+        font-size: 25px;
+    }
+
+    .similar-recipes {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}

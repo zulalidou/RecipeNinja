@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+@media (max-width: 767px) {
+    .navbar-top-main {
+      display: flex;
+      justify-content: center;
+      background-color: white;
+    }
+
+    .hamburger-icon-container {
+        display: block;
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        border: 1px solid black;
+        padding: 2px;
+    }
+
+    .hamburger-icon-container:hover {
+        cursor: pointer;
+    }
+
+    .navbar-img {
+        height: 100%;
+    }
+
+    .search-container,
+    .navbar-about {
+        display: none;
+    }
+
+    .navbar-bottom {
+        display: none;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .navbar-top-main {
+      display: flex;
+      justify-content: center;
+      background-color: white;
+    }
+
+    .hamburger-icon-container {
+        display: none;
+    }
+
+    .logo-container {
+        margin-right: 5px;
+    }
+
+    .navbar-img {
+        /* This is to remove the extra space at the bottom of the img */
+        display: block;
+    }
+
+    .search-container {
+      width: 50%;
+      padding: 5px 0px;
+    }
+
+    #search-bar {
+        box-sizing: border-box;
+        padding: 12px 30px;
+        background-image: url("../images/magnifyingglass_small.png");
+        background-repeat: no-repeat;
+        background-position: 5px;
+        font-family: verdana, arial, sans-serif;
+        font-size: 20px;
+        width: 100%;
+        border: 1px solid gray;
+    }
+
+    #search-bar:focus {
+        outline: none;
+        border-color: black;
+    }
+
+    .navbar-about {
+        color: black;
+        background-color: white;
+        font-family: verdana, arial, sans-serif;
+        font-size: 25px;
+        line-height: 60px;
+        text-decoration: none;
+        margin-left: 5px;
+    }
+
+    .navbar-bottom {
+        background-color: #3bf;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navbar-bottom-meal-types,
+    .navbar-bottom-cuisines {
+        list-style-type: none;
+        display: inline;
+        font-size: 20px;
+        font-family: verdana, arial, sans-serif;
+        display: inline-block;
+        padding: 5px;
+        width: 190px;
+
+        /* This is added so that I can move the down arrow icons to the right,
+           instead of having the down arrow icons stick to the texts and Looking
+           like "MEAL TYPESv" or "CUISINESv"
+        */
+        position: relative;
+    }
+
+    .navbar-bottom-meal-types:hover,
+    .navbar-bottom-cuisines:hover {
+        cursor: pointer;
+        background-color: #5ac8ff;
+    }
+
+    .navbar-bottom-meal-types img,
+    .navbar-bottom-cuisines img {
+        position: absolute;
+        margin: 5px;
+        right: 0px;
+    }
+}
