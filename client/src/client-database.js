@@ -9,12 +9,14 @@ const db = new Dexie('RecipeNinjaClientDB');
  * A store is the same thing as a table
  *
  * The keys in the object below represent the names of tables in the database
- * The values (for the keys) in the object below represent the names of the columns for their keys/stores/tables
- * - The value for the recipes table below shows only one column (namely 'searchTerm'), but there can be more
+ * The values (for the keys) in the object below represent the names of the
+ * columns for their keys/stores/tables
+ * - The value for the recipes table below shows only one column
+ *   (namely 'searchTerm'), but there can be more
  * - added to each table
  */
 db.version(1).stores({
-    recipes: 'searchTerm'
+  recipes: 'searchTerm',
 });
 
 
