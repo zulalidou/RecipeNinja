@@ -7,10 +7,3 @@
     background-color: rgba(0, 0, 0, 0.2);
     overflow: auto;
 }
-
-
-@media (min-width: 768px) {
-    .dark-background {
-        display: none;
-    }
-}

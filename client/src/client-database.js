@@ -2,7 +2,7 @@
 import Dexie from 'dexie';
 
 // 'RecipeNinjaClientDB' is the name of the database
-const db = new Dexie('RecipeNinjaClientDB');
+const db = new Dexie('RecipeNinjaClientDBaa');
 
 
 /*
@@ -15,9 +15,9 @@ const db = new Dexie('RecipeNinjaClientDB');
  *   (namely 'searchTerm'), but there can be more
  * - added to each table
  */
-db.version(1).stores({
-  recipes: 'searchTerm',
-});
+// db.version(1).stores({
+//   recipes: 'searchTerm',
+// });
 
 
 export default db;

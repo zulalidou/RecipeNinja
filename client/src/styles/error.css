@@ -1,0 +1,141 @@
+.error-container {
+    max-height: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    overflow-y: auto;
+    font-family: sans-serif;
+    background-color: #ffaa00;
+    z-index: 1;
+}
+
+.ec-top {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.ec-title {
+    text-align: center;
+    flex: 1;
+    padding-top: 5px;
+    color: white;
+}
+
+.ec-close-btn-1 {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    bottom: 0;
+    font-size: 22px;
+    width: 50px;
+    border: 1px solid black;
+    color: white;
+    background-color: red;
+}
+
+.ec-close-btn-1:hover {
+    background-color: #f00000;
+    cursor: pointer;
+}
+
+.ec-bottom {
+    padding: 15px;
+    border: 1px solid white;
+    margin: 10px;
+    background-color: white;
+}
+
+.ec-bottom p  {
+    margin-bottom: 0;
+}
+
+.bullet-point-span {
+    margin-right: 5px;
+}
+
+
+.ec-bottom .p1 {
+    margin-top: 10px;
+}
+
+
+@media (max-width: 575px) {
+    .error-container {
+        width: 70%;
+    }
+
+    .ec-title {
+        font-size: 20px;
+    }
+
+    .ec-bottom p  {
+        font-size: 13px;
+    }
+
+    .bullet-point-span {
+        font-size: 20px;
+    }
+
+    .ec-close-btn-1 {
+        display: none;
+    }
+
+    .ec-close-btn-2 {
+        border: 1px solid black;
+        color: white;
+        background-color: red;
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    .ec-close-btn-2:hover {
+        background-color: #f00000;
+        cursor: pointer;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .error-container {
+        width: 400px;
+    }
+
+    .ec-title {
+        font-size: 30px;
+    }
+
+    .ec-bottom p  {
+        font-size: 16px;
+    }
+
+    .bullet-point-span {
+        font-size: 20px;
+    }
+
+    .ec-close-btn-2 {
+        display: none;
+    }
+}
+
+
+@media (min-width: 769px) {
+    .error-container {
+        width: 500px;
+    }
+
+    .ec-bottom p  {
+        font-size: 20px;
+    }
+
+    .bullet-point-span {
+        font-size: 22px;
+    }
+
+    .ec-close-btn-2 {
+        display: none;
+    }
+}
