@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 
 const Error = (props) => {
-  console.log('This is the ERROR component');
-
   return (
     <div className="error-container">
       <div className="ec-top">
@@ -19,23 +17,23 @@ const Error = (props) => {
 
       <div className="ec-bottom">
         <p>
-            An unexpected problem was encountered. Here are a few things
-            you can try:
+          An unexpected problem was encountered. Here are a few things
+          you can try:
         </p>
 
         <p className="p1">
           <span className="bullet-point-span">&#8226;</span>
-            Reload the page
+          Reload the page
         </p>
 
         <p>
           <span className="bullet-point-span">&#8226;</span>
-            Close the tab and open it again
+          Close the tab and open it again
         </p>
 
         <p>
           <span className="bullet-point-span">&#8226;</span>
-            Wait a few minutes, and try again later
+          Wait a few minutes, and try again later
         </p>
 
         <button className="ec-close-btn-2" type="button"

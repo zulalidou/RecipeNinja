@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
+import '../styles/side-navbar-submenu-2.css';
+import UpArrowIcon from '../images/up-arrow.png';
+import DownArrowIcon from '../images/down-arrow.png';
+
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import SideNavbarSubmenu3 from './side-navbar-submenu-3';
 import SideNavbarSubmenu4 from './side-navbar-submenu-4';
 import SideNavbarSubmenu5 from './side-navbar-submenu-5';
-import PropTypes from 'prop-types';
 
-import '../styles/side-navbar-submenu-2.css';
-
-import UpArrowIcon from '../images/up-arrow.png';
-import DownArrowIcon from '../images/down-arrow.png';
 
 const SideNavbarSubmenu2 = (props) => {
   const [showSideNavbarSubmenu3, setShowSideNavbarSubmenu3] = useState(false);
@@ -37,45 +37,54 @@ const SideNavbarSubmenu2 = (props) => {
             onClick={() => setShowSideNavbarSubmenu3(!showSideNavbarSubmenu3)}>
             <strong>Americas</strong>
 
-            {(showSideNavbarSubmenu3) ?
-                <img src={UpArrowIcon} alt="up arrow"/> :
-                <img src={DownArrowIcon} alt="down arrow"/>
+            {
+              showSideNavbarSubmenu3 ?
+              <img src={UpArrowIcon} alt="up arrow"/> :
+              <img src={DownArrowIcon} alt="down arrow"/>
             }
           </div>
         </li>
 
-        {showSideNavbarSubmenu3 &&
-            <SideNavbarSubmenu3 closeSideNavbar={props.closeSideNavbar} />}
+        {
+          showSideNavbarSubmenu3 &&
+          <SideNavbarSubmenu3 closeSideNavbar={props.closeSideNavbar} />
+        }
 
         <li>
           <div className="side-navbar-asia"
             onClick={() => setShowSideNavbarSubmenu4(!showSideNavbarSubmenu4)}>
             <strong>Asia</strong>
 
-            {(showSideNavbarSubmenu4) ?
-                <img src={UpArrowIcon} alt="up arrow"/> :
-                <img src={DownArrowIcon} alt="down arrow"/>
+            {
+              showSideNavbarSubmenu4 ?
+              <img src={UpArrowIcon} alt="up arrow"/> :
+              <img src={DownArrowIcon} alt="down arrow"/>
             }
           </div>
         </li>
 
-        {showSideNavbarSubmenu4 &&
-            <SideNavbarSubmenu4 closeSideNavbar={props.closeSideNavbar} />}
+        {
+          showSideNavbarSubmenu4 &&
+          <SideNavbarSubmenu4 closeSideNavbar={props.closeSideNavbar} />
+        }
 
         <li>
           <div className="side-navbar-europe"
             onClick={() => setShowSideNavbarSubmenu5(!showSideNavbarSubmenu5)}>
             <strong>Europe</strong>
 
-            {(showSideNavbarSubmenu5) ?
-                            <img src={UpArrowIcon} alt="up arrow"/> :
-                            <img src={DownArrowIcon} alt="down arrow"/>
+            {
+              showSideNavbarSubmenu5 ?
+              <img src={UpArrowIcon} alt="up arrow"/> :
+              <img src={DownArrowIcon} alt="down arrow"/>
             }
           </div>
         </li>
 
-        {showSideNavbarSubmenu5 &&
-            <SideNavbarSubmenu5 closeSideNavbar={props.closeSideNavbar} />}
+        {
+          showSideNavbarSubmenu5 &&
+          <SideNavbarSubmenu5 closeSideNavbar={props.closeSideNavbar} />
+        }
 
         <li>
           <Link to={{

@@ -1,8 +1,7 @@
 import React from 'react';
+import '../styles/navbar-submenu-1.css';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import '../styles/navbar-submenu-1.css';
 
 
 const NavbarSubmenu1 = (props) => {

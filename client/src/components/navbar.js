@@ -1,21 +1,16 @@
 import React, {useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
-
-import NavbarSubmenu1 from './navbar-submenu-1';
-import NavbarSubmenu2 from './navbar-submenu-2';
-
-import SideNavbar from './side-navbar';
 import '../styles/navbar.css';
-
-
 import LogoIcon from '../images/logo.png';
 import DownArrowIcon from '../images/down-arrow.png';
 import HamburgerIcon from '../images/hamburger.png';
+import NavbarSubmenu1 from './navbar-submenu-1';
+import NavbarSubmenu2 from './navbar-submenu-2';
+import SideNavbar from './side-navbar';
+
+import {Link, useHistory} from 'react-router-dom';
 
 
 const keyPressed = (history) => {
-  console.log('keyPressed()');
-
   if (window.event.key === 'Enter') {
     window.event.preventDefault();
 
@@ -40,7 +35,6 @@ const Navbar = () => {
   const [showNavbarSubmenu1, setShowNavbarSubmenu1] = useState(false);
   const [showNavbarSubmenu2, setShowNavbarSubmenu2] = useState(false);
   const [showSideNavbar, setShowSideNavbar] = useState(false);
-
 
   return (
     <nav>
@@ -77,9 +71,10 @@ const Navbar = () => {
                         MEAL TYPES
             <img src={DownArrowIcon} alt="down arrow"/>
 
-            {showNavbarSubmenu1 &&
-                <NavbarSubmenu1
-                  closeComponent={() => setShowNavbarSubmenu1(false)}/>
+            {
+              showNavbarSubmenu1 &&
+              <NavbarSubmenu1
+                closeComponent={() => setShowNavbarSubmenu1(false)}/>
             }
           </li>
 
@@ -89,9 +84,10 @@ const Navbar = () => {
                         CUISINES
             <img src={DownArrowIcon} alt="down arrow"/>
 
-            {showNavbarSubmenu2 &&
-                <NavbarSubmenu2
-                  closeComponent={() => setShowNavbarSubmenu2(false)}/>
+            {
+              showNavbarSubmenu2 &&
+              <NavbarSubmenu2
+                closeComponent={() => setShowNavbarSubmenu2(false)}/>
             }
           </li>
         </ul>

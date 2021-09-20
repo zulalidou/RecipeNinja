@@ -1,13 +1,10 @@
 import React from 'react';
+import '../styles/side-navbar-submenu-1.css';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../styles/side-navbar-submenu-1.css';
-
 
 const SideNavbarSubmenu1 = (props) => {
-  console.log(props);
-
   return (
     <div className="side-navbar-submenu-1">
       <ul>

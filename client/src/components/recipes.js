@@ -1,23 +1,15 @@
 import React, {useState, useEffect} from 'react';
-
+import '../styles/recipes.css';
+import * as Constants from '../constants';
 import Loading from './loading';
 import RecipeCard from './recipe-card';
+import Error from './error';
+import DarkBackground from './dark-background';
 import PropTypes from 'prop-types';
 
-import '../styles/recipes.css';
 
-
+// Retrieves the recipe's info
 const getRecipeInfo = async (recipeID) => {
-  const recipes = await fetchRecipeInfo(recipeID);
-  return recipes;
-};
-
-// const getSimilarRecipes = async (recipeID) => {
-//   const recipes = await fetchSimilarRecipes(recipeID);
-//   return recipes;
-// };
-
-const fetchRecipeInfo = async (recipeID) => {
   let recipeInfo = null;
 
   try {
@@ -29,52 +21,36 @@ const fetchRecipeInfo = async (recipeID) => {
     });
 
     recipeInfo = await response.json();
-
     return recipeInfo;
   } catch (err) {
-    console.log('ERROR: Couldn\'t retrieve recipes - fetchRecipeInfo()');
-    console.log(err);
+    console.log('ERROR: Couldn\'t retrieve recipes');
+    return Constants.ERROR;
   }
 };
-
-// const fetchSimilarRecipes = async (recipeID) => {
-//   let recipes = null;
-//
-//   try {
-//     const response = await fetch(`/api/get-similar-recipes?
-//         recipeID=${recipeID}`, {
-//       method: 'GET',
-//       headers: {
-//         'Content-type': 'application/json',
-//       },
-//     });
-//
-//     recipes = await response.json();
-//
-//     return recipes;
-//   } catch (err) {
-//     console.log('ERROR: Couldn\'t retrieve recipes - fetchSimilarRecipes()');
-//     console.log(err);
-//   }
-// };
 
 
 const Recipes = (props) => {
   const [recipeInfo, setRecipeInfo] = useState(null);
-  // const [similarRecipes, setSimilarRecipes] = useState(null);
-
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      const recipeInfo = await getRecipeInfo(props.location.state.recipeID);
-      console.log(recipeInfo);
+    async function fetchRecipes() {
       document.title = `${recipeInfo.title} | RecipeNinja`;
-      setRecipeInfo(recipeInfo);
 
+      // scrolls to the top of the page
       window.scrollTo(0, 0);
+
+      let recipeInfo = await getRecipeInfo(props.location.state.recipeID);
+
+      if (recipeInfo === Constants.ERROR) {
+        displayErrorMsg(true);
+        recipeInfo = [];
+      }
+
+      setRecipeInfo(recipeInfo);
     }
 
-    fetchData();
+    fetchRecipes();
   }, [props.location.state.recipeID]);
 
 
@@ -126,13 +102,13 @@ const Recipes = (props) => {
 
               <div>
                 {
-                    (recipeInfo.diets.size === 0) ?
+                  (recipeInfo.diets.size === 0) ?
 
-                    <p className='recipe-diet'><strong>N/A</strong></p> :
+                  <p className='recipe-diet'><strong>N/A</strong></p> :
 
-                    recipeInfo.diets.map((item, idx) => {
-                      return <p key={idx} className='recipe-diet'>{item}</p>;
-                    })
+                  recipeInfo.diets.map((item, idx) => {
+                    return <p key={idx} className='recipe-diet'>{item}</p>;
+                  })
                 }
               </div>
             </div>
@@ -142,17 +118,17 @@ const Recipes = (props) => {
 
               <div>
                 {
-                    (recipeInfo.dishTypes.size === 0) ?
+                  (recipeInfo.dishTypes.size === 0) ?
 
-                    <p className='recipe-dishtype'><strong>N/A</strong></p> :
+                  <p className='recipe-dishtype'><strong>N/A</strong></p> :
 
-                    recipeInfo.dishTypes.map((item, idx) => {
-                      return (
-                        <p key={idx} className='recipe-dishtype'>
-                          {item}
-                        </p>
-                      );
-                    })
+                  recipeInfo.dishTypes.map((item, idx) => {
+                    return (
+                      <p key={idx} className='recipe-dishtype'>
+                        {item}
+                      </p>
+                    );
+                  })
                 }
               </div>
             </div>
@@ -162,18 +138,18 @@ const Recipes = (props) => {
 
               <div>
                 {
-                    (recipeInfo.extendedIngredients.size === 0) ?
+                  (recipeInfo.extendedIngredients.size === 0) ?
 
-                    <p className='recipe-ingredient'><strong>N/A</strong></p> :
+                  <p className='recipe-ingredient'><strong>N/A</strong></p> :
 
-                    recipeInfo.extendedIngredients.map((item, idx) => {
-                      return (
-                        <p key={idx} className='recipe-ingredient'>
-                          {item.name} -
-                          {item.measures.us.amount} {item.measures.us.unitLong}
-                        </p>
-                      );
-                    })
+                  recipeInfo.extendedIngredients.map((item, idx) => {
+                    return (
+                      <p key={idx} className='recipe-ingredient'>
+                        {item.name} -
+                        {item.measures.us.amount} {item.measures.us.unitLong}
+                      </p>
+                    );
+                  })
                 }
               </div>
             </div>
@@ -219,6 +195,14 @@ const Recipes = (props) => {
               }
             </div>
           </div>
+        </div>
+      }
+
+      {
+        showErrorMsg &&
+        <div>
+          <Error closeComponent={() => setShowErrorMsg(false)}/>
+          <DarkBackground />
         </div>
       }
     </div>

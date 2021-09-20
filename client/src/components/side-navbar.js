@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-
+import '../styles/side-navbar.css';
+import UpArrowIcon from '../images/up-arrow.png';
+import DownArrowIcon from '../images/down-arrow.png';
+import CloseIcon from '../images/close.png';
 import SideNavbarSubmenu1 from './side-navbar-submenu-1';
 import SideNavbarSubmenu2 from './side-navbar-submenu-2';
 import DarkBackground from './dark-background';
 
-import '../styles/side-navbar.css';
-
-
-import UpArrowIcon from '../images/up-arrow.png';
-import DownArrowIcon from '../images/down-arrow.png';
-import CloseIcon from '../images/close.png';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 const SideNavbar = (props) => {
@@ -59,30 +56,34 @@ const SideNavbar = (props) => {
             onClick={() => setShowSideNavbarSubmenu1(!showSideNavbarSubmenu1)}>
             <strong>Meal Types</strong>
 
-            {(showSideNavbarSubmenu1) ?
-                            <img src={UpArrowIcon} alt="up arrow"/> :
-                            <img src={DownArrowIcon} alt="down arrow"/>
+            {
+              showSideNavbarSubmenu1 ?
+              <img src={UpArrowIcon} alt="up arrow"/> :
+              <img src={DownArrowIcon} alt="down arrow"/>
             }
           </div>
 
-          {showSideNavbarSubmenu1 &&
-              <SideNavbarSubmenu1
-                closeSideNavbar={() => setCloseComponent(true)}/>
+          {
+            showSideNavbarSubmenu1 &&
+            <SideNavbarSubmenu1
+              closeSideNavbar={() => setCloseComponent(true)}/>
           }
 
           <div className='side-navbar-cuisines'
             onClick={() => setShowSideNavbarSubmenu2(!showSideNavbarSubmenu2)}>
             <strong>Cuisines</strong>
 
-            {(showSideNavbarSubmenu2) ?
-                <img src={UpArrowIcon} alt="up arrow"/> :
-                <img src={DownArrowIcon} alt="down arrow"/>
+            {
+              showSideNavbarSubmenu2 ?
+              <img src={UpArrowIcon} alt="up arrow"/> :
+              <img src={DownArrowIcon} alt="down arrow"/>
             }
           </div>
 
-          {showSideNavbarSubmenu2 &&
-              <SideNavbarSubmenu2
-                closeSideNavbar={() => setCloseComponent(true)}/>
+          {
+            showSideNavbarSubmenu2 &&
+            <SideNavbarSubmenu2
+              closeSideNavbar={() => setCloseComponent(true)}/>
           }
         </div>
       </nav>

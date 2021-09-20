@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import '../styles/navbar-submenu-2.css';
 
 import NavbarSubmenu3 from './navbar-submenu-3';
 import NavbarSubmenu4 from './navbar-submenu-4';
 import NavbarSubmenu5 from './navbar-submenu-5';
-
-import '../styles/navbar-submenu-2.css';
-
 import RightArrowIcon from '../images/right-arrow.png';
+
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 const NavbarSubmenu2 = (props) => {
@@ -38,8 +37,9 @@ const NavbarSubmenu2 = (props) => {
             onMouseLeave={() => setShowNavbarSubmenu3(false)}>
                 Americas<img src={RightArrowIcon} alt="right arrow icon"/>
 
-            {showNavbarSubmenu3 &&
-                <NavbarSubmenu3 closeComponent={props.closeComponent}/>
+            {
+              showNavbarSubmenu3 &&
+              <NavbarSubmenu3 closeComponent={props.closeComponent}/>
             }
           </div>
         </li>
@@ -50,8 +50,9 @@ const NavbarSubmenu2 = (props) => {
             onMouseLeave={() => setShowNavbarSubmenu4(false)}>
                         Asia<img src={RightArrowIcon} alt="right arrow icon"/>
 
-            {showNavbarSubmenu4 &&
-                <NavbarSubmenu4 closeComponent={props.closeComponent}/>
+            {
+              showNavbarSubmenu4 &&
+              <NavbarSubmenu4 closeComponent={props.closeComponent}/>
             }
           </div>
         </li>
@@ -63,8 +64,9 @@ const NavbarSubmenu2 = (props) => {
                         Europe
             <img src={RightArrowIcon} alt="right arrow icon"/>
 
-            {showNavbarSubmenu5 &&
-                <NavbarSubmenu5 closeComponent={props.closeComponent}/>
+            {
+              showNavbarSubmenu5 &&
+              <NavbarSubmenu5 closeComponent={props.closeComponent}/>
             }
           </div>
         </li>
@@ -103,5 +105,6 @@ const NavbarSubmenu2 = (props) => {
 NavbarSubmenu2.propTypes = {
   closeComponent: PropTypes.func,
 };
+
 
 export default NavbarSubmenu2;

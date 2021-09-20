@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-
-import db from '../client-database';
+import '../styles/search.css';
+import * as Constants from '../constants';
+import clientDb from '../client-database';
 import Loading from './loading';
 import RecipeCard from './recipe-card';
+import Error from './error';
+import DarkBackground from './dark-background';
 
-import '../styles/search.css';
 
-
+// Retrieves the recipes for the search term(s) used
 const getSearchedRecipes = async (foodSearched) => {
   try {
     const response = await fetch(`/api/get-searched-recipes?
@@ -21,26 +23,29 @@ const getSearchedRecipes = async (foodSearched) => {
     const recipes = await response.json();
     return recipes;
   } catch (err) {
-    console.log('An error occurred- Couldn\'t retrieve recipes');
-    console.log(err);
-    return [];
+    console.log('ERROR: Couldn\'t retrieve search recipes');
+    return Constants.ERROR;
   }
 };
 
 
 const SearchResults = () => {
   const location = useLocation();
-  console.log(location);
   const [searchResults, setSearchResults] = useState(null);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
 
-  // Handle the case when the db couldn't be opened
-  db.open().then(function(db) {
-    console.log('Database opened successfully');
-  }).catch(function(err) {
-    console.log('Database couldn\'t not open for some reason');
-    console.log(err);
-  });
+  /*
+   * Opens the client database, so we can retrieve recipes from it
+   * (assuming it isn't empty)
+   */
+  useEffect(() => {
+    clientDb.open().then(function(clientDb) {})
+        .catch(function(err) {
+          console.log('The client database couldn\'t not open for some reason');
+          setShowErrorMsg(true);
+        });
+  }, []);
 
 
   useEffect(() => {
@@ -48,19 +53,23 @@ const SearchResults = () => {
       document.title = `Search results for ${location.state.foodSearched}` +
         ` | RecipeNinja`;
 
-      let searchedRecipes = await db.recipes.get({
+      let searchedRecipes = await clientDb.recipes.get({
         searchTerm: location.state.foodSearched,
       });
 
-      console.log(searchedRecipes);
-
       if (searchedRecipes === undefined) {
         searchedRecipes = await getSearchedRecipes(location.state.foodSearched);
-        setSearchResults(searchedRecipes);
-        db.recipes.add({
-          searchTerm: location.state.foodSearched,
-          recipes: searchedRecipes,
-        });
+
+        if (searchedRecipes === Constants.ERROR) {
+          setShowErrorMsg(true);
+          setSearchResults([]);
+        } else {
+          setSearchResults(searchedRecipes);
+          db.recipes.add({
+            searchTerm: location.state.foodSearched,
+            recipes: searchedRecipes,
+          });
+        }
       } else {
         setSearchResults(searchedRecipes.recipes);
       }
@@ -68,9 +77,6 @@ const SearchResults = () => {
 
     fetchRecipes();
   }, [location.state.foodSearched]);
-
-
-  console.log('hellow');
 
 
   return (
@@ -85,16 +91,16 @@ const SearchResults = () => {
             <em>{location.state.foodSearched}</em>
           </h1>
 
-          {searchResults.length === 0 &&
-                <div>
-                  <p className='no-search-results'>
-                    Please check your spelling and try again
-                  </p>
-                  <p className='no-search-results'>
-                    Try more general words
-                  </p>
-                </div>
-
+          {
+            searchResults.length === 0 &&
+            <div>
+              <p className='no-search-results'>
+                Please check your spelling and try again
+              </p>
+              <p className='no-search-results'>
+                Try more general words
+              </p>
+            </div>
           }
 
           <div className='recipe-cards-container'>
@@ -106,6 +112,14 @@ const SearchResults = () => {
               })
             }
           </div>
+        </div>
+      }
+
+      {
+        showErrorMsg &&
+        <div>
+          <Error closeComponent={() => setShowErrorMsg(false)}/>
+          <DarkBackground />
         </div>
       }
     </div>

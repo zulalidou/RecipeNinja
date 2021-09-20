@@ -1,12 +1,10 @@
 import React from 'react';
+import '../styles/recipe-card.css';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../styles/recipe-card.css';
-
 
 const displayRecipeInfo = (history, recipeID) => {
-  console.log('displayRecipeInfo()');
   history.push({
     pathname: `/recipes/${recipeID}`,
     state: {
@@ -15,9 +13,9 @@ const displayRecipeInfo = (history, recipeID) => {
   });
 };
 
+
 const RecipeCard = (props) => {
   const history = useHistory();
-  console.log(props);
 
   return (
     <div className="recipe-card"
