@@ -19,7 +19,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "eslint client/**",
     "eject": "react-scripts eject"
   },
   "browserslist": {

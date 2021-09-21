@@ -21,7 +21,7 @@ const app = express();
 const helmet = require('helmet');
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(express.static(path.join(__dirname, './client/build')));
 app.use(helmet());
 
 
@@ -38,8 +38,8 @@ app.use('/api/get-recipe-info', getRecipeInfoRoute);
 
 
 // handles access to routes that do not exist
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 
