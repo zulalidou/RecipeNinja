@@ -12,6 +12,11 @@ import SideNavbar from './side-navbar';
 import {Link, useHistory} from 'react-router-dom';
 
 
+/*
+ * - Gets called every time a key is pressed in either of the search bars.
+ * - When the enter key is pressed, sends the user to the search page,
+ *   along with some state
+ */
 const keyPressed = (history, element, showBottomSearchBar, showSideNavbar) => {
   console.log('keyPressed()');
 

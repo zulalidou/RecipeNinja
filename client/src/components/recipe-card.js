@@ -4,6 +4,10 @@ import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 
+/*
+ * When a RecipeCard is clicked, this function executes. It sends the user to
+ * the recipes page to learn more about the recipe they clicked on.
+ **/
 const displayRecipeInfo = (history, recipeID) => {
   history.push({
     pathname: `/recipes/${recipeID}`,

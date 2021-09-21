@@ -19,6 +19,12 @@ const getSearchedRecipes = async (food) => {
       },
     });
 
+    console.log(response);
+
+    if (response.status === 403) {
+      return Constants.ERROR;
+    }
+
     const recipes = await response.json();
     return recipes;
   } catch (err) {
@@ -58,8 +64,11 @@ const SearchResults = () => {
 
       if (searchedRecipes === undefined) {
         searchedRecipes = await getSearchedRecipes(location.state.food);
+        console.log('damadam');
+        console.log(searchedRecipes);
 
         if (searchedRecipes === Constants.ERROR) {
+          console.log('ayakaka');
           setShowErrorMsg(true);
           setSearchResults([]);
         } else {

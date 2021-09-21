@@ -20,6 +20,10 @@ const getRecipeInfo = async (recipeID) => {
       },
     });
 
+    if (response.status === 403) {
+      return Constants.ERROR;
+    }
+
     recipeInfo = await response.json();
     return recipeInfo;
   } catch (err) {
@@ -42,8 +46,7 @@ const Recipes = (props) => {
 
       if (recipeInfo === Constants.ERROR) {
         document.title = `${props.location.state.recipeID} | RecipeNinja`;
-        displayErrorMsg(true);
-        setRecipeInfo([]);
+        setShowErrorMsg(true);
       } else {
         document.title = `${recipeInfo.title} | RecipeNinja`;
         setRecipeInfo(recipeInfo);

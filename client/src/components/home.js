@@ -90,9 +90,10 @@ const fetchRecipes = async (recipes,
     if (recipes === Constants.ERROR) {
       displayErrorMsg(true);
       setRecipes([]);
-    } else {
-      setRecipes(recipes);
+      return;
     }
+
+    setRecipes(recipes);
 
     clientDb.recipes.add({
       searchTerm: clientDbRecipeType,
@@ -123,6 +124,10 @@ const getCategoricalRecipes = async (category, value) => {
       },
     });
 
+    if (response.status === 403) {
+      return Constants.ERROR;
+    }
+
     const recipes = await response.json();
     return recipes;
   } catch (err) {
@@ -144,6 +149,10 @@ const getRandomRecipes = async () => {
         'Content-type': 'application/json',
       },
     });
+
+    if (response.status === 403) {
+      return Constants.ERROR;
+    }
 
     const recipes = await response.json();
     return recipes;

@@ -1,45 +1,48 @@
 const express = require('express');
 const router = express.Router();
 const got = require('got');
+const Constants = require('../constants');
 
 
 router.get('/', async function(req, res) {
   console.log('\n/api/get-random-recipes called\n');
 
-  console.log('req.query:')
-  console.log(req.query);
-  console.log('----------===================--------------==============\n\n')
-
   const recipes = await getRecipes(req.query.NUM_OF_RECIPES);
+
+  if (recipes === Constants.ERROR) {
+    res.status(403).send([]);
+    return;
+  }
+
   res.status(200).send(recipes);
 });
 
 
+// Retrieves random recipes from the Spoonacular API
 async function getRecipes(NUM_OF_RECIPES) {
-  console.log('\n\ngetRecipes()\n\n');
-
   const url = `https://api.spoonacular.com/recipes/random?number=${NUM_OF_RECIPES}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
-  console.log('url = ' + url + '\n');
+  let response = null;
 
-  const response = await got(url);
+  try {
+    response = await got(url);
+  } catch (e) {
+    console.log('ERROR: An error occurred - /api/get-random-recipes');
+    return Constants.ERROR;
+  }
+
   const recipesFound = JSON.parse(response.body).recipes;
-
-
   const recipes = [];
 
-  for (let i = 0; i < recipesFound.length; i++) {
+  for (recipe of recipesFound) {
     const recipeInfo = {
-      id: recipesFound[i].id,
-      title: recipesFound[i].title,
-      image: (recipesFound[i].image === undefined) ? '../images/plate.png' : `https://spoonacular.com/recipeImages/${recipesFound[i].id}-556x370.jpg`,
+      id: recipe.id,
+      title: recipe.title,
+      image: recipe.image === undefined ? '../images/plate.png' : recipe.image,
     };
 
     recipes.push(recipeInfo);
   }
 
-  console.log('\nrecipes:');
-  console.log(recipes);
-  console.log('=====================================================\n\n');
   return recipes;
 }
 

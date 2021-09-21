@@ -1,39 +1,50 @@
 const express = require('express');
 const router = express.Router();
 const got = require('got');
+const Constants = require('../constants');
 
 
 router.get('/', async function(req, res) {
-  console.log('\n/api/get-categorical-recipes called');
+  console.log('\n/api/get-categorical-recipes executing');
 
-  recipes = await getRecipes(req.query.category, req.query.categoryValue, req.query.NUM_OF_RECIPES);
+  recipes = await getRecipes(req.query.category,
+      req.query.categoryValue,
+      req.query.NUM_OF_RECIPES);
+
+  if (recipes === Constants.ERROR) {
+    res.status(403).send([]);
+    return;
+  }
+
   res.status(200).send(recipes);
 });
 
 
+// Retrieves the categorical recipes from the Spoonacular API
 async function getRecipes(category, food, NUM_OF_RECIPES) {
-  console.log('\n\ngetRecipesFromAPI()\n\n');
-
   const url = `https://api.spoonacular.com/recipes/complexSearch?${category}=${food}&number=${NUM_OF_RECIPES}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
-  const response = await got(url);
-  const recipesFound = JSON.parse(response.body).results;
+  let response = null;
 
-
-  const recipes = [];
-
-  for (let i = 0; i < recipesFound.length; i++) {
-    const recipeInfo = {
-      id: recipesFound[i].id,
-      title: recipesFound[i].title,
-      image: (recipesFound[i].image === undefined) ? '../images/plate.png' : `https://spoonacular.com/recipeImages/${recipesFound[i].id}-556x370.jpg`,
-    };
-
-    recipes.push(recipeInfo);
+  try {
+    response = await got(url);
+  } catch (e) {
+    console.log('ERROR: An error occurred - /api/get-categorical-recipes');
+    return Constants.ERROR;
   }
 
-  console.log('\nrecipes:');
-  console.log(recipes);
-  console.log('=====================================================\n\n');
+  const recipesFound = JSON.parse(response.body).results;
+  const recipes = [];
+
+  for (recipe of recipesFound) {
+    delete recipe.imageType;
+
+    if (recipe.image === undefined) {
+      recipe.image = '../images/plate.png';
+    }
+
+    recipes.push(recipe);
+  }
+
   return recipes;
 }
 
