@@ -1,0 +1,48 @@
+.page-not-found-container {
+    margin: 40px auto auto auto;
+    text-align: center;
+}
+
+.page-not-found-container h1 {
+    font-family: sans-serif;
+}
+
+.page-not-found-container p {
+    font-family: sans-serif;
+    margin-bottom: 20px;
+}
+
+.page-not-found-btn {
+    width: 50%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.page-not-found-btn:hover {
+    cursor: pointer;
+    background-color: #ddd;
+}
+
+
+@media (max-width: 576px) {
+    .page-not-found-container {
+        width: 80%;
+    }
+
+    .page-not-found-container h1 {
+        font-size: 25px;
+    }
+
+    .page-not-found-container p {
+        font-size: 16px;
+    }
+
+}
+
+
+@media (min-width: 577px) {
+    .page-not-found-container {
+        width: 400px;
+    }
+}

@@ -7,6 +7,7 @@ import About from './components/about';
 import Search from './components/search';
 import Recipes from './components/recipes';
 import Footer from './components/footer';
+import PageNotFound from './components/page-not-found';
 
 
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
         <Route exact path="/about" component={About} />
         <Route exact path="/search" component={Search} />
         <Route exact path="/recipes/:name" component={Recipes} />
+        <Route component={PageNotFound} />
       </Switch>
 
       <Route path="/" component={Footer} />
