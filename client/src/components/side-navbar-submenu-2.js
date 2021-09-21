@@ -24,7 +24,7 @@ const SideNavbarSubmenu2 = (props) => {
             pathname: '/search',
             search: '?search=africa',
             state: {
-              foodSearched: 'africa',
+              food: 'africa',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -91,7 +91,7 @@ const SideNavbarSubmenu2 = (props) => {
             pathname: '/search',
             search: '?search=mediterranean',
             state: {
-              foodSearched: 'mediterranean',
+              food: 'mediterranean',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -104,7 +104,7 @@ const SideNavbarSubmenu2 = (props) => {
             pathname: '/search',
             search: '?search=middle+east',
             state: {
-              foodSearched: 'middle east',
+              food: 'middle east',
             },
           }}
           onClick={props.closeSideNavbar}>

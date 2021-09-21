@@ -3,6 +3,8 @@ import '../styles/navbar.css';
 import LogoIcon from '../images/logo.png';
 import DownArrowIcon from '../images/down-arrow.png';
 import HamburgerIcon from '../images/hamburger.png';
+import MagnifyingGlassIcon from '../images/magnifying-glass.png';
+import CloseIcon from '../images/close.png';
 import NavbarSubmenu1 from './navbar-submenu-1';
 import NavbarSubmenu2 from './navbar-submenu-2';
 import SideNavbar from './side-navbar';
@@ -10,21 +12,26 @@ import SideNavbar from './side-navbar';
 import {Link, useHistory} from 'react-router-dom';
 
 
-const keyPressed = (history) => {
+const keyPressed = (history, element, showBottomSearchBar, showSideNavbar) => {
+  console.log('keyPressed()');
+
   if (window.event.key === 'Enter') {
     window.event.preventDefault();
 
-    const foodSearched = document.getElementById('search-bar').value
+    const food = document.getElementById(element).value
         .toLowerCase().trim();
 
-    if (foodSearched === '') {
+    if (food === '') {
       return;
     }
 
+    showBottomSearchBar(false);
+    showSideNavbar(false);
+
     history.push({
       pathname: '/search',
-      search: `?search=${foodSearched}`,
-      state: {foodSearched: foodSearched},
+      search: `?search=${food}`,
+      state: {food: food},
     });
   }
 };
@@ -34,7 +41,9 @@ const Navbar = () => {
   const history = useHistory();
   const [showNavbarSubmenu1, setShowNavbarSubmenu1] = useState(false);
   const [showNavbarSubmenu2, setShowNavbarSubmenu2] = useState(false);
+  const [showBottomSearchBar, setShowBottomSearchBar] = useState(false);
   const [showSideNavbar, setShowSideNavbar] = useState(false);
+
 
   return (
     <nav>
@@ -54,12 +63,26 @@ const Navbar = () => {
           <div className="search-container">
             <form>
               <input id="search-bar" type="text" placeholder="Find a recipe"
-                autoComplete="off" onKeyPress={() => keyPressed(history)}
+                autoComplete="off"
+                onKeyPress={() => keyPressed(history,
+                    'search-bar',
+                    setShowBottomSearchBar,
+                    setShowSideNavbar)}
                 required/>
             </form>
           </div>
 
           <Link className="navbar-about" to="/about">About</Link>
+
+          <div className='magnifying-glass-icon-container'
+            onClick={() => setShowBottomSearchBar(!showBottomSearchBar)}>
+            {
+                showBottomSearchBar ?
+
+                <img src={CloseIcon} alt='close'/> :
+                <img src={MagnifyingGlassIcon} alt='magnifying glass'/>
+            }
+          </div>
         </div>
       </div>
 
@@ -92,6 +115,22 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+
+      {
+        showBottomSearchBar &&
+
+        <div className="search-container-2">
+          <form>
+            <input id="search-bar-2" type="text" placeholder="Find a recipe"
+              autoComplete="off"
+              onKeyPress={() => keyPressed(history,
+                  'search-bar-2',
+                  setShowBottomSearchBar,
+                  setShowSideNavbar)}
+              required/>
+          </form>
+        </div>
+      }
 
       {/*
         * The SideNavbar component is always on the screen, but it's moved to

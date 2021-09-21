@@ -13,7 +13,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=chinese',
             state: {
-              foodSearched: 'chinese',
+              food: 'chinese',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -26,7 +26,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=indian',
             state: {
-              foodSearched: 'indian',
+              food: 'indian',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -39,7 +39,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=japanese',
             state: {
-              foodSearched: 'japanese',
+              food: 'japanese',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -52,7 +52,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=korean',
             state: {
-              foodSearched: 'korean',
+              food: 'korean',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -65,7 +65,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=thai',
             state: {
-              foodSearched: 'thai',
+              food: 'thai',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -78,7 +78,7 @@ const SideNavbarSubmenu4 = (props) => {
             pathname: '/search',
             search: '?search=vietnamese',
             state: {
-              foodSearched: 'vietnamese',
+              food: 'vietnamese',
             },
           }}
           onClick={props.closeSideNavbar}>

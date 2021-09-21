@@ -13,7 +13,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=british',
             state: {
-              foodSearched: 'british',
+              food: 'british',
             },
           }}
           onClick={props.closeComponent}>
@@ -26,7 +26,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=eastern+european',
             state: {
-              foodSearched: 'eastern european',
+              food: 'eastern european',
             },
           }}
           onClick={props.closeComponent}>
@@ -39,7 +39,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=french',
             state: {
-              foodSearched: 'french',
+              food: 'french',
             },
           }}
           onClick={props.closeComponent}>
@@ -52,7 +52,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=german',
             state: {
-              foodSearched: 'german',
+              food: 'german',
             },
           }}
           onClick={props.closeComponent}>
@@ -65,7 +65,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=greek',
             state: {
-              foodSearched: 'greek',
+              food: 'greek',
             },
           }}
           onClick={props.closeComponent}>
@@ -78,7 +78,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=irish',
             state: {
-              foodSearched: 'irish',
+              food: 'irish',
             },
           }}
           onClick={props.closeComponent}>
@@ -91,7 +91,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=italian',
             state: {
-              foodSearched: 'italian',
+              food: 'italian',
             },
           }}
           onClick={props.closeComponent}>
@@ -104,7 +104,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=nordic',
             state: {
-              foodSearched: 'nordic',
+              food: 'nordic',
             },
           }}
           onClick={props.closeComponent}>
@@ -117,7 +117,7 @@ const NavbarSubmenu5 = (props) => {
             pathname: '/search',
             search: '?search=spanish',
             state: {
-              foodSearched: 'spanish',
+              food: 'spanish',
             },
           }}
           onClick={props.closeComponent}>

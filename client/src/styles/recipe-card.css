@@ -6,6 +6,7 @@
 
 .recipe-card:hover {
     cursor: pointer;
+    box-shadow: 1px 5px 7px 5px #888888;
 }
 
 .recipe-card-img-container {

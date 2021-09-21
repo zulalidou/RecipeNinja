@@ -13,7 +13,7 @@ const SideNavbarSubmenu3 = (props) => {
             pathname: '/search',
             search: '?search=american',
             state: {
-              foodSearched: 'american',
+              food: 'american',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -26,7 +26,7 @@ const SideNavbarSubmenu3 = (props) => {
             pathname: '/search',
             search: '?search=caribbean',
             state: {
-              foodSearched: 'caribbean',
+              food: 'caribbean',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -39,7 +39,7 @@ const SideNavbarSubmenu3 = (props) => {
             pathname: '/search',
             search: '?search=latin+american',
             state: {
-              foodSearched: 'latin american',
+              food: 'latin american',
             },
           }}
           onClick={props.closeSideNavbar}>
@@ -52,7 +52,7 @@ const SideNavbarSubmenu3 = (props) => {
             pathname: '/search',
             search: '?search=mexican',
             state: {
-              foodSearched: 'mexican',
+              food: 'mexican',
             },
           }}
           onClick={props.closeSideNavbar}>

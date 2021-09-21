@@ -10,10 +10,9 @@ import DarkBackground from './dark-background';
 
 
 // Retrieves the recipes for the search term(s) used
-const getSearchedRecipes = async (foodSearched) => {
+const getSearchedRecipes = async (food) => {
   try {
-    const response = await fetch(`/api/get-searched-recipes?
-        foodSearched=${foodSearched}`, {
+    const response = await fetch(`/api/get-searched-recipes?food=${food}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -50,23 +49,23 @@ const SearchResults = () => {
 
   useEffect(() => {
     const fetchRecipes = async () => {
-      document.title = `Search results for ${location.state.foodSearched}` +
+      document.title = `Search results for ${location.state.food}` +
         ` | RecipeNinja`;
 
       let searchedRecipes = await clientDb.recipes.get({
-        searchTerm: location.state.foodSearched,
+        searchTerm: location.state.food,
       });
 
       if (searchedRecipes === undefined) {
-        searchedRecipes = await getSearchedRecipes(location.state.foodSearched);
+        searchedRecipes = await getSearchedRecipes(location.state.food);
 
         if (searchedRecipes === Constants.ERROR) {
           setShowErrorMsg(true);
           setSearchResults([]);
         } else {
           setSearchResults(searchedRecipes);
-          db.recipes.add({
-            searchTerm: location.state.foodSearched,
+          clientDb.recipes.add({
+            searchTerm: location.state.food,
             recipes: searchedRecipes,
           });
         }
@@ -76,7 +75,7 @@ const SearchResults = () => {
     };
 
     fetchRecipes();
-  }, [location.state.foodSearched]);
+  }, [location.state.food]);
 
 
   return (
@@ -87,8 +86,7 @@ const SearchResults = () => {
 
         <div>
           <h1 className='search-results-header'>
-            {searchResults.length} results found for
-            <em>{location.state.foodSearched}</em>
+            {searchResults.length} results found for {location.state.food}
           </h1>
 
           {

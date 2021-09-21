@@ -35,19 +35,19 @@ const Recipes = (props) => {
 
   useEffect(() => {
     async function fetchRecipes() {
-      document.title = `${recipeInfo.title} | RecipeNinja`;
-
       // scrolls to the top of the page
       window.scrollTo(0, 0);
 
-      let recipeInfo = await getRecipeInfo(props.location.state.recipeID);
+      const recipeInfo = await getRecipeInfo(props.location.state.recipeID);
 
       if (recipeInfo === Constants.ERROR) {
+        document.title = `${props.location.state.recipeID} | RecipeNinja`;
         displayErrorMsg(true);
-        recipeInfo = [];
+        setRecipeInfo([]);
+      } else {
+        document.title = `${recipeInfo.title} | RecipeNinja`;
+        setRecipeInfo(recipeInfo);
       }
-
-      setRecipeInfo(recipeInfo);
     }
 
     fetchRecipes();
@@ -75,7 +75,7 @@ const Recipes = (props) => {
               </p>
 
               <p>
-                <strong>Servings:</strong> {recipeInfo.servings}
+                Servings: {recipeInfo.servings}
               </p>
 
               <p>
@@ -87,7 +87,7 @@ const Recipes = (props) => {
               </p>
 
               <p>
-                <strong>Vegan:</strong> {recipeInfo.vegan ? 'Yes' : 'No'}
+                Vegan: {recipeInfo.vegan ? 'Yes' : 'No'}
               </p>
 
               <p>
@@ -145,8 +145,8 @@ const Recipes = (props) => {
                   recipeInfo.extendedIngredients.map((item, idx) => {
                     return (
                       <p key={idx} className='recipe-ingredient'>
-                        {item.name} -
-                        {item.measures.us.amount} {item.measures.us.unitLong}
+                        {item.name} - {item.measures.us.amount}
+                        {item.measures.us.unitLong}
                       </p>
                     );
                   })

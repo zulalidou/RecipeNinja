@@ -11,10 +11,10 @@ router.get('/', async function(req, res) {
 });
 
 
-async function getRecipes(category, foodSearched, NUM_OF_RECIPES) {
+async function getRecipes(category, food, NUM_OF_RECIPES) {
   console.log('\n\ngetRecipesFromAPI()\n\n');
 
-  const url = `https://api.spoonacular.com/recipes/complexSearch?${category}=${foodSearched}&number=${NUM_OF_RECIPES}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?${category}=${food}&number=${NUM_OF_RECIPES}&apiKey=${process.env.SPOONACULAR_API_KEY}`;
   const response = await got(url);
   const recipesFound = JSON.parse(response.body).results;
 

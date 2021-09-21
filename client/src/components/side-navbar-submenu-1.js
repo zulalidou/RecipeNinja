@@ -13,7 +13,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=main+courses',
             state: {
-              foodSearched: 'main courses',
+              food: 'main courses',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Main Courses</div>
@@ -25,7 +25,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=side+dishes',
             state: {
-              foodSearched: 'side dishes',
+              food: 'side dishes',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Side Dishes</div>
@@ -37,7 +37,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=desserts',
             state: {
-              foodSearched: 'desserts',
+              food: 'desserts',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Desserts</div>
@@ -49,7 +49,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=appetizers',
             state: {
-              foodSearched: 'appetizers',
+              food: 'appetizers',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Appetizers</div>
@@ -61,7 +61,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=soups',
             state: {
-              foodSearched: 'soups',
+              food: 'soups',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Soups</div>
@@ -73,7 +73,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=sauces',
             state: {
-              foodSearched: 'sauces',
+              food: 'sauces',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Sauces</div>
@@ -85,7 +85,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=snacks',
             state: {
-              foodSearched: 'snacks',
+              food: 'snacks',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Snacks</div>
@@ -97,7 +97,7 @@ const SideNavbarSubmenu1 = (props) => {
             pathname: '/search',
             search: '?search=beverages',
             state: {
-              foodSearched: 'beverages',
+              food: 'beverages',
             },
           }}>
             <div onClick={props.closeSideNavbar}>Beverages</div>
