@@ -7,7 +7,7 @@ import Loading from './loading';
 import RecipeCard from './recipe-card';
 import Error from './error';
 import DarkBackground from './dark-background';
-import TagManager from 'react-gtm-module';
+// import TagManager from 'react-gtm-module';
 
 
 // Retrieves the recipes for the search term(s) used
@@ -19,8 +19,6 @@ const getSearchedRecipes = async (food) => {
         'Content-type': 'application/json',
       },
     });
-
-    console.log(response);
 
     if (response.status === 403) {
       return Constants.ERROR;
@@ -36,14 +34,14 @@ const getSearchedRecipes = async (food) => {
 
 
 const SearchResults = () => {
-  TagManager.dataLayer({
-    dataLayer: {
-      event: 'pageview',
-      pagePath: '/search',
-      pageTitle: `Search results for ${location.state.food}` +
-        ` | RecipeNinja`,
-    },
-  });
+  // TagManager.dataLayer({
+  //   dataLayer: {
+  //     event: 'pageview',
+  //     pagePath: '/search',
+  //     pageTitle: `Search results for ${location.state.food}` +
+  //       ` | RecipeNinja`,
+  //   },
+  // });
 
   const location = useLocation();
   const [searchResults, setSearchResults] = useState(null);
@@ -74,11 +72,8 @@ const SearchResults = () => {
 
       if (searchedRecipes === undefined) {
         searchedRecipes = await getSearchedRecipes(location.state.food);
-        console.log('damadam');
-        console.log(searchedRecipes);
 
         if (searchedRecipes === Constants.ERROR) {
-          console.log('ayakaka');
           setShowErrorMsg(true);
           setSearchResults([]);
         } else {

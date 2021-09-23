@@ -5,8 +5,6 @@ const Constants = require('../constants');
 
 
 router.get('/', async function(req, res) {
-  console.log('\n/api/get-random-recipes called\n');
-
   const recipes = await getRecipes(req.query.NUM_OF_RECIPES);
 
   if (recipes === Constants.ERROR) {

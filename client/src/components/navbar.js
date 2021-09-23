@@ -18,8 +18,6 @@ import {Link, useHistory} from 'react-router-dom';
  *   along with some state
  */
 const keyPressed = (history, element, showBottomSearchBar, showSideNavbar) => {
-  console.log('keyPressed()');
-
   if (window.event.key === 'Enter') {
     window.event.preventDefault();
 

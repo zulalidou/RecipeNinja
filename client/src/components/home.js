@@ -5,7 +5,7 @@ import clientDb from '../client-database';
 import RecipeCard from './recipe-card';
 import Error from './error';
 import DarkBackground from './dark-background';
-import TagManager from 'react-gtm-module';
+// import TagManager from 'react-gtm-module';
 
 const NUM_OF_RECIPES = 12;
 
@@ -20,7 +20,6 @@ const displayRecipes = async (displayErrorMsg,
   document.title = 'RecipeNinja | Your #1 Stop For Learning About All The' +
                     'World\'s Foods';
 
-  console.log('displayRecipes()');
 
   if (clientDb.recipes === undefined) {
     displayErrorMsg(true);
@@ -113,8 +112,6 @@ const fetchRecipes = async (recipes,
  *   - ['Main courses', 'Side Dishes', 'Americas', 'Middle Eastern', (...)]
  */
 const getCategoricalRecipes = async (category, value) => {
-  console.log('getCategoricalRecipes()');
-
   try {
     const response = await fetch('/api/get-categorical-recipes?' +
         `category=${category}&categoryValue=${value}&` +
@@ -140,8 +137,6 @@ const getCategoricalRecipes = async (category, value) => {
 
 // Retrieves random recipes from the API
 const getRandomRecipes = async () => {
-  console.log('getRandomRecipes()');
-
   try {
     const response = await fetch('/api/get-random-recipes?' +
         `NUM_OF_RECIPES=${NUM_OF_RECIPES}`, {
@@ -165,14 +160,14 @@ const getRandomRecipes = async () => {
 
 
 const Home = () => {
-  TagManager.dataLayer({
-    dataLayer: {
-      event: 'pageview',
-      pagePath: '/',
-      pageTitle: 'RecipeNinja | Your #1 Stop For Learning About All The' +
-                        'World\'s Foods',
-    },
-  });
+  // TagManager.dataLayer({
+  //   dataLayer: {
+  //     event: 'pageview',
+  //     pagePath: '/',
+  //     pageTitle: 'RecipeNinja | Your #1 Stop For Learning About All The' +
+  //                       'World\'s Foods',
+  //   },
+  // });
 
 
   const [randomRecipes, setRandomRecipes] = useState(null);

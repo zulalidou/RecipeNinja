@@ -5,7 +5,6 @@ const Constants = require('../constants');
 
 
 router.get('/', async function(req, res) {
-  console.log('/api-get-searched-recipes.js executing');
   recipes = await getRecipesFromAPI(req.query.food);
 
   if (recipes === Constants.ERROR) {

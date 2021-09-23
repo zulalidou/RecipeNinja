@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 
 
 const NavbarSubmenu1 = (props) => {
-  console.log(props);
-
   return (
     <div className="navbar-submenu-1">
       <ul>

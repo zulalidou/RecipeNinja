@@ -9,11 +9,11 @@ import Recipes from './components/recipes';
 import Footer from './components/footer';
 import PageNotFound from './components/page-not-found';
 
-import TagManager from 'react-gtm-module';
-const tagManagerArgs = {
-  gtmId: 'GTM-MCGKCW9',
-};
-TagManager.initialize(tagManagerArgs);
+// import TagManager from 'react-gtm-module';
+// const tagManagerArgs = {
+//   gtmId: 'GTM-MCGKCW9',
+// };
+// TagManager.initialize(tagManagerArgs);
 
 
 const App = () => (

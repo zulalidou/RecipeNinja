@@ -5,8 +5,6 @@ const Constants = require('../constants');
 
 
 router.get('/', async function(req, res) {
-  console.log('\n/api/get-categorical-recipes executing');
-
   recipes = await getRecipes(req.query.category,
       req.query.categoryValue,
       req.query.NUM_OF_RECIPES);
