@@ -6,6 +6,7 @@ import RecipeCard from './recipe-card';
 import Error from './error';
 import DarkBackground from './dark-background';
 import PropTypes from 'prop-types';
+import TagManager from 'react-gtm-module';
 
 
 // Retrieves the recipe's info
@@ -34,6 +35,15 @@ const getRecipeInfo = async (recipeID) => {
 
 
 const Recipes = (props) => {
+  TagManager.dataLayer({
+    dataLayer: {
+      event: 'pageview',
+      pagePath: '/recipes/:name',
+      pageTitle: `${props.location.state.recipeID} | RecipeNinja`,
+    },
+  });
+
+
   const [recipeInfo, setRecipeInfo] = useState(null);
   const [showErrorMsg, setShowErrorMsg] = useState(false);
 

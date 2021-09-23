@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom';
 
 
 const PageNotFound = () => {
+  document.title = 'Page not found';
+
   return (
     <div className='page-not-found-container'>
       <h1>This page isn&apos;t available</h1>

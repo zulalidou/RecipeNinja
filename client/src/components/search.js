@@ -7,6 +7,7 @@ import Loading from './loading';
 import RecipeCard from './recipe-card';
 import Error from './error';
 import DarkBackground from './dark-background';
+import TagManager from 'react-gtm-module';
 
 
 // Retrieves the recipes for the search term(s) used
@@ -35,6 +36,15 @@ const getSearchedRecipes = async (food) => {
 
 
 const SearchResults = () => {
+  TagManager.dataLayer({
+    dataLayer: {
+      event: 'pageview',
+      pagePath: '/search',
+      pageTitle: `Search results for ${location.state.food}` +
+        ` | RecipeNinja`,
+    },
+  });
+
   const location = useLocation();
   const [searchResults, setSearchResults] = useState(null);
   const [showErrorMsg, setShowErrorMsg] = useState(false);

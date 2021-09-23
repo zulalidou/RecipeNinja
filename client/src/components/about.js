@@ -1,9 +1,18 @@
 import React from 'react';
 import '../styles/about.css';
 import RecipeIcon from '../images/recipe.png';
+import TagManager from 'react-gtm-module';
 
 
 const About = () => {
+  TagManager.dataLayer({
+    dataLayer: {
+      event: 'pageview',
+      pagePath: '/about',
+      pageTitle: 'About RecipeNinja',
+    },
+  });
+
   document.title = 'About RecipeNinja';
 
   return (
