@@ -22,8 +22,14 @@ const helmet = require('helmet');
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './client/build')));
-app.use(helmet());
+// app.use(helmet());
+app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+);
 
+console.log('heyyy there');
 
 // Routes
 const getRandomRecipesRoute = require('./routes/get-random-recipes');
@@ -38,8 +44,9 @@ app.use('/api/get-recipe-info', getRecipeInfoRoute);
 
 
 // handles access to routes that do not exist
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
+  // res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 

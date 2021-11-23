@@ -47,6 +47,20 @@ const Recipes = (props) => {
   const [recipeInfo, setRecipeInfo] = useState(null);
   const [showErrorMsg, setShowErrorMsg] = useState(false);
 
+
+  /*
+   * This case occurs if/when the user comes to this page by typing the url into
+   * the address bar, instead of clicking links on the website
+   */
+  if (props.location.state === undefined) {
+    const recipeID = props.location.pathname.substring(
+        props.location.pathname.lastIndexOf('/') + 1);
+
+    props.location.state = {
+      recipeID: recipeID,
+    };
+  }
+
   useEffect(() => {
     async function fetchRecipes() {
       // scrolls to the top of the page

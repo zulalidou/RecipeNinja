@@ -61,7 +61,22 @@ const SearchResults = () => {
   }, []);
 
 
+  /*
+   * This case occurs if/when the user comes to this page by typing the url into
+   * the address bar, instead of clicking links on the website
+   */
+  if (location.state === undefined) {
+    let food = location.search.substring(location.search.indexOf('=') + 1);
+    food = food.replace('+', ' ');
+
+    location.state = {
+      food: food,
+    };
+  }
+
   useEffect(() => {
+    console.log(location);
+
     const fetchRecipes = async () => {
       document.title = `Search results for ${location.state.food}` +
         ` | RecipeNinja`;
