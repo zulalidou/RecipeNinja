@@ -8,8 +8,19 @@ import CloseIcon from '../images/close.png';
 import NavbarSubmenu1 from './navbar-submenu-1';
 import NavbarSubmenu2 from './navbar-submenu-2';
 import SideNavbar from './side-navbar';
-
 import {Link, useHistory} from 'react-router-dom';
+import ReactGA from 'react-ga';
+
+
+const eventTrack = (category, action, label) => {
+  console.log('GA event:', category, ':', action, ':', label);
+
+  ReactGA.event({
+    category: category,
+    action: action,
+    label: label,
+  });
+};
 
 
 /*
@@ -75,7 +86,10 @@ const Navbar = () => {
             </form>
           </div>
 
-          <Link className="navbar-about" to="/about">About</Link>
+          <Link className="navbar-about" to="/about"
+            onClick={() =>
+              eventTrack('About Page', 'About button clicked', 'Button')}>
+          About</Link>
 
           <div className='magnifying-glass-icon-container'
             onClick={() => setShowBottomSearchBar(!showBottomSearchBar)}>

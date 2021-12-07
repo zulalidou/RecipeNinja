@@ -22,14 +22,13 @@ const helmet = require('helmet');
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, './client/build')));
-// app.use(helmet());
+
 app.use(
     helmet({
       contentSecurityPolicy: false,
     })
 );
 
-console.log('heyyy there');
 
 // Routes
 const getRandomRecipesRoute = require('./routes/get-random-recipes');
