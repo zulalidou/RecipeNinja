@@ -5,7 +5,6 @@ import clientDb from '../client-database';
 import RecipeCard from './recipe-card';
 import Error from './error';
 import DarkBackground from './dark-background';
-// import TagManager from 'react-gtm-module';
 
 const NUM_OF_RECIPES = 12;
 
@@ -160,16 +159,6 @@ const getRandomRecipes = async () => {
 
 
 const Home = () => {
-  // TagManager.dataLayer({
-  //   dataLayer: {
-  //     event: 'pageview',
-  //     pagePath: '/',
-  //     pageTitle: 'RecipeNinja | Your #1 Stop For Learning About All The' +
-  //                       'World\'s Foods',
-  //   },
-  // });
-
-
   const [randomRecipes, setRandomRecipes] = useState(null);
   const [mainCourseRecipes, setMainCourseRecipes] = useState(null);
   const [sideDishRecipes, setSideDishRecipes] = useState(null);

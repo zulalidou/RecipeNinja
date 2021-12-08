@@ -35,7 +35,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://recipeninja.herokuapp.com",
-  "devDependencies": {
-  }
+  "proxy": "https://recipeninja.herokuapp.com"
 }

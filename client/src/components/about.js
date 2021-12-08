@@ -1,18 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../styles/about.css';
 import RecipeIcon from '../images/recipe.png';
-// import TagManager from 'react-gtm-module';
+import ReactGA from 'react-ga';
 
 
 const About = () => {
-  // TagManager.dataLayer({
-  //   dataLayer: {
-  //     event: 'pageview',
-  //     pagePath: '/about',
-  //     pageTitle: 'About RecipeNinja',
-  //   },
-  // });
-
   document.title = 'About RecipeNinja';
 
   return (

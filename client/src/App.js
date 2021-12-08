@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter as Router,
-  Switch, Route} from 'react-router-dom';
+  Switch, Route, useLocation} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar';
 import Home from './components/home';
@@ -13,19 +13,16 @@ import { createBrowserHistory } from 'history';
 import ReactGA from 'react-ga';
 
 
-ReactGA.initialize('UA-208053083-1');
-ReactGA.pageview(window.location.pathname);
-
-// const history = createBrowserHistory();
-
-// history.listen((location) => {
-//   console.log('A new page is being accessed??');
-//   console.log(window.location);
-//   ReactGA.pageview(window.location.pathname + window.location.search);
-// });
-
-
 const App = () => {
+  const history = createBrowserHistory();
+
+  history.listen(location => {
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.set({ page: location.pathname }); // Update the user's current page
+    ReactGA.pageview(window.location.pathname); // Record a pageview for the given page
+  });
+
+
   return (
     <Router>
       <div className="App">
