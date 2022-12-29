@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js",
-    "build": "cd client && npm install && npm run build"
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
