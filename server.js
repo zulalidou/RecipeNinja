@@ -44,7 +44,7 @@ app.use('/api/get-recipe-info', getRecipeInfoRoute);
 
 // handles access to routes that do not exist
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
+  res.sendFile(path.join('./client/build/index.html'));
   // res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
