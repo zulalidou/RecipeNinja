@@ -112,7 +112,7 @@ const fetchRecipes = async (recipes,
  */
 const getCategoricalRecipes = async (category, value) => {
   try {
-    const response = await fetch('/api/get-categorical-recipes?' +
+    const response = await fetch('../../../api/get-categorical-recipes?' +
         `category=${category}&categoryValue=${value}&` +
         `NUM_OF_RECIPES=${NUM_OF_RECIPES}`, {
       method: 'GET',
@@ -137,7 +137,7 @@ const getCategoricalRecipes = async (category, value) => {
 // Retrieves random recipes from the API
 const getRandomRecipes = async () => {
   try {
-    const response = await fetch('/api/get-random-recipes?' +
+    const response = await fetch('../../../api/get-random-recipes?' +
         `NUM_OF_RECIPES=${NUM_OF_RECIPES}`, {
       method: 'GET',
       headers: {
