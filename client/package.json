@@ -35,5 +35,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://recipeninja.herokuapp.com"
+  "proxy": "https://recipeninja-backend.onrender.com"
 }

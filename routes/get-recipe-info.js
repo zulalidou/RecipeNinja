@@ -189,7 +189,7 @@ async function getRecipeImage(recipeID) {
   const image = JSON.parse(response.body).image;
 
   if (image === undefined) {
-    return '../images/plate.png';
+    return '/client/src/images/plate.png';
   }
 
   return image;
