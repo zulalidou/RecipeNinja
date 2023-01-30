@@ -21,16 +21,18 @@ const displayRecipeInfo = (history, recipeID) => {
 
 const RecipeCard = (props) => {
   const history = useHistory();
+
+  console.log(props.recipeInfo.image);
   
-  if (props.recipeInfo.image == "/client/src/images/plate.png") {
-    console.log(props.recipeInfo.image);
+  if (props.recipeInfo.image == null) {
+    props.recipeInfo.image = PlateIcon;
   }
 
   return (
     <div className="recipe-card"
       onClick={() => displayRecipeInfo(history, props.recipeInfo.id)}>
       <div className="recipe-card-img-container">
-        <img src={PlateIcon && props.recipeInfo.image} alt='food'/>
+        <img src={props.recipeInfo.image} alt='food'/>
       </div>
 
       <p className="recipe-card-title-container">{props.recipeInfo.title}</p>
