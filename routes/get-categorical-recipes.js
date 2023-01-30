@@ -37,7 +37,7 @@ async function getRecipes(category, food, NUM_OF_RECIPES) {
     delete recipe.imageType;
 
     if (recipe.image === undefined) {
-      recipe.image = '/client/src/images/plate.png';
+      recipe.image = null;
     }
 
     recipes.push(recipe);

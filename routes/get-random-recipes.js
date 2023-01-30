@@ -35,7 +35,7 @@ async function getRecipes(NUM_OF_RECIPES) {
     const recipeInfo = {
       id: recipe.id,
       title: recipe.title,
-      image: recipe.image === undefined ? '/client/src/images/plate.png' : recipe.image,
+      image: recipe.image === undefined ? null : recipe.image,
     };
 
     recipes.push(recipeInfo);

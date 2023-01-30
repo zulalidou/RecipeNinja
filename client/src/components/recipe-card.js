@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/recipe-card.css';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import PlateIcon from '../images/plate.png';
 
 
 /*
@@ -20,12 +21,16 @@ const displayRecipeInfo = (history, recipeID) => {
 
 const RecipeCard = (props) => {
   const history = useHistory();
+  
+  if (props.recipeInfo.image == "/client/src/images/plate.png") {
+    console.log(props.recipeInfo.image);
+  }
 
   return (
     <div className="recipe-card"
       onClick={() => displayRecipeInfo(history, props.recipeInfo.id)}>
       <div className="recipe-card-img-container">
-        <img src={props.recipeInfo.image} alt='food'/>
+        <img src={PlateIcon && props.recipeInfo.image} alt='food'/>
       </div>
 
       <p className="recipe-card-title-container">{props.recipeInfo.title}</p>
